@@ -1,0 +1,5 @@
+F:\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Release\Jitter.dll
+F:\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Release\Jitter.pdb
+F:\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Release\Jitter.dll
+F:\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Release\Jitter.pdb
+F:\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Release\Jitter.csprojResolveAssemblyReference.cache

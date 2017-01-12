@@ -1,0 +1,5 @@
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Windows Phone\Debug\JitterPhone.dll
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Windows Phone\Debug\JitterPhone.pdb
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Windows Phone\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Windows Phone\Debug\JitterPhone.dll
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Windows Phone\Debug\JitterPhone.pdb

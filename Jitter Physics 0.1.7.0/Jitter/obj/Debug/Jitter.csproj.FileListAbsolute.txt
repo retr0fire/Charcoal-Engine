@@ -1,0 +1,12 @@
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Debug\Jitter.dll
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Debug\Jitter.pdb
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Debug\Jitter.dll
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Debug\Jitter.pdb
+F:\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Debug\Jitter.dll
+F:\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Debug\Jitter.pdb
+F:\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Debug\Jitter.dll
+F:\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Debug\Jitter.pdb
+C:\Users\Me\Documents\Visual Studio 2010\Projects\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Debug\Jitter.dll
+C:\Users\Me\Documents\Visual Studio 2010\Projects\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Debug\Jitter.pdb
+C:\Users\Me\Documents\Visual Studio 2010\Projects\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Debug\Jitter.dll
+C:\Users\Me\Documents\Visual Studio 2010\Projects\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Debug\Jitter.pdb

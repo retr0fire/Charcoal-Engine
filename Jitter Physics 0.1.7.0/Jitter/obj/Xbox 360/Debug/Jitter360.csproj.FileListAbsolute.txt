@@ -1,0 +1,5 @@
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Xbox 360\Debug\Jitter360.dll
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\bin\Xbox 360\Debug\Jitter360.pdb
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Xbox 360\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Xbox 360\Debug\Jitter360.dll
+C:\Users\Langford\Downloads\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\obj\Xbox 360\Debug\Jitter360.pdb
