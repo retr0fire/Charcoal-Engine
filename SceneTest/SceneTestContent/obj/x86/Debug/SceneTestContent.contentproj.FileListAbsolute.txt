@@ -1,0 +1,5 @@
+C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine\SceneTest\SceneTestContent\obj\x86\Debug\SceneTestContent.contentprojResolveAssemblyReference.cache
+C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V2\SceneTest\SceneTestContent\obj\x86\Debug\SceneTestContent.contentprojResolveAssemblyReference.cache
+C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\SceneTest\SceneTestContent\obj\x86\Debug\SceneTestContent.contentprojResolveAssemblyReference.cache
+C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\SceneTest\SceneTestContent\obj\x86\Debug\SceneTestContent.contentprojResolveAssemblyReference.cache
+C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTestContent\obj\x86\Debug\SceneTestContent.contentprojResolveAssemblyReference.cache
