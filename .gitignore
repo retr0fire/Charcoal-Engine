@@ -1,16 +1,3 @@
-*.png
-*.tga
-*.obj
-*.x
-*.fbx
-*.zip
-*.jpg
-*.jpeg
-*.gif
-
-*.xnb
-
-
 *.log
 *.sql
 *.sqlite

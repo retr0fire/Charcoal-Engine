@@ -319,6 +319,15 @@
       </Dependency>
       <Request>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\car_0.xnb</Request>
     </Item>
+    <Item>
+      <Source>MedBarrelNormal.jpg</Source>
+      <Name>MedBarrelNormal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\MedBarrelNormal.xnb</Output>
+      <Time>2016-02-25T10:07:39.3601494-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

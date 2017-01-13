@@ -15,14 +15,14 @@
     <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="SceneTest.exe.manifest" size="20586">
+    <dependentAssembly dependencyType="install" codebase="SceneTest.exe.manifest" size="20977">
       <assemblyIdentity name="SceneTest.exe" version="1.0.0.3" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>wwqkpJ9INc8+LxhG9UhXzSjqRR0=</dsig:DigestValue>
+        <dsig:DigestValue>5cmvSvRj/596+9F2lytEPHe6tfk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -43,6 +43,10 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Jitter, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jitter Physics 0.1.7.0\Jitter.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -120,10 +124,6 @@
     <Compile Include="Utilities\ScreenShot.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\Jitter.csproj">
-      <Project>{AA03EF1A-94F7-4D30-AB14-2092863FF923}</Project>
-      <Name>Jitter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MJLGameEngineContent\MJLGameEngineContent.contentproj">
       <Project>{D5D568D7-55F0-4709-BAE5-7B628DE64448}</Project>
       <Name>MJLGameEngineContent %28EngineContent%29</Name>

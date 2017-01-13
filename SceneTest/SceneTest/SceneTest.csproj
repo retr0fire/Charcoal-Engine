@@ -74,6 +74,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Jitter, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Jitter Physics 0.1.7.0\Jitter.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -132,10 +136,6 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\Jitter.csproj">
-      <Project>{AA03EF1A-94F7-4D30-AB14-2092863FF923}</Project>
-      <Name>Jitter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\MapEditor\MapEditor.csproj">
       <Project>{3CA43227-2DFD-4469-9D6F-8A5C4D44A70B}</Project>
       <Name>MapEditor</Name>

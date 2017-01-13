@@ -21,3 +21,4 @@ Content\chapelx.xnb
 Content\ground.xnb
 Content\particleplane.xnb
 Content\car.xnb
+Content\MedBarrelNormal.xnb

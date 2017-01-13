@@ -63,14 +63,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Jitter.dll" size="167936">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Jitter.dll" size="153088">
       <assemblyIdentity name="Jitter" version="0.1.7.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>CV2rMUSWZtyDd8e3p5cIlDIF1Ro=</dsig:DigestValue>
+        <dsig:DigestValue>pQ1ULXjCwRHo1v5PCpdWCzk8uUc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -82,7 +82,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>s4ThVLzZKMLCNuPQnWiGbmwK9y0=</dsig:DigestValue>
+        <dsig:DigestValue>iQ2Pn3YxT2lImpbGhzu2ebDCPrs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -94,7 +94,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>0N/usvANQ/4Ys3Qpg9rm9fx4pUA=</dsig:DigestValue>
+        <dsig:DigestValue>p8jDXqwtfxVAl35QildlWRpdH7Y=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -106,7 +106,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>jyydod06rP7E6+qiWWmgVg/xzpk=</dsig:DigestValue>
+        <dsig:DigestValue>A3XBLB7v4hFANgtpI1dSeIEZysU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -188,7 +188,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>9yinIC7i4IdKY6LmAxs8Cp0PHSs=</dsig:DigestValue>
+      <dsig:DigestValue>xUjyqYQKFdwJZH+3uh9CcVm6NMI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Grass2.xnb" size="5592631">
@@ -234,6 +234,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>dUKhnkuW6QSBCJlE/DEJbk7dbFs=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\MedBarrelNormal.xnb" size="16777403">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>IlUm7rWXlC4j85HHgnU9ZmRy7Bc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\MudAndStones.xnb" size="5592631">
@@ -305,7 +314,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>MTmkEDDN5U6XzvzItv1zvrJwxNQ=</dsig:DigestValue>
+      <dsig:DigestValue>37YF9HHo2zyjRQ9qW46Gzsk7i9k=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\terrain.xnb" size="262331">

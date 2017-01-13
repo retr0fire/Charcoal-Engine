@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SceneTestContent", "SceneTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MJLGameEngineContent", "MJLGameEngineContent\MJLGameEngineContent.contentproj", "{D5D568D7-55F0-4709-BAE5-7B628DE64448}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jitter", "..\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\Jitter.csproj", "{AA03EF1A-94F7-4D30-AB14-2092863FF923}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapEditor", "MapEditor\MapEditor.csproj", "{3CA43227-2DFD-4469-9D6F-8A5C4D44A70B}"
 EndProject
 Global
@@ -65,18 +63,6 @@ Global
 		{D5D568D7-55F0-4709-BAE5-7B628DE64448}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{D5D568D7-55F0-4709-BAE5-7B628DE64448}.Release|x86.ActiveCfg = Debug|Any CPU
 		{D5D568D7-55F0-4709-BAE5-7B628DE64448}.Release|Xbox 360.ActiveCfg = Debug|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Debug|Xbox 360.ActiveCfg = Debug|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Release|x86.ActiveCfg = Release|Any CPU
-		{AA03EF1A-94F7-4D30-AB14-2092863FF923}.Release|Xbox 360.ActiveCfg = Release|Any CPU
 		{3CA43227-2DFD-4469-9D6F-8A5C4D44A70B}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{3CA43227-2DFD-4469-9D6F-8A5C4D44A70B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{3CA43227-2DFD-4469-9D6F-8A5C4D44A70B}.Debug|Mixed Platforms.Build.0 = Debug|x86

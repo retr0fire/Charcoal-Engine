@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Jitter, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jitter Physics 0.1.7.0\Jitter.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
@@ -95,10 +99,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Jitter Physics 0.1.7.0\Jitter Physics 0.1.7.0\Jitter\Jitter.csproj">
-      <Project>{AA03EF1A-94F7-4D30-AB14-2092863FF923}</Project>
-      <Name>Jitter</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MJLGameEngine\MJLGameEngine.csproj">
       <Project>{60A39A91-893B-4D9B-8552-E463F833B0AD}</Project>
       <Name>MJLGameEngine</Name>
