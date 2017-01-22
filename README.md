@@ -1,12 +1,15 @@
 # Charcoal-Engine
 Open Source 3D Game Engine coded in C#
 
-To edit, compile, and test the engine, you will (as of right now) need:
+To edit, compile, and test the engine, you will ***(as of right now)*** need:
 
-Visual Studio C# 2010
-Microsoft XNA 4.0
-Microsoft Games for Windows Marketplace
-Microsoft Games for Windows - LIVE Redistributable
+* Visual Studio C# 2010
+
+* Microsoft XNA 4.0
+
+* Microsoft Games for Windows Marketplace
+
+* Microsoft Games for Windows - LIVE Redistributable
 
 Folders:
 
