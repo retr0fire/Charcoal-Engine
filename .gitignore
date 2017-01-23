@@ -1,6 +1,7 @@
 *.log
 *.sql
 *.sqlite
+*.application
 
 # OS generated files #
 ######################
