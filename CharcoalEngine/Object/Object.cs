@@ -29,7 +29,7 @@ namespace CharcoalEngine.Object
             get;
             private set;
         }
-        public Model model;
+        public CharcoalModel model;
         
         public Matrix Orientation;
         public Matrix World; //this is the final compiled 'World' Matrix
