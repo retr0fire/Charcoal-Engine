@@ -1,5 +1,3 @@
-Content\barrel.xnb
-Content\car.xnb
 Content\chapelx.xnb
 Content\ground.xnb
 Content\particleplane.xnb
@@ -24,6 +22,8 @@ Content\car_0.xnb
 Content\chapel_diffuse_0.xnb
 Content\ground_0.xnb
 Content\smoke_0.xnb
+Content\barrel.xnb
+Content\car.xnb
 EngineContent\ControlTextures\arrow.xnb
 EngineContent\Effects\AlphaMapEffect.xnb
 EngineContent\Effects\BasicTextureEffect.xnb

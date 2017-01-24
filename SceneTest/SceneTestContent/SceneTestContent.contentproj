@@ -47,12 +47,14 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
+      <ProcessorParameters_Scale>0.2</ProcessorParameters_Scale>
     </Compile>
     <Compile Include="car.fbx">
       <Name>car</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
+      <ProcessorParameters_RotationX>-90</ProcessorParameters_RotationX>
     </Compile>
     <Compile Include="chapelx.x">
       <Name>chapelx</Name>
