@@ -71,7 +71,7 @@ namespace CharcoalEngine.Scene
         public Scene()
         {
             if (GameEngineData.game == null)
-                throw new NullReferenceException("You have not started the Game Engine. Call MJLGameEgine.StartGameEngine(Game game) to start the Engine");
+                throw new NullReferenceException("You have not started the Game Engine. Call CharcoalEngine.StartGameEngine(Game game) to start the Engine");
             GameEngineData.game.Window.AllowUserResizing = true;
             GameEngineData.game.IsMouseVisible = true;
 
