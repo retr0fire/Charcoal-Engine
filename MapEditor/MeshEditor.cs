@@ -15,14 +15,14 @@ namespace MapEditor
     public partial class MeshEditor : Form
     {
         public List<Transform> Transforms = new List<Transform>();
-        public MJLGameEngine.Scene.Scene scene;
+        public CharcoalEngine.Scene.Scene scene;
 
         public MeshEditor()
         {
             InitializeComponent();
         }
 
-        public void RunAsMeshEditor(MJLGameEngine.Scene.Scene s, Model m)
+        public void RunAsMeshEditor(CharcoalEngine.Scene.Scene s, Model m)
         {
             scene = s;
             foreach (ModelMesh mesh in m.Meshes)

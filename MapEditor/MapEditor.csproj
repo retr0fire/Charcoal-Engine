@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3CA43227-2DFD-4469-9D6F-8A5C4D44A70B}</ProjectGuid>
+    <ProjectGuid>{8EFB0911-2F50-4296-B2D3-54502B43807B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MapEditor</RootNamespace>
@@ -34,11 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Jitter, Version=0.1.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Jitter">
       <HintPath>..\Jitter Physics 0.1.7.0\Jitter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
+    <Reference Include="Microsoft.Xna.Framework.Avatar, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
@@ -62,13 +62,13 @@
     <Compile Include="Editor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor.Designer.cs">
+    <Compile Include="Editor.designer.cs">
       <DependentUpon>Editor.cs</DependentUpon>
     </Compile>
     <Compile Include="MeshEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MeshEditor.Designer.cs">
+    <Compile Include="MeshEditor.designer.cs">
       <DependentUpon>MeshEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -99,9 +99,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MJLGameEngine\MJLGameEngine.csproj">
-      <Project>{60A39A91-893B-4D9B-8552-E463F833B0AD}</Project>
-      <Name>MJLGameEngine</Name>
+    <ProjectReference Include="..\CharcoalEngine\CharcoalEngine.csproj">
+      <Project>{410BBA5C-E8A7-4F5D-A577-35A02ABEBD9F}</Project>
+      <Name>CharcoalEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -14,30 +14,30 @@ namespace MapEditor
 {
     public partial class Editor : Form
     {
-        MJLGameEngine.Scene.Scene scene;
+        CharcoalEngine.Scene.Scene scene;
         public Editor()
         {
             InitializeComponent();
         }
 
-        public void RunAsEditor(MJLGameEngine.Scene.Scene s)
+        public void RunAsEditor(CharcoalEngine.Scene.Scene s)
         {
             Application.EnableVisualStyles();
             this.Show();
             scene = s;
-            foreach (MJLGameEngine.Object.Object obj in scene.Objects)
+            foreach (CharcoalEngine.Object.Object obj in scene.Objects)
             {
                 ObjectsTree.Nodes.Add(obj.Name);
             }
-            foreach (MJLGameEngine.Scene.DirectionalLight obj in scene.DirectionalLights)
+            foreach (CharcoalEngine.Scene.DirectionalLight obj in scene.DirectionalLights)
             {
                 LightsTree.Nodes.Add("Directional Light");
             }
-            foreach (MJLGameEngine.Scene.SpotLight obj in scene.SpotLights)
+            foreach (CharcoalEngine.Scene.SpotLight obj in scene.SpotLights)
             {
                 LightsTree.Nodes.Add("SpotLight");
             }
-            foreach (MJLGameEngine.Object.ParticleGenerator.Particle_Generator obj in scene.ParticleGenerators)
+            foreach (CharcoalEngine.Object.ParticleGenerator.Particle_Generator obj in scene.ParticleGenerators)
             {
                 GeneratorsTreeView.Nodes.Add("Particle Generators");
             }
@@ -53,8 +53,8 @@ namespace MapEditor
         private void AddNewObject_Click(object sender, EventArgs e)
         {
             //ObjectsTree.Nodes.Add("new node");
-            //MJLGameEngine.Object.Object o = scene.Objects[1];
-            //scene.Objects.Add(new MJLGameEngine.Object.Object(o.Name, o.model, o.Position, o.YawPitchRoll, o.Scale.X, o.texture, o.normalmap, o.normalmap_enabled));
+            //CharcoalEngine.Object.Object o = scene.Objects[1];
+            //scene.Objects.Add(new CharcoalEngine.Object.Object(o.Name, o.model, o.Position, o.YawPitchRoll, o.Scale.X, o.texture, o.normalmap, o.normalmap_enabled));
         }
 
         private void ObjectsTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -84,7 +84,7 @@ namespace MapEditor
 
         private void AddLight_Click(object sender, System.EventArgs e)
         {
-            scene.SpotLights.Add(new MJLGameEngine.Scene.SpotLight());
+            scene.SpotLights.Add(new CharcoalEngine.Scene.SpotLight());
             LightsTree.Nodes.Add("SpotLight");
         }
 
@@ -98,19 +98,19 @@ namespace MapEditor
             ObjectsTree.Nodes.Clear();
             LightsTree.Nodes.Clear();
             GeneratorsTreeView.Nodes.Clear();
-            foreach (MJLGameEngine.Object.Object obj in scene.Objects)
+            foreach (CharcoalEngine.Object.Object obj in scene.Objects)
             {
                 ObjectsTree.Nodes.Add(obj.Name);
             }
-            foreach (MJLGameEngine.Scene.DirectionalLight obj in scene.DirectionalLights)
+            foreach (CharcoalEngine.Scene.DirectionalLight obj in scene.DirectionalLights)
             {
                 LightsTree.Nodes.Add("Directional Light");
             }
-            foreach (MJLGameEngine.Scene.SpotLight obj in scene.SpotLights)
+            foreach (CharcoalEngine.Scene.SpotLight obj in scene.SpotLights)
             {
                 LightsTree.Nodes.Add("SpotLight");
             }
-            foreach (MJLGameEngine.Object.ParticleGenerator.Particle_Generator obj in scene.ParticleGenerators)
+            foreach (CharcoalEngine.Object.ParticleGenerator.Particle_Generator obj in scene.ParticleGenerators)
             {
                 GeneratorsTreeView.Nodes.Add("Particle Generators");
             }

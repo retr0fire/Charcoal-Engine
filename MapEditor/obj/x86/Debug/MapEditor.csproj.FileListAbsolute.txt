@@ -1,71 +1,25 @@
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\MapEditor.exe
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\MapEditor.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\MJLGameEngine.dll
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\MenuHelper.dll
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\MJLGameEngine.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\MenuHelper.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\obj\x86\Debug\MapEditor.csprojResolveAssemblyReference.cache
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\obj\x86\Debug\MapEditor.Editor.resources
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\obj\x86\Debug\MapEditor.Properties.Resources.resources
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\obj\x86\Debug\MapEditor.csproj.GenerateResource.Cache
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\obj\x86\Debug\MapEditor.exe
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\obj\x86\Debug\MapEditor.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\AlphaMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\BasicTextureEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\DirectionalLightEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\FinalBlendEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\NormalPixelMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\RadialBlurEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\ShadowMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\SpotLightEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\TexturePixelMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Effects\WorldPixelMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\ControlTextures\arrow.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V4\MapEditor\bin\Debug\EngineContent\Fonts\Font.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Fonts\Font.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\AlphaMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\BasicTextureEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\DirectionalLightEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\FinalBlendEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\NormalPixelMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\RadialBlurEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\ShadowMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\SpotLightEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\TexturePixelMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\Effects\WorldPixelMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\EngineContent\ControlTextures\arrow.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\MapEditor.exe
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\MapEditor.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\MJLGameEngine.dll
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\bin\Debug\MJLGameEngine.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\obj\x86\Debug\MapEditor.csprojResolveAssemblyReference.cache
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\obj\x86\Debug\MapEditor.Editor.resources
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\obj\x86\Debug\MapEditor.Properties.Resources.resources
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\obj\x86\Debug\MapEditor.csproj.GenerateResource.Cache
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\obj\x86\Debug\MapEditor.exe
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MapEditor\obj\x86\Debug\MapEditor.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Fonts\Font.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\AlphaMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\BasicTextureEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\DirectionalLightEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\FinalBlendEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\NormalPixelMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\RadialBlurEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\ShadowMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\SpotLightEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\TexturePixelMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\Effects\WorldPixelMapEffect.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\EngineContent\ControlTextures\arrow.xnb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\MapEditor.exe
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\MapEditor.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\MJLGameEngine.dll
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\MJLGameEngine.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\obj\x86\Debug\MapEditor.csprojResolveAssemblyReference.cache
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\obj\x86\Debug\MapEditor.Editor.resources
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\obj\x86\Debug\MapEditor.Properties.Resources.resources
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\obj\x86\Debug\MapEditor.csproj.GenerateResource.Cache
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\obj\x86\Debug\MapEditor.exe
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\obj\x86\Debug\MapEditor.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\Jitter.pdb
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\bin\Debug\Jitter.dll
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MapEditor\obj\x86\Debug\MapEditor.MeshEditor.resources
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\obj\x86\Debug\MapEditor.csprojResolveAssemblyReference.cache
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\obj\x86\Debug\MapEditor.Editor.resources
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\obj\x86\Debug\MapEditor.MeshEditor.resources
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\obj\x86\Debug\MapEditor.Properties.Resources.resources
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\obj\x86\Debug\MapEditor.csproj.GenerateResource.Cache
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\ControlTextures\arrow.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\AlphaMapEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\BasicTextureEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\DirectionalLightEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\FinalBlendEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\NormalPixelMapEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\RadialBlurEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\ShadowMapEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\SpotLightEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\TexturePixelMapEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Effects\WorldPixelMapEffect.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngineContent\Fonts\Font.xnb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\MapEditor.exe
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\MapEditor.pdb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngine.dll
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\Jitter.dll
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\CharcoalEngine.pdb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\bin\Debug\Jitter.pdb
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\obj\x86\Debug\MapEditor.exe
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\MapEditor\obj\x86\Debug\MapEditor.pdb

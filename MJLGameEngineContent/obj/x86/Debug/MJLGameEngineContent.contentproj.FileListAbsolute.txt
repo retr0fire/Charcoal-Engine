@@ -1,2 +1,0 @@
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5\MJLGameEngineContent\obj\x86\Debug\MJLGameEngineContent.contentprojResolveAssemblyReference.cache
-C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\MJLGameEngineContent\obj\x86\Debug\MJLGameEngineContent.contentprojResolveAssemblyReference.cache

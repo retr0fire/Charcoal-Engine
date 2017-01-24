@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>ControlTextures\arrow.png</Source>
+      <Name>ControlTextures\arrow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\ControlTextures\arrow.xnb</Output>
+      <Time>2017-01-24T10:09:55.452351-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\AlphaMapEffect.fx</Source>
+      <Name>Effects\AlphaMapEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\AlphaMapEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.489063-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\BasicTextureEffect.fx</Source>
+      <Name>Effects\BasicTextureEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\BasicTextureEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.5020829-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\DirectionalLightEffect.fx</Source>
+      <Name>Effects\DirectionalLightEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\DirectionalLightEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.5822655-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\FinalBlendEffect.fx</Source>
+      <Name>Effects\FinalBlendEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\FinalBlendEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.5937814-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\NormalPixelMapEffect.fx</Source>
+      <Name>Effects\NormalPixelMapEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\NormalPixelMapEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.6108073-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\RadialBlurEffect.fx</Source>
+      <Name>Effects\RadialBlurEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\RadialBlurEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.6223246-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\ShadowMapEffect.fx</Source>
+      <Name>Effects\ShadowMapEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\ShadowMapEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.6513679-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\SpotLightEffect.fx</Source>
+      <Name>Effects\SpotLightEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\SpotLightEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.6638863-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\TexturePixelMapEffect.fx</Source>
+      <Name>Effects\TexturePixelMapEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\TexturePixelMapEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.6804111-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\WorldPixelMapEffect.fx</Source>
+      <Name>Effects\WorldPixelMapEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\WorldPixelMapEffect.xnb</Output>
+      <Time>2017-01-24T10:10:12.691928-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\Font.spritefont</Source>
+      <Name>Fonts\Font</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Fonts\Font.xnb</Output>
+      <Time>2017-01-24T10:10:24.8864582-05:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Debug</BuildConfiguration>
+      <CompressContent>false</CompressContent>
+      <RootDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngineContent\</RootDirectory>
+      <LoggerRootDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\</LoggerRootDirectory>
+      <IntermediateDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngineContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T12:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\WINDOWS\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2016-10-08T16:04:24.3596001-04:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

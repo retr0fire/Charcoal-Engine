@@ -13,10 +13,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-using MJLGameEngine;
-using MJLGameEngine.Scene;
-using MJLGameEngine._2D_Graphics;
-using MJLGameEngine._2D_Graphics.Objects;
+using CharcoalEngine;
+using CharcoalEngine.Scene;
+using CharcoalEngine._2D_Graphics;
+using CharcoalEngine._2D_Graphics.Objects;
 using MapEditor;
 
 using Jitter;
@@ -56,7 +56,7 @@ namespace SceneTest
 
             Engine.StartGameEngine(this);
             scene = new Scene();
-            MJLGameEngine.Scene.Camera.Intitialize_WithDefaults();
+            CharcoalEngine.Scene.Camera.Intitialize_WithDefaults();
 
             
 
@@ -75,11 +75,11 @@ namespace SceneTest
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             scene.LoadScene(Color.CornflowerBlue);
-            scene.DirectionalLights.Add(new MJLGameEngine.Scene.DirectionalLight());
+            scene.DirectionalLights.Add(new CharcoalEngine.Scene.DirectionalLight());
             scene.SpotLights.Add(new SpotLight(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0, 14, 0), new Vector3(0, -1f, 0), 0.7f, Color.White.ToVector3(), 2));
             
-            //scene.ParticleGenerators.Add(new MJLGameEngine.Object.ParticleGenerator.Particle_Generator(new Vector3(0, 20, 0), 3000, Content.Load<Texture2D>("smoke"), Content.Load<Model>("particleplane"), Vector3.Down, 0.012f, true, Vector3.One, 100000));
-            //scene.ParticleGenerators.Add(new MJLGameEngine.Object.ParticleGenerator.Particle_Generator(new Vector3(0, 0, 0), 100, Content.Load<Texture2D>("smoke"), Content.Load<Model>("particleplane"), Vector3.Up, 0.009f, true, Color.Orange.ToVector3(), 100));
+            //scene.ParticleGenerators.Add(new CharcoalEngine.Object.ParticleGenerator.Particle_Generator(new Vector3(0, 20, 0), 3000, Content.Load<Texture2D>("smoke"), Content.Load<Model>("particleplane"), Vector3.Down, 0.012f, true, Vector3.One, 100000));
+            //scene.ParticleGenerators.Add(new CharcoalEngine.Object.ParticleGenerator.Particle_Generator(new Vector3(0, 0, 0), 100, Content.Load<Texture2D>("smoke"), Content.Load<Model>("particleplane"), Vector3.Up, 0.009f, true, Color.Orange.ToVector3(), 100));
                         
             scene.AddObject(true, "ground", Vector3.Down, Vector3.Zero, 1, Content.Load<Texture2D>("Road"), Content.Load<Texture2D>("RoadNormal"), true, true);
             /*
@@ -144,7 +144,7 @@ namespace SceneTest
             #region save_screenshots
             if (k.IsKeyDown(Keys.PrintScreen))
                 if (lk.IsKeyUp(Keys.PrintScreen))
-                    MJLGameEngine.Utilities.ScreenShot.Save_Image_To_OneDrive(scene.SceneTarget);
+                    CharcoalEngine.Utilities.ScreenShot.Save_Image_To_OneDrive(scene.SceneTarget);
 
             #endregion
             #region shoot_barrels
@@ -152,7 +152,7 @@ namespace SceneTest
             {
                 if (lk.IsKeyUp(Keys.Space))
                 {
-                    MJLGameEngine.Object.Object o = scene.AddObject(false, "barrel", Camera.Position, new Vector3(0, 90, 0), 1, null, Content.Load<Texture2D>("MedBarrelNormal"), true, false);
+                    CharcoalEngine.Object.Object o = scene.AddObject(false, "barrel", Camera.Position, new Vector3(0, 90, 0), 1, null, Content.Load<Texture2D>("MedBarrelNormal"), true, false);
                     o.body.LinearVelocity = new JVector(Camera.look.X * 30, Camera.look.Y * 30, Camera.look.Z * 30);
                     //Console.WriteLine(Camera.look);
                 }

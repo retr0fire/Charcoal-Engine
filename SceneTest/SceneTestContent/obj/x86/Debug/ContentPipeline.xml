@@ -2,13 +2,124 @@
 <XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline" xmlns:Framework="Microsoft.Xna.Framework" xmlns:Processors="Microsoft.Xna.Framework.Content.Pipeline.Processors">
   <Asset Type="Pipeline:BuildItemCollection">
     <Item>
+      <Source>barrel.fbx</Source>
+      <Name>barrel</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateTangentFrames">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\barrel.xnb</Output>
+      <Time>2017-01-24T10:21:56.3986311-05:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\barrel_0.xml</Key>
+        <Value>2017-01-24T10:24:27.5755003-05:00</Value>
+      </Dependency>
+      <Request>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\MedBarrelDiffuse_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>car.fbx</Source>
+      <Name>car</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateTangentFrames">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\car.xnb</Output>
+      <Time>2017-01-24T10:21:56.448787-05:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\car_0.xml</Key>
+        <Value>2017-01-24T10:24:38.5809568-05:00</Value>
+      </Dependency>
+      <Request>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\car_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>chapelx.x</Source>
+      <Name>chapelx</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateTangentFrames">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\chapelx.xnb</Output>
+      <Time>2017-01-24T10:21:56.5013659-05:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\chapelx_0.xml</Key>
+        <Value>2017-01-24T10:24:39.7100758-05:00</Value>
+      </Dependency>
+      <Request>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\chapel_diffuse_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>ground.x</Source>
+      <Name>ground</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateTangentFrames">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\ground.xnb</Output>
+      <Time>2017-01-24T10:21:56.5589514-05:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\ground_0.xml</Key>
+        <Value>2017-01-24T10:24:45.578113-05:00</Value>
+      </Dependency>
+      <Request>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\ground_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>particleplane.x</Source>
+      <Name>particleplane</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateTangentFrames">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\particleplane.xnb</Output>
+      <Time>2017-01-24T10:21:56.5899967-05:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\particleplane_0.xml</Key>
+        <Value>2017-01-24T10:24:45.7365995-05:00</Value>
+      </Dependency>
+      <Request>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\smoke_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>renderplane.x</Source>
+      <Name>renderplane</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateTangentFrames">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\renderplane.xnb</Output>
+      <Time>2017-01-24T10:21:56.5960061-05:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\renderplane_0.xml</Key>
+        <Value>2017-01-24T10:24:45.9065207-05:00</Value>
+      </Dependency>
+      <Request>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\ground_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>chapel_diffuse.tga</Source>
+      <Name>chapel_diffuse</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\chapel_diffuse.xnb</Output>
+      <Time>2017-01-24T10:21:56.4948555-05:00</Time>
+    </Item>
+    <Item>
       <Source>Dirt.dds</Source>
       <Name>Dirt</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\Dirt.xnb</Output>
-      <Time>2016-02-24T11:16:41.7318947-05:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\Dirt.xnb</Output>
+      <Time>2017-01-24T10:21:56.5078749-05:00</Time>
     </Item>
     <Item>
       <Source>DirtNormal.dds</Source>
@@ -16,35 +127,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\DirtNormal.xnb</Output>
-      <Time>2016-02-24T11:16:41.7434118-05:00</Time>
-    </Item>
-    <Item>
-      <Source>MudAndStones.dds</Source>
-      <Name>MudAndStones</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\MudAndStones.xnb</Output>
-      <Time>2016-02-24T11:30:18.3877218-05:00</Time>
-    </Item>
-    <Item>
-      <Source>MudAndStonesNormal.dds</Source>
-      <Name>MudAndStonesNormal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\MudAndStonesNormal.xnb</Output>
-      <Time>2016-02-24T11:30:18.403353-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Road.dds</Source>
-      <Name>Road</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\Road.xnb</Output>
-      <Time>2016-02-24T12:34:43.067518-05:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\DirtNormal.xnb</Output>
+      <Time>2017-01-24T10:21:56.5163888-05:00</Time>
     </Item>
     <Item>
       <Source>Grass2.dds</Source>
@@ -52,8 +136,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\Grass2.xnb</Output>
-      <Time>2016-02-24T15:02:45.8959649-05:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\Grass2.xnb</Output>
+      <Time>2017-01-24T10:21:56.5284057-05:00</Time>
     </Item>
     <Item>
       <Source>GrassNormal.dds</Source>
@@ -61,8 +145,53 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\GrassNormal.xnb</Output>
-      <Time>2016-02-24T15:02:45.9740447-05:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\GrassNormal.xnb</Output>
+      <Time>2017-01-24T10:21:56.543929-05:00</Time>
+    </Item>
+    <Item>
+      <Source>MedBarrelNormal.jpg</Source>
+      <Name>MedBarrelNormal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\MedBarrelNormal.xnb</Output>
+      <Time>2017-01-24T10:21:56.5674634-05:00</Time>
+    </Item>
+    <Item>
+      <Source>MudAndStones.dds</Source>
+      <Name>MudAndStones</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\MudAndStones.xnb</Output>
+      <Time>2017-01-24T10:21:56.5754753-05:00</Time>
+    </Item>
+    <Item>
+      <Source>MudAndStonesNormal.dds</Source>
+      <Name>MudAndStonesNormal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\MudAndStonesNormal.xnb</Output>
+      <Time>2017-01-24T10:21:56.5849897-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Road.dds</Source>
+      <Name>Road</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\Road.xnb</Output>
+      <Time>2017-01-24T10:21:56.6035175-05:00</Time>
+    </Item>
+    <Item>
+      <Source>RoadNormal.dds</Source>
+      <Name>RoadNormal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\RoadNormal.xnb</Output>
+      <Time>2017-01-24T10:21:56.6095269-05:00</Time>
     </Item>
     <Item>
       <Source>Sand.dds</Source>
@@ -70,8 +199,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\Sand.xnb</Output>
-      <Time>2016-02-24T15:08:26.107481-05:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\Sand.xnb</Output>
+      <Time>2017-01-24T10:21:56.6150344-05:00</Time>
     </Item>
     <Item>
       <Source>SandNormal.dds</Source>
@@ -79,8 +208,26 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\SandNormal.xnb</Output>
-      <Time>2016-02-24T15:08:26.1185141-05:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\SandNormal.xnb</Output>
+      <Time>2017-01-24T10:21:57.0186351-05:00</Time>
+    </Item>
+    <Item>
+      <Source>smoke.png</Source>
+      <Name>smoke</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\smoke.xnb</Output>
+      <Time>2017-01-24T10:21:57.0783243-05:00</Time>
+    </Item>
+    <Item>
+      <Source>terrain.bmp</Source>
+      <Name>terrain</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\terrain.xnb</Output>
+      <Time>2017-01-24T10:21:57.0938476-05:00</Time>
     </Item>
     <Item>
       <Source>Font.spritefont</Source>
@@ -88,18 +235,18 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\Font.xnb</Output>
-      <Time>2016-03-16T17:43:58.6163772-04:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\Font.xnb</Output>
+      <Time>2017-01-24T10:21:56.5218981-05:00</Time>
     </Item>
     <Item>
-      <Source>ground.x</Source>
-      <Importer>XImporter</Importer>
+      <Source>barrel.fbx</Source>
+      <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
-      <Output>obj\x86\Debug\ground_0.xml</Output>
-      <Time>2016-07-26T16:00:01.5220503-04:00</Time>
+      <Output>obj\x86\Debug\barrel_0.xml</Output>
+      <Time>2017-01-24T10:21:56.3986311-05:00</Time>
     </Item>
     <Item>
-      <Source>ground.png</Source>
+      <Source>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\images\MedBarrelDiffuse.jpg</Source>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Parameters>
@@ -111,61 +258,15 @@
         <Data Key="PremultiplyAlpha" Type="bool">true</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\ground_0.xnb</Output>
-      <Time>2016-01-05T17:49:22.813994-05:00</Time>
-    </Item>
-    <Item>
-      <Source>particleplane.x</Source>
-      <Importer>XImporter</Importer>
-      <Options>IntermediateFile, DontCacheImportedData</Options>
-      <Output>obj\x86\Debug\particleplane_0.xml</Output>
-      <Time>2016-01-29T11:42:32.6989635-05:00</Time>
-    </Item>
-    <Item>
-      <Source>smoke.png</Source>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
-        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
-        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
-        <Data Key="GenerateMipmaps" Type="bool">true</Data>
-        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
-        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\smoke_0.xnb</Output>
-      <Time>2016-02-01T18:12:01.3517892-05:00</Time>
-    </Item>
-    <Item>
-      <Source>chapelx.x</Source>
-      <Importer>XImporter</Importer>
-      <Options>IntermediateFile, DontCacheImportedData</Options>
-      <Output>obj\x86\Debug\chapelx_0.xml</Output>
-      <Time>2016-03-16T10:38:21.7308596-04:00</Time>
-    </Item>
-    <Item>
-      <Source>chapel_diffuse.tga</Source>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
-        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
-        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
-        <Data Key="GenerateMipmaps" Type="bool">true</Data>
-        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
-        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\chapel_diffuse_0.xnb</Output>
-      <Time>2016-03-15T11:49:23.855044-04:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\MedBarrelDiffuse_0.xnb</Output>
+      <Time>2016-02-25T10:07:39.2835347-05:00</Time>
     </Item>
     <Item>
       <Source>car.fbx</Source>
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>obj\x86\Debug\car_0.xml</Output>
-      <Time>2016-01-08T17:12:32.5880238-05:00</Time>
+      <Time>2017-01-24T10:21:56.448787-05:00</Time>
     </Item>
     <Item>
       <Source>car.png</Source>
@@ -180,18 +281,18 @@
         <Data Key="PremultiplyAlpha" Type="bool">true</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\car_0.xnb</Output>
-      <Time>2016-01-08T17:12:51.9059787-05:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\car_0.xnb</Output>
+      <Time>2017-01-24T10:21:56.4547959-05:00</Time>
     </Item>
     <Item>
-      <Source>barrel.fbx</Source>
-      <Importer>FbxImporter</Importer>
+      <Source>chapelx.x</Source>
+      <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
-      <Output>obj\x86\Debug\barrel_0.xml</Output>
-      <Time>2016-02-25T10:07:39.379174-05:00</Time>
+      <Output>obj\x86\Debug\chapelx_0.xml</Output>
+      <Time>2017-01-24T10:21:56.5013659-05:00</Time>
     </Item>
     <Item>
-      <Source>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\images\MedBarrelDiffuse.jpg</Source>
+      <Source>chapel_diffuse.tga</Source>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Parameters>
@@ -203,130 +304,61 @@
         <Data Key="PremultiplyAlpha" Type="bool">true</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\MedBarrelDiffuse_0.xnb</Output>
-      <Time>2016-02-25T10:07:39.2835347-05:00</Time>
-    </Item>
-    <Item>
-      <Source>RoadNormal.dds</Source>
-      <Name>RoadNormal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\RoadNormal.xnb</Output>
-      <Time>2016-02-24T11:34:24.482404-05:00</Time>
-    </Item>
-    <Item>
-      <Source>terrain.bmp</Source>
-      <Name>terrain</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\terrain.xnb</Output>
-      <Time>2016-02-15T11:53:39.975722-05:00</Time>
-    </Item>
-    <Item>
-      <Source>chapel_diffuse.tga</Source>
-      <Name>chapel_diffuse</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\chapel_diffuse.xnb</Output>
-      <Time>2016-03-15T11:49:23.855044-04:00</Time>
-    </Item>
-    <Item>
-      <Source>barrel.fbx</Source>
-      <Name>barrel</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateTangentFrames">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\barrel.xnb</Output>
-      <Time>2016-02-25T10:07:39.379174-05:00</Time>
-      <Dependency>
-        <Key>obj\x86\Debug\barrel_0.xml</Key>
-        <Value>2016-12-04T15:45:43.0706091-05:00</Value>
-      </Dependency>
-      <Request>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\MedBarrelDiffuse_0.xnb</Request>
-    </Item>
-    <Item>
-      <Source>chapelx.x</Source>
-      <Name>chapelx</Name>
-      <Importer>XImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateTangentFrames">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\chapelx.xnb</Output>
-      <Time>2016-03-16T10:38:21.7308596-04:00</Time>
-      <Dependency>
-        <Key>obj\x86\Debug\chapelx_0.xml</Key>
-        <Value>2016-12-04T15:41:21.5578105-05:00</Value>
-      </Dependency>
-      <Request>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\chapel_diffuse_0.xnb</Request>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\chapel_diffuse_0.xnb</Output>
+      <Time>2017-01-24T10:21:56.4948555-05:00</Time>
     </Item>
     <Item>
       <Source>ground.x</Source>
-      <Name>ground</Name>
       <Importer>XImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\ground_0.xml</Output>
+      <Time>2017-01-24T10:21:56.5589514-05:00</Time>
+    </Item>
+    <Item>
+      <Source>ground.png</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
       <Parameters>
-        <Data Key="GenerateTangentFrames">True</Data>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\ground.xnb</Output>
-      <Time>2016-07-26T16:00:01.5220503-04:00</Time>
-      <Dependency>
-        <Key>obj\x86\Debug\ground_0.xml</Key>
-        <Value>2016-12-04T15:41:20.2697352-05:00</Value>
-      </Dependency>
-      <Request>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\ground_0.xnb</Request>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\ground_0.xnb</Output>
+      <Time>2017-01-24T10:21:56.5534434-05:00</Time>
     </Item>
     <Item>
       <Source>particleplane.x</Source>
-      <Name>particleplane</Name>
       <Importer>XImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateTangentFrames">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\particleplane.xnb</Output>
-      <Time>2016-01-29T11:42:32.6989635-05:00</Time>
-      <Dependency>
-        <Key>obj\x86\Debug\particleplane_0.xml</Key>
-        <Value>2016-12-04T15:41:20.8563112-05:00</Value>
-      </Dependency>
-      <Request>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\smoke_0.xnb</Request>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\particleplane_0.xml</Output>
+      <Time>2017-01-24T10:21:56.5899967-05:00</Time>
     </Item>
     <Item>
-      <Source>car.fbx</Source>
-      <Name>car</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateTangentFrames">True</Data>
-        <Data Key="RotationX">-90</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\car.xnb</Output>
-      <Time>2016-01-08T17:12:32.5880238-05:00</Time>
-      <Dependency>
-        <Key>obj\x86\Debug\car_0.xml</Key>
-        <Value>2016-12-04T15:45:42.2514038-05:00</Value>
-      </Dependency>
-      <Request>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\car_0.xnb</Request>
-    </Item>
-    <Item>
-      <Source>MedBarrelNormal.jpg</Source>
-      <Name>MedBarrelNormal</Name>
+      <Source>smoke.png</Source>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\MedBarrelNormal.xnb</Output>
-      <Time>2016-02-25T10:07:39.3601494-05:00</Time>
+      <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\smoke_0.xnb</Output>
+      <Time>2017-01-24T10:21:57.0783243-05:00</Time>
+    </Item>
+    <Item>
+      <Source>renderplane.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\renderplane_0.xml</Output>
+      <Time>2017-01-24T10:21:56.5960061-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -334,10 +366,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTestContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTestContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTest\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTestContent\</RootDirectory>
+      <LoggerRootDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\</LoggerRootDirectory>
+      <IntermediateDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTestContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

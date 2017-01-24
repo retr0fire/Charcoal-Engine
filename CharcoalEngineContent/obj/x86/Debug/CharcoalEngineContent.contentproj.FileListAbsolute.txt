@@ -1,0 +1,1 @@
+c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngineContent\obj\x86\Debug\CharcoalEngineContent.contentprojResolveAssemblyReference.cache

@@ -3,7 +3,7 @@
   <Asset Type="Graphics:MeshContent">
     <Name>Barrel</Name>
     <Identity>
-      <SourceFilename>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTestContent\barrel.fbx</SourceFilename>
+      <SourceFilename>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTestContent\barrel.fbx</SourceFilename>
       <SourceTool>FbxImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
@@ -26,7 +26,7 @@
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Name>lambert1</Name>
       <Identity>
-        <SourceFilename>C:\Users\Me\Documents\Visual Studio 2010\Projects\MJLGameEngine V5 - Physics Test\SceneTest\SceneTestContent\barrel.fbx</SourceFilename>
+        <SourceFilename>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTestContent\barrel.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>
