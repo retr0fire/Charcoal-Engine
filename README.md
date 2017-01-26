@@ -14,6 +14,7 @@ To edit, compile, and test the engine, you will ***(as of right now)*** need:
 Folders:
 
 * Jitter Physics 0.1.7.0 contains the .dll for the physics library
+             - this is open-source software, not written by  Retrofire
 * MapEditor contains simple code to modify the scene while 
             the engine is still running - it is a work in progress
 * CharcoalEngine - main code for the rendering engine
