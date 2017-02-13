@@ -43,8 +43,8 @@ namespace CharcoalEngine.Scene
             Rotation = new Quaternion(0, 0, 0, 1);
             
             Viewport = GameEngineData.game.GraphicsDevice.Viewport;
-            Viewport.MinDepth = 1;
-            Viewport.MaxDepth = 400;
+            Viewport.MinDepth = .0001f;
+            Viewport.MaxDepth = 40000;
             Viewport.Width = 800;
             Viewport.Height = 600;
             Position = new Vector3(0, 2, 6);

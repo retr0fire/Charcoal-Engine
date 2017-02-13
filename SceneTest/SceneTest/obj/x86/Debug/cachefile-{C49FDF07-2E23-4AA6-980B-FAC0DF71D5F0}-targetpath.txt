@@ -24,3 +24,5 @@ Content\ground_0.xnb
 Content\smoke_0.xnb
 Content\barrel.xnb
 Content\car.xnb
+Content\Dirt_0.xnb
+Content\cube.xnb

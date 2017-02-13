@@ -38,8 +38,8 @@ struct VertexShaderInput
 	float4 Position : POSITION0;
 	float2 UV : TEXCOORD0;
 	float3 Normal : NORMAL0;
-    float3 Tangent : TANGENT0;
-    float3 Binormal : BINORMAL0;
+    //float3 Tangent : TANGENT0;
+    //float3 Binormal : BINORMAL0;
 };
 
 struct VertexShaderOutput
@@ -49,8 +49,8 @@ struct VertexShaderOutput
 	float3 Normal : TEXCOORD1;
 	float4 WorldPosition : TEXCOORD2;
 	
-    float3 Tangent : TEXCOORD3;
-    float3 Binormal : TEXCOORD4;
+    //float3 Tangent : TEXCOORD3;
+    //float3 Binormal : TEXCOORD4;
 	float3 ViewDirection : TEXCOORD5;
 };
 
@@ -66,8 +66,8 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	output.UV = input.UV;
 	output.Normal = mul(input.Normal, World);
 	
-	output.Tangent = normalize(mul(input.Tangent, WorldInverseTranspose));
-    output.Binormal = normalize(mul(input.Binormal, WorldInverseTranspose));
+	//output.Tangent = normalize(mul(input.Tangent, WorldInverseTranspose));
+    //output.Binormal = normalize(mul(input.Binormal, WorldInverseTranspose));
 
 	output.ViewDirection = CameraPosition - worldPosition;
 
@@ -77,18 +77,18 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	// Calculate the normal, including the information in the bump map
-	float4 bumptex = tex2D(NormalMapSampler, input.UV);
-	float3 bump = float3(0,0,0);
-	if (dds_Normal == true)
-		bump = (bump_Height) * (bumptex.agb - (0.5, 0.5, 0.5));
-	else
-		bump = (bump_Height) * (bumptex - (0.5, 0.5, 0.5));
-    float3 bumpNormal = normalize(input.Normal) + (bump.x * input.Tangent + bump.y * input.Binormal);
-    bumpNormal = normalize(bumpNormal);
+	//float4 bumptex = tex2D(NormalMapSampler, input.UV);
+	//float3 bump = float3(0,0,0);
+	//if (dds_Normal == true)
+	//	bump = (bump_Height) * (bumptex.agb - (0.5, 0.5, 0.5));
+	//else
+	//	bump = (bump_Height) * (bumptex - (0.5, 0.5, 0.5));
+    //float3 bumpNormal = normalize(input.Normal) + (bump.x * input.Tangent + bump.y * input.Binormal);
+    //bumpNormal = normalize(bumpNormal);
 
 	float3 normal = normalize(input.Normal);
-	if (NormalMapEnabled == true)
-		normal = bumpNormal;
+	//if (NormalMapEnabled == true)
+	//	normal = bumpNormal;
 
 	float3 diffuseColor = DiffuseColor;
 	float3 totalLight = float3(0, 0, 0);

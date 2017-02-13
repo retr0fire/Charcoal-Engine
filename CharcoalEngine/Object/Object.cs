@@ -29,7 +29,7 @@ namespace CharcoalEngine.Object
             get;
             private set;
         }
-        public CharcoalModel model;
+        public Model model;
         
         public Matrix Orientation;
         public Matrix World; //this is the final compiled 'World' Matrix
@@ -85,7 +85,7 @@ namespace CharcoalEngine.Object
                 for (int i = 0; i < model.Meshes.Count; i++)
                     for (int j = 0; j < model.Meshes[i].MeshParts.Count; j++)
                     {
-                        Console.WriteLine(model.Meshes[i].MeshParts[j].Tag);
+                        //Console.WriteLine(model.Meshes[i].MeshParts[j].Tag);
                         if (model.Meshes[i].MeshParts[j].Tag == null)
                             model.Meshes[i].MeshParts[j].Tag = (BasicEffect)(model.Meshes[i].MeshParts[j].Effect as BasicEffect).Clone();
                     

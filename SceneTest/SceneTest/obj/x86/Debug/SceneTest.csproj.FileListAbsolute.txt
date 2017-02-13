@@ -48,3 +48,5 @@ c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\Scene
 c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\EngineContent\Effects\TexturePixelMapEffect.xnb
 c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\EngineContent\Effects\WorldPixelMapEffect.xnb
 c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\EngineContent\Fonts\Font.xnb
+C:\Users\Me\Documents\Visual Studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\cube.xnb
+C:\Users\Me\Documents\Visual Studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\Dirt_0.xnb

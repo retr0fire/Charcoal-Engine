@@ -17,7 +17,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\AlphaMapEffect.xnb</Output>
-      <Time>2017-01-24T10:10:12.489063-05:00</Time>
+      <Time>2017-02-08T18:09:45.6772003-05:00</Time>
     </Item>
     <Item>
       <Source>Effects\BasicTextureEffect.fx</Source>
@@ -35,7 +35,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\DirectionalLightEffect.xnb</Output>
-      <Time>2017-01-24T10:10:12.5822655-05:00</Time>
+      <Time>2017-02-08T18:09:47.3309349-05:00</Time>
     </Item>
     <Item>
       <Source>Effects\FinalBlendEffect.fx</Source>
@@ -80,7 +80,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\Effects\SpotLightEffect.xnb</Output>
-      <Time>2017-01-24T10:10:12.6638863-05:00</Time>
+      <Time>2017-02-08T18:09:47.2448112-05:00</Time>
     </Item>
     <Item>
       <Source>Effects\TexturePixelMapEffect.fx</Source>
@@ -115,10 +115,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngineContent\</RootDirectory>
-      <LoggerRootDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\</LoggerRootDirectory>
-      <IntermediateDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngineContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\</OutputDirectory>
+      <RootDirectory>C:\Users\Me\Documents\Visual Studio 2010\Projects\CharcoalEngine\CharcoalEngineContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Me\Documents\Visual Studio 2010\Projects\CharcoalEngine\CharcoalEngine\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Me\Documents\Visual Studio 2010\Projects\CharcoalEngine\CharcoalEngineContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Me\Documents\Visual Studio 2010\Projects\CharcoalEngine\CharcoalEngine\bin\x86\Debug\EngineContent\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

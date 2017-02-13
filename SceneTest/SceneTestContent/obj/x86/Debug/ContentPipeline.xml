@@ -362,6 +362,47 @@
       </Dependency>
       <Request>c:\users\me\documents\visual studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\car_0.xnb</Request>
     </Item>
+    <Item>
+      <Source>cube.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\cube_0.xml</Output>
+      <Time>2017-02-06T22:56:02.6957708-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Dirt.dds</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\Dirt_0.xnb</Output>
+      <Time>2017-01-24T10:21:56.5078749-05:00</Time>
+    </Item>
+    <Item>
+      <Source>cube.x</Source>
+      <Name>cube</Name>
+      <Importer>XImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateTangentFrames">True</Data>
+        <Data Key="Scale">0.05</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Me\Documents\Visual Studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\cube.xnb</Output>
+      <Time>2017-02-06T22:56:02.6957708-05:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\cube_0.xml</Key>
+        <Value>2017-02-06T22:56:04.9470898-05:00</Value>
+      </Dependency>
+      <Request>C:\Users\Me\Documents\Visual Studio 2010\Projects\CharcoalEngine\SceneTest\SceneTest\bin\x86\Debug\Content\Dirt_0.xnb</Request>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

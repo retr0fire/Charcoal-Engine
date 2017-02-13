@@ -41,7 +41,7 @@ namespace SceneTest
         Microsoft.Xna.Framework.Input.KeyboardState lk;
         Microsoft.Xna.Framework.Input.MouseState mouseState;
         Microsoft.Xna.Framework.Input.MouseState mousePreviousState;
-        
+        CharcoalEngine.Object.CharcoalModel m;
         Editor e = new Editor();
 
         public Game1()
@@ -75,13 +75,13 @@ namespace SceneTest
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             scene.LoadScene(Color.CornflowerBlue);
-            scene.DirectionalLights.Add(new CharcoalEngine.Scene.DirectionalLight());
+            //scene.DirectionalLights.Add(new CharcoalEngine.Scene.DirectionalLight());
             scene.SpotLights.Add(new SpotLight(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(0, 14, 0), new Vector3(0, -1f, 0), 0.7f, Color.White.ToVector3(), 2));
             
             //scene.ParticleGenerators.Add(new CharcoalEngine.Object.ParticleGenerator.Particle_Generator(new Vector3(0, 20, 0), 3000, Content.Load<Texture2D>("smoke"), Content.Load<Model>("particleplane"), Vector3.Down, 0.012f, true, Vector3.One, 100000));
             //scene.ParticleGenerators.Add(new CharcoalEngine.Object.ParticleGenerator.Particle_Generator(new Vector3(0, 0, 0), 100, Content.Load<Texture2D>("smoke"), Content.Load<Model>("particleplane"), Vector3.Up, 0.009f, true, Color.Orange.ToVector3(), 100));
                         
-            scene.AddObject(true, "ground", Vector3.Down, Vector3.Zero, 1, Content.Load<Texture2D>("Road"), Content.Load<Texture2D>("RoadNormal"), true, true);
+            //scene.AddObject(true, "ground", Vector3.Down, Vector3.Zero, 1, Content.Load<Texture2D>("Road"), Content.Load<Texture2D>("RoadNormal"), true, true);
             /*
             for (int i = 0; i < 5; i++)
             {
@@ -100,7 +100,29 @@ namespace SceneTest
             //scene.AddObject(true, "cottage_3ds", new Vector3(25, -0.8f, -5), Vector3.Zero, 1, null, null, false);
             //scene.AddObject(true, "house_obj", new Vector3(-20, -0.8f, 30), Vector3.Zero, 1, null, Content.Load<Texture2D>("house_normal"), true);
 
-            scene.AddObject(false, "car", new Vector3(3, 3, 3), new Vector3(0, 90, 0), 1, null, null, false, false);
+            //scene.AddObject(false, "car", new Vector3(3, 3, 3), new Vector3(0, 90, 0), 1, null, null, false, false);
+            Random r = new Random();
+
+            for (int i = 0; i < 50; i++)
+            {
+                for (int j = 0; j < 50; j++)
+                {
+                    //scene.AddObject(true, "cube", new Vector3(i-25, r.Next(0, 2), j-25), new Vector3(0, 0, 0), 1, null, null, false, false);
+                }
+            }
+
+
+
+            System.Windows.Forms.OpenFileDialog d = new System.Windows.Forms.OpenFileDialog();
+            d.ValidateNames = true;
+            d.CheckFileExists = true;
+            d.Filter = "OBJ files (*.obj)|*.obj|All files (*.*)|*.*";
+            if (d.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+                this.Exit();
+
+            scene.AddObject(true, d.FileName, Vector3.Zero, Vector3.Zero, 1);
+            //System.Windows.Forms.MessageBox.Show("object count: " + scene.Objects.Count);
+            
             //scene.AddObject(false, "f22- 3x", new Vector3(10, 10, 10), new Vector3(0, 0, 0), 1, null, Content.Load<Texture2D>("FA-22_Raptor_N"), true);
             //scene.AddObject(false, "f5", new Vector3(-10, 10, 10), new Vector3(0, 0, 0), 1, null, null, false);
             //scene.AddObject(false, "mig29-2", new Vector3(-20, 10, 10), new Vector3(0, 0, 0), 1, null, Content.Load<Texture2D>("Mig-29_Fulcrum_N"), true);
@@ -152,8 +174,8 @@ namespace SceneTest
             {
                 if (lk.IsKeyUp(Keys.Space))
                 {
-                    CharcoalEngine.Object.Object o = scene.AddObject(false, "barrel", Camera.Position, new Vector3(0, 90, 0), 1, null, Content.Load<Texture2D>("MedBarrelNormal"), true, false);
-                    o.body.LinearVelocity = new JVector(Camera.look.X * 30, Camera.look.Y * 30, Camera.look.Z * 30);
+                    //CharcoalEngine.Object.Object o = scene.AddObject(false, "barrel", Camera.Position, new Vector3(0, 90, 0), 1, null, Content.Load<Texture2D>("MedBarrelNormal"), true, false);
+                    //o.body.LinearVelocity = new JVector(Camera.look.X * 30, Camera.look.Y * 30, Camera.look.Z * 30);
                     //Console.WriteLine(Camera.look);
                 }
             }
@@ -252,11 +274,14 @@ namespace SceneTest
         }
         protected override void Draw(GameTime gameTime)
         {
+           
             scene.Draw(spriteBatch);
             GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
             
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
-            spriteBatch.Draw(scene.SpotLights[0].shadowmap, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, new Vector2(0.02f, 0.02f), SpriteEffects.None, 0);
+            //spriteBatch.Draw(scene.SpotLights[0].shadowmap, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, new Vector2(0.02f, 0.02f), SpriteEffects.None, 0);
+            spriteBatch.Draw(scene.LightTarget, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, new Vector2(0.08f, 0.08f), SpriteEffects.None, 0);
+            spriteBatch.Draw(scene.SceneTarget, new Vector2(100, 0), null, Color.White, 0.0f, Vector2.Zero, new Vector2(0.08f, 0.08f), SpriteEffects.None, 0);
             spriteBatch.End();
             base.Draw(gameTime);
 
@@ -276,6 +301,26 @@ namespace SceneTest
 
             Vector3 direction = farPoint - nearPoint;
             return direction;
+        }
+
+        private Texture2D Generate_Perlin_Map(int size)
+        {
+            Texture2D texture = new Texture2D(GraphicsDevice, size, size);
+            //texture.se
+            int two = 2;
+            for (int count = 0; count < size; size++)
+            {
+                for (int i = 0; i < two; i++)
+                {
+                    for (int j = 0; j < two; j++)
+                    {
+
+                    }
+                }
+                two = two * two;
+            }
+
+            return null;
         }
     }
 }

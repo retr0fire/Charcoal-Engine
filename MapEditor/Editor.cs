@@ -25,9 +25,9 @@ namespace MapEditor
             Application.EnableVisualStyles();
             this.Show();
             scene = s;
-            foreach (CharcoalEngine.Object.Object obj in scene.Objects)
+            foreach (CharcoalEngine.Object.CharcoalModel obj in scene.Objects)
             {
-                ObjectsTree.Nodes.Add(obj.Name);
+                ObjectsTree.Nodes.Add(obj.FileName);
             }
             foreach (CharcoalEngine.Scene.DirectionalLight obj in scene.DirectionalLights)
             {
@@ -98,9 +98,9 @@ namespace MapEditor
             ObjectsTree.Nodes.Clear();
             LightsTree.Nodes.Clear();
             GeneratorsTreeView.Nodes.Clear();
-            foreach (CharcoalEngine.Object.Object obj in scene.Objects)
+            foreach (CharcoalEngine.Object.CharcoalModel obj in scene.Objects)
             {
-                ObjectsTree.Nodes.Add(obj.Name);
+                ObjectsTree.Nodes.Add(obj.FileName);
             }
             foreach (CharcoalEngine.Scene.DirectionalLight obj in scene.DirectionalLights)
             {
@@ -121,14 +121,7 @@ namespace MapEditor
             MeshEditor m = new MeshEditor();
             try
             {
-                m.RunAsMeshEditor(scene, scene.Objects[ObjectsTree.SelectedNode.Index].model);
-                //scene.Objects[ObjectsTree.SelectedNode.Index].model = 
-                int meshnumber = 0;
-                foreach (ModelMesh mesh in scene.Objects[ObjectsTree.SelectedNode.Index].model.Meshes)
-                {
-                    mesh.ParentBone.Transform = m.Transforms[meshnumber].OutTransform;
-                    meshnumber++;
-                }
+                m.RunAsMeshEditor(scene, scene.Objects[ObjectsTree.SelectedNode.Index]);
             }
             catch
             {

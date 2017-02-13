@@ -14,39 +14,33 @@ namespace MapEditor
 {
     public partial class MeshEditor : Form
     {
-        public List<Transform> Transforms = new List<Transform>();
         public CharcoalEngine.Scene.Scene scene;
+        public CharcoalEngine.Object.CharcoalModel model;
 
         public MeshEditor()
         {
             InitializeComponent();
         }
 
-        public void RunAsMeshEditor(CharcoalEngine.Scene.Scene s, Model m)
+        public void RunAsMeshEditor(CharcoalEngine.Scene.Scene s, CharcoalEngine.Object.CharcoalModel m)
         {
             scene = s;
-            foreach (ModelMesh mesh in m.Meshes)
-            {
-                
-                Transforms.Add(new Transform(mesh.ParentBone.Transform));
-            }
             Application.EnableVisualStyles();
+            model = m;
             this.ShowDialog();
         }
 
         private void MeshEditor_Load(object sender, EventArgs e)
         {
-            int meshnumber = 0;
-            foreach (Transform m in Transforms)
+            foreach (CharcoalEngine.Object.Mesh m in model.Meshes)
             {
-                MeshTreeView.Nodes.Add("Mesh" + " " + meshnumber);
-                meshnumber++;
+                MeshTreeView.Nodes.Add(m.name);
             }
         }
 
         private void MeshTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            MeshEditorView.SelectedObject = Transforms[e.Node.Index];
+            MeshEditorView.SelectedObject = model.Meshes[e.Node.Index];
             scene.SelectedMesh = e.Node.Index;
         }
 
@@ -57,10 +51,10 @@ namespace MapEditor
 
         private void MeshEditorView_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            Transforms[MeshTreeView.SelectedNode.Index].Update();
+            //Transforms[MeshTreeView.SelectedNode.Index].Update();
         }
     }
-    public class Transform
+    /*public class Transform
     {
         public Vector3 _YawPitchRoll
         {
@@ -94,5 +88,5 @@ namespace MapEditor
         {
             OutTransform = Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(MathHelper.ToRadians(YPR.X), MathHelper.ToRadians(YPR.Y), MathHelper.ToRadians(YPR.Z)) * Matrix.CreateTranslation(Position);
         }
-    }
+    }*/
 }

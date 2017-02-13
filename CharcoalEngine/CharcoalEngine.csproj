@@ -79,6 +79,8 @@
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -106,6 +108,7 @@
     <Compile Include="2D Graphics\Objects\SliderBar.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Object\BillBoard.cs" />
+    <Compile Include="Object\CharcoalModel.cs" />
     <Compile Include="Object\Object.cs" />
     <Compile Include="Object\ParticleGenerator\Particle.cs" />
     <Compile Include="Object\ParticleGenerator\Particle_Generator.cs" />
@@ -128,6 +131,9 @@
       <Name>CharcoalEngineContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Object\Importers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

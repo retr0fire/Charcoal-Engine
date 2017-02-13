@@ -60,8 +60,8 @@ struct VertexShaderInput
 	float4 Position : POSITION0;
 	float2 UV : TEXCOORD0;
 	float3 Normal : NORMAL0;
-    float3 Tangent : TANGENT0;
-    float3 Binormal : BINORMAL0;
+    //float3 Tangent : TANGENT0;
+    //float3 Binormal : BINORMAL0;
 };
 
 struct VertexShaderOutput
@@ -72,8 +72,8 @@ struct VertexShaderOutput
 	float4 WorldPosition : TEXCOORD2;
 	float4 LightPosition :TEXCOORD3;
 	
-    float3 Tangent : TEXCOORD4;
-    float3 Binormal : TEXCOORD5;
+    //float3 Tangent : TEXCOORD4;
+    //float3 Binormal : TEXCOORD5;
 	float3 ViewDirection : TEXCOORD6;
 };
 
@@ -89,8 +89,8 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 
 	output.UV = input.UV;
 	output.Normal = input.Normal;
-    output.Tangent = input.Tangent;
-    output.Binormal = input.Binormal;
+    //output.Tangent = input.Tangent;
+    //output.Binormal = input.Binormal;
 	
 	output.ViewDirection = CameraPosition - worldPosition;
 
@@ -102,23 +102,23 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	input.Normal = mul(input.Normal, World);
 
-	input.Tangent = normalize(mul(input.Tangent, WorldInverseTranspose));
-    input.Binormal = normalize(mul(input.Binormal, WorldInverseTranspose));
+	//input.Tangent = normalize(mul(input.Tangent, WorldInverseTranspose));
+    //input.Binormal = normalize(mul(input.Binormal, WorldInverseTranspose));
 	
 	input.ViewDirection = CameraPosition - input.WorldPosition;
 
 
 
 	// Calculate the normal, including the information in the bump map
-	float4 bumptex = tex2D(NormalMapSampler, input.UV);
+	//float4 bumptex = tex2D(NormalMapSampler, input.UV);
 
-	float3 bump = float3(0,0,0);
-    if (dds_Normal == true)
-		bump = (bump_Height) * (bumptex.agb - (0.5, 0.5, 0.5));
-	else
-		bump = (bump_Height) * (bumptex - (0.5, 0.5, 0.5));
-    float3 bumpNormal = normalize(input.Normal) + (bump.x * input.Tangent + bump.y * input.Binormal);
-    bumpNormal = normalize(bumpNormal);
+	//float3 bump = float3(0,0,0);
+    //if (dds_Normal == true)
+	//	bump = (bump_Height) * (bumptex.agb - (0.5, 0.5, 0.5));
+	//else
+	//	bump = (bump_Height) * (bumptex - (0.5, 0.5, 0.5));
+    //float3 bumpNormal = normalize(input.Normal) + (bump.x * input.Tangent + bump.y * input.Binormal);
+    //bumpNormal = normalize(bumpNormal);
 	
 	float2 tcoords;
 	tcoords[0] = input.LightPosition.x/input.LightPosition.w/2.0f +0.5f;
@@ -145,8 +145,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	if (d < (shadow+offset))
 	{
 		float3 normal = normalize(input.Normal);
-		if (NormalMapEnabled == true)
-			normal = bumpNormal;
+		//if (NormalMapEnabled == true)
+		//	normal = bumpNormal;
 		float adds = 0;
 		float3 diffuseColor = DiffuseColor;
 		float3 totalLight = AmbientLightColor;
