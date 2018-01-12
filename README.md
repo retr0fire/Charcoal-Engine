@@ -4,6 +4,7 @@ Open Source 3D Game Engine coded in C#
 To edit, compile, and test the engine, you will ***(as of right now)*** need:
 
 * Visual Studio C# 2017
+* Monogame Framework
 
 Folders:
 
