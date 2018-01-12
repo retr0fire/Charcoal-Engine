@@ -46,7 +46,7 @@ namespace SceneTest.Objects
             Update_Cubes();
 
             //set up the collision octree for this section
-            CollisionOctree = new Octree(Vector3.Zero, new BoundingBox(Vector3.Zero, Vector3.One*Size), 4);
+            CollisionOctree = new Octree(Vector3.Zero, new BoundingBox(Vector3.Zero, Vector3.One*Size), 2);
             
             Material = new CharcoalEngine.Object.Material();
             Material.Alpha = 1;
