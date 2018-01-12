@@ -1,98 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.Design;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System.Reflection;
-using System.Diagnostics;
 using System.IO;
 using CharcoalEngine.Scene;
+using CharcoalEngine;
+using CharcoalEngine.Utilities;
 using Jitter;
 using Jitter.Collision;
 using Jitter.Collision.Shapes;
 using Jitter.DataStructures;
 using Jitter.Dynamics;
 using Jitter.LinearMath;
-
-using System.IO;
 using System.Windows.Forms;
-
-using System.Drawing;
+using System.Windows.Forms.Design;
+using System.Drawing.Design;
+using System.Windows;
+using System.Design;
 
 namespace CharcoalEngine.Object
 {
-    public class CharcoalModel
+    public class OBJ_File
     {
+        //Whether you want a nice verbose log dump on every load call:
+        const bool LOG = false;
+
+        //sharing is caring
         public List<Vertex> Vertices = new List<Vertex>();
         public List<TexCoord> TexCoords = new List<TexCoord>();
         public List<Normal> Normals = new List<Normal>();
-        public List<Mesh> Meshes = new List<Mesh>();
         
+        //only one?
         public MTLFile MTLfile;
+                
+        //always got his nose in a file...
         private StreamReader reader;
         private string foldername;
         private string location;
         private int Line_Number;
-
-        public string FileName;
-        //public RigidBody body;
-        /*public bool _IsStatic
-        {
-            get { return body.IsStatic; }
-            set { body.IsStatic = value; }
-        }*/
-
-        public Vector3 _Position
-        {
-            get { return Position; }
-            set { Position = value; }
-        }
-        public Vector3 Position;
-
-        public Vector3 _Center
-        {
-            get { return Center; }
-            set { Center = value; }
-        }
-        public Vector3 Center;
-
-        public Vector3 _YawPitchRoll
-        {
-            get { return YawPitchRoll; }
-            set { YawPitchRoll = value; }
-        }
-        public Vector3 YawPitchRoll;
-        public float _Scale
-        {
-            get { return Scale; }
-            set { Scale = value; }
-        }
-        public float Scale = 1.0f;
-
-        //public Matrix Orientation;
-        public Matrix World; //this is the final compiled 'World' Matrix
-
-        public void Update()
-        {
-            World = Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z) * Matrix.CreateTranslation(Position);
-            foreach (Mesh m in Meshes)
-            {
-                m.UpdateMatrix();
-            }
-        
-        }
-
-        BasicEffect effect;
-
+                     
+        //yeah, stay in there!
         BoundingBox b;
-        
-        public CharcoalModel(string _location, GraphicsDevice GraphicsDevice, Vector3 __Position, Vector3 __YawPitchRoll, float __Scale, bool __FlipAxis, bool __IsStatic)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="_location"></param>
+        /// <param name="GraphicsDevice"></param>
+        /// <param name="__Position"></param>
+        /// <param name="__YawPitchRoll"></param>
+        /// <param name="__Scale"></param>
+        /// <param name="__FlipAxis"></param>
+        /// <param name="__IsStatic"></param>
+        /// <param name="Root">Node to attach the meshes to</param>
+        public void Load(string _location, GraphicsDevice GraphicsDevice, Vector3 __Position, Vector3 __YawPitchRoll, float __Scale, bool __FlipAxis, bool __IsStatic, Transform Root)
         {
             //Application.EnableVisualStyles();
             //DialogResult FlipResult = MessageBox.Show("Flip Y & Z Axis?", "Flip Axis?", MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, 0);
@@ -102,23 +72,25 @@ namespace CharcoalEngine.Object
             location = _location;
             reader = new System.IO.StreamReader(location);
             foldername = location;
+            int num_removed = 0;
             for (int i = foldername.Length - 1; i > 0; i--)
             {
                 if (foldername[i] != '\\')
                 {
                     foldername = foldername.Remove(i, 1);
+                    num_removed++;
                 }
                 else
                 {
                     break;
                 }
             }
-
-            Console.WriteLine("foldername : " + foldername);
-
-            Console.WriteLine("file name : " + location);
-
-            FileName = location;
+            if (LOG)
+            {
+                Console.WriteLine("foldername : " + foldername);
+                Console.WriteLine("file name : " + location);
+            }
+            Root.Name = location.Remove(0, location.Length - num_removed);
 
             string line;
             while (true)
@@ -127,7 +99,7 @@ namespace CharcoalEngine.Object
                     break;
                 line = reader.ReadLine();
                 if (line.StartsWith("#"))
-                    Console.WriteLine("Comment: " + line.Remove(0, 1));
+                    if (LOG) Console.WriteLine("Comment: " + line.Remove(0, 1));
                 if (line.StartsWith("v "))
                     ReadVertex(line);
                 if (line.StartsWith("vt "))
@@ -136,45 +108,132 @@ namespace CharcoalEngine.Object
                     ReadNormal(line);
                 if (line.StartsWith("f "))
                 {
-                    if (Meshes.Count == 0)
+                    if (Root.Children.Count == 0)
                     {
-                        MessageBox.Show("Error, no g");
+                        MessageBox.Show("Error, no groups");
                         return;
                     }
-                    ReadFace(line);
+                    if (Root.Children[Root.Children.Count - 1].Children.Count == 0)
+                    {
+                        //no material has been specified yet, borrow the material from the last mesh
+                        if (Root.Children.Count > 1)
+                        {
+                            Mesh mesh = new Mesh();
+                            mesh.Load("error");
+                            Root.Children[Root.Children.Count - 1].Children.Add(mesh);
+
+                            mesh.Material = ((Mesh)Root.Children[Root.Children.Count - 2].Children[Root.Children[Root.Children.Count - 1].Children.Count - 1]).Material.Clone();
+                            mesh.Name = ((Mesh)Root.Children[Root.Children.Count - 2].Children[Root.Children[Root.Children.Count - 1].Children.Count - 1]).Name;
+                        }
+                        
+                    }
+                    ReadFace(line, Root);
                 }
                 if (line.StartsWith("g "))
                 {
-                    Console.WriteLine("Group!");
-                    Meshes.Add(new Mesh(line.Remove(0, 2)));
-                    Meshes[Meshes.Count - 1].mat = new Material("null");
-                    Meshes[Meshes.Count - 1].mat.TextureEnabled = false;
+                    if (LOG) Console.WriteLine("Group!");
+                    Transform T = new Transform();
+                    T.Name = line.Remove(0, 2);
+
+                    Root.Children.Add(T);
+
+                    /*Material mat = new Material();
+                    mat.Load("null");
+
+                    ((Mesh)Root.Children[Root.Children.Count - 1]).Material = mat;
+                    ((Mesh)Root.Children[Root.Children.Count - 1]).Material.TextureEnabled = false;
+
+                    if (Root.Children.Count > 1)
+                    {
+                        ((Mesh)Root.Children[Root.Children.Count - 1]).Material = ((Mesh)Root.Children[Root.Children.Count - 2]).Material.Clone();
+                    }*/
                 }
                 if (line.StartsWith("usemtl "))
                 {
-                    Console.WriteLine("usemtl.....");
+                    //if a new group has just been added, don't add another...
+                    //try
+                    //{
+                    //    if (((Mesh)Root.Children[Root.Children.Count - 1]).Faces.Count != 0)
+                    //    {
+                    if (Root.Children.Count == 0)
+                    {
+                        Transform T = new Transform();
+                        T.Name = line.Remove(0, 7);
+
+                        Root.Children.Add(T);
+                    }
+                    if (LOG) Console.WriteLine("Group!");
+                    Mesh ms = new Mesh();
+                    ms.Load(line.Remove(0, 7));
+                    Root.Children[Root.Children.Count - 1].Children.Add(ms);
+                    //Root.Children[Root.Children.Count - 1].Name = line.Remove(0, 7);
+                    Material mat = new Material();
+                    mat.Load("null");
+
+                    ((Mesh)Root.Children[Root.Children.Count - 1].Children[Root.Children[Root.Children.Count - 1].Children.Count - 1]).Material = mat;
+                    ((Mesh)Root.Children[Root.Children.Count - 1].Children[Root.Children[Root.Children.Count - 1].Children.Count - 1]).Material.TextureEnabled = false;
+                    /*    }
+                    }
+                    catch
+                    {
+                        try
+                        {
+                            if (((Mesh)Root.Children[Root.Children.Count - 1]).Faces.Count == 0)
+                                Root.Children.RemoveAt(Root.Children.Count - 1);
+                            if (LOG) Console.WriteLine("Group!");
+                            Mesh m = new Mesh();
+                            m.Load(line.Remove(0, 2));
+                            Root.Children.Add(m);
+
+                            Material mat = new Material();
+                            mat.Load("null");
+
+                            ((Mesh)Root.Children[Root.Children.Count - 1]).Material = mat;
+                            ((Mesh)Root.Children[Root.Children.Count - 1]).Material.TextureEnabled = false;
+                        }
+                        catch
+                        {
+                            Mesh m = new Mesh();
+                            m.Load(line.Remove(0, 2));
+                            Root.Children.Add(m);
+
+                            Material mat = new Material();
+                            mat.Load("null");
+
+                            ((Mesh)Root.Children[Root.Children.Count - 1]).Material = mat;
+                            ((Mesh)Root.Children[Root.Children.Count - 1]).Material.TextureEnabled = false;
+                        }
+                    }*/
+
+                    if (LOG) Console.WriteLine("usemtl.....");
                     string materialname = line.Remove(0, 7);
                     foreach (Material m in MTLfile.Materials)
                     {
                         if (materialname == m.name)
                         {
-                            Console.WriteLine("material found");
-                            if (Meshes.Count == 0)
+                            if (LOG) Console.WriteLine("material found");
+                            /*if (Root.Children.Count == 0)
                             {
-                                Meshes.Add(new Mesh(materialname));
-                                Meshes[Meshes.Count - 1].mat = new Material("null");
-                                Meshes[Meshes.Count - 1].mat.TextureEnabled = false;
-                            }
-                            Meshes[Meshes.Count - 1].mat = m.Clone();
+                                Mesh mesh = new Mesh();
+                                mesh.Load(materialname);
+                                Root.Children.Add(mesh);
+                                Material material = new Material();
+                                material.Load("null");
+                                ((Mesh)Root.Children[Root.Children.Count - 1]).Material = material;
+                                ((Mesh)Root.Children[Root.Children.Count - 1]).Material.TextureEnabled = false;
+                            }*/
+                            ((Mesh)Root.Children[Root.Children.Count - 1].Children[Root.Children[Root.Children.Count - 1].Children.Count - 1]).Material = m.Clone();
                             break;
                         }
                     }
                 }
                 if (line.StartsWith("mtllib "))
                 {
-                    Console.WriteLine("mtllib!");
+                    if (LOG) Console.WriteLine("mtllib!");
                     line = line.Remove(0, 7);
-                    MTLfile = new MTLFile(foldername + line, foldername, GraphicsDevice);
+                    MTLFile mtl = new MTLFile();
+                    if (mtl.Load(foldername + line, foldername, GraphicsDevice) == false) return;
+                    MTLfile = mtl;
                 }
 
                 Line_Number++;
@@ -182,19 +241,91 @@ namespace CharcoalEngine.Object
             }
             reader.Close();
 
-            for (int group = 0; group < Meshes.Count; group++)
+            for (int group = 0; group < Root.Children.Count; group++)
             {
-                Meshes[group].UpdateMesh(Vertices, TexCoords, Normals);
-                b = BoundingBox.CreateMerged(b, Meshes[group].boundingBox);
+                Root.Children[group].Parent = Root;
+
+                for (int sub = 0; sub < Root.Children[group].Children.Count; sub++)
+                {
+                    ((Mesh)Root.Children[group].Children[sub]).Parent = Root.Children[group];
+                    ((Mesh)Root.Children[group].Children[sub]).Obj_File = this;
+                    ((Mesh)Root.Children[group].Children[sub]).UpdateMesh();
+                    ((Mesh)Root.Children[group].Children[sub]).UpdateBoundingBox();
+                    ((Mesh)Root.Children[group].Children[sub]).UpdateMatrix();
+                }
+
             }
+
+            //now go through each group and center the position so that it is easy to select sections
+            //Root.boundingBox = new BoundingBox(Vector3.Zero, Vector3.Zero);
+            for (int group = 0; group < Root.Children.Count; group++)
+            {
+                //Root.Children[group].boundingBox = new BoundingBox(Vector3.Zero, Vector3.Zero);
+                BoundingBox b = Root.GetBBox(Root.Children[group].Children[0].boundingBox, ((Mesh)(Root.Children[group].Children[0])).WBPosition);
+
+                for (int sub = 0; sub < Root.Children[group].Children.Count; sub++)
+                {
+                    Root.Children[group].Children[sub].boundingBox = new BoundingBox(Vector3.Zero, Vector3.Zero);
+                    b = BoundingBox.CreateMerged(b, Root.GetBBox(Root.Children[group].Children[sub].boundingBox, ((Mesh)(Root.Children[group].Children[sub])).WBPosition));
+                    
+                }
+
+                for (int sub = 0; sub < Root.Children[group].Children.Count; sub++)
+                {
+                    Root.Children[group].Children[sub].Position = ((Mesh)(Root.Children[group].Children[sub])).WBPosition - (b.Max + b.Min) / 2;
+                }
+                //Root.Children[group].__boundingbox__.Min -= Root.Children[group].Position;
+                //Root.Children[group].__boundingbox__.Max -= Root.Children[group].Position;
+                Root.Children[group].Position = (b.Max + b.Min) / 2;
+
+                //Root.Children[group].UpdateBoundingBox();
+                //for (int sub = 0; sub < Root.Children[group].Children.Count; sub++)
+                //{
+                //    Root.Children[group].Children[sub].UpdateBoundingBox();
+                //}
+
+            }
+            
+            for (int group = 0; group < Root.Children.Count; group++)
+            {
+                Root.Children[group].Parent = Root;
+
+                for (int sub = 0; sub < Root.Children[group].Children.Count; sub++)
+                {
+                    ((Mesh)Root.Children[group].Children[sub]).Parent = Root.Children[group];
+                    ((Mesh)Root.Children[group].Children[sub]).Obj_File = this;
+                    //((Mesh)Root.Children[group].Children[sub]).UpdateMesh();
+                    ((Mesh)Root.Children[group].Children[sub]).UpdateBoundingBox();
+                    //((Mesh)Root.Children[group].Children[sub]).UpdateMatrix();
+                }
+
+            }
+            Root.Update();
+            Root.UpdateBoundingBox();
+            /*for (int group = 0; group < Root.Children.Count; group++)
+            {
+                Root.Children[group].Parent = Root;
+
+                for (int sub = 0; sub < Root.Children[group].Children.Count; sub++)
+                {
+                    ((Mesh)Root.Children[group].Children[sub]).Parent = Root.Children[group];
+                    ((Mesh)Root.Children[group].Children[sub]).Obj_File = this;
+                    ((Mesh)Root.Children[group].Children[sub]).UpdateMesh();
+                    ((Mesh)Root.Children[group].Children[sub]).UpdateBoundingBox();
+                    ((Mesh)Root.Children[group].Children[sub]).UpdateMatrix();
+                }
+
+            }*/
+
+
             //if (FlipResult == DialogResult.Yes)
             //{
             //    YawPitchRoll.Y = -MathHelper.PiOver2;
             //}
 
-            Position = __Position;
-            YawPitchRoll = __YawPitchRoll;
-            Scale = __Scale;
+            Root.Position = __Position;
+            //YawPitchRoll = __YawPitchRoll;
+            //Scale = new Vector3(__Scale);
         }
 
         private void ReadVertex(string l)
@@ -221,7 +352,7 @@ namespace CharcoalEngine.Object
                 x += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == ' ')
                 {
@@ -231,7 +362,7 @@ namespace CharcoalEngine.Object
                 y += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == ' ')
                 {
@@ -274,7 +405,7 @@ namespace CharcoalEngine.Object
                 x += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == ' ')
                 {
@@ -284,7 +415,7 @@ namespace CharcoalEngine.Object
                 y += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == ' ')
                 {
@@ -326,7 +457,7 @@ namespace CharcoalEngine.Object
                 x += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == ' ')
                 {
@@ -360,7 +491,7 @@ namespace CharcoalEngine.Object
             v._TexCoord = new Vector2(tx, 1 - ty);
             TexCoords.Add(v);
         }
-        private void ReadFace(string l)
+        private void ReadFace(string l, Transform Root)
         {
             l = l.Remove(0, 2);
             while (l.StartsWith(" "))
@@ -394,7 +525,7 @@ namespace CharcoalEngine.Object
                 x += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == '/')
                 {
@@ -408,7 +539,7 @@ namespace CharcoalEngine.Object
                 y += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == ' ')
                 {
@@ -441,7 +572,7 @@ namespace CharcoalEngine.Object
             #endregion
             #region fv2
             x = y = z = "";
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == '/')
                 {
@@ -455,7 +586,7 @@ namespace CharcoalEngine.Object
                 x += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == '/')
                 {
@@ -469,7 +600,7 @@ namespace CharcoalEngine.Object
                 y += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == ' ')
                 {
@@ -502,7 +633,7 @@ namespace CharcoalEngine.Object
             #endregion
             #region fv3
             x = y = z = "";
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == '/')
                 {
@@ -516,7 +647,7 @@ namespace CharcoalEngine.Object
                 x += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == '/')
                 {
@@ -530,7 +661,7 @@ namespace CharcoalEngine.Object
                 y += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == ' ')
                 {
@@ -563,7 +694,7 @@ namespace CharcoalEngine.Object
             #endregion
             #region fv4?
             x = y = z = "";
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == '/')
                 {
@@ -577,7 +708,7 @@ namespace CharcoalEngine.Object
                 x += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == '/')
                 {
@@ -591,7 +722,7 @@ namespace CharcoalEngine.Object
                 y += l[i];
             }
 
-            for (int useless = 0; i < l.Length; i++)
+            for (; i < l.Length; i++)
             {
                 if (l[i] == ' ')
                 {
@@ -635,7 +766,7 @@ namespace CharcoalEngine.Object
 
                 Face f2 = new Face();
                 f2.fv = fv2;
-                Meshes[Meshes.Count - 1].Faces.Add(f2);
+                ((Mesh)(Root.Children[Root.Children.Count - 1]).Children[Root.Children[Root.Children.Count - 1].Children.Count-1]).Faces.Add(f2);
 
             }
             else
@@ -653,130 +784,71 @@ namespace CharcoalEngine.Object
             Console.WriteLine(" ");*/
             Face f = new Face();
             f.fv = fv;
-            Meshes[Meshes.Count - 1].Faces.Add(f);
-        }
-        public void DrawModel(GraphicsDevice GraphicsDevice, Matrix World, Matrix View, Matrix Projection)
-        {
-            Matrix w = Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z) * Matrix.CreateTranslation(Position);
-
-            GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
-            for (int g = 0; g < Meshes.Count; g++)
-            {
-                Matrix gw = Matrix.CreateTranslation(-Meshes[g].Center) * Matrix.CreateScale(Meshes[g].Scale) * Matrix.CreateFromYawPitchRoll(Meshes[g].YawPitchRoll.X, Meshes[g].YawPitchRoll.Y, Meshes[g].YawPitchRoll.Z) * Matrix.CreateTranslation(Meshes[g].Center) * Matrix.CreateTranslation(Meshes[g].Position);
-
-                if (effect == null)
-                    effect = new BasicEffect(GraphicsDevice);
-                effect.World = gw * w * World;
-                effect.View = View;
-                effect.Projection = Projection;
-                effect.DiffuseColor = Microsoft.Xna.Framework.Color.White.ToVector3();
-                //
-                effect.DiffuseColor = Meshes[g].mat.DiffuseColor;
-                effect.Alpha = Meshes[g].mat.Alpha;
-                GraphicsDevice.BlendState = BlendState.AlphaBlend;
-                effect.EnableDefaultLighting();
-                effect.PreferPerPixelLighting = true;
-                effect.Texture = Meshes[g].mat.Texture;
-                effect.TextureEnabled = Meshes[g].mat.TextureEnabled;
-
-                effect.CurrentTechnique.Passes[0].Apply();
-
-                //VertexPositionNormalTexture[] V = new VertexPositionNormalTexture[Meshes[g].Faces.Count * 3/* * 2 */];
-                /*for (int i = 0; i < Meshes[g].Faces.Count; i++)
-                {
-
-                    //Face f = Faces[462];
-                    V[i * 3 + 2] = new VertexPositionNormalTexture(Vertices[Meshes[g].Faces[i].fv[0].v1 - 1]._Vertex, Normals[Meshes[g].Faces[i].fv[0].n1 - 1]._Normal, TexCoords[Meshes[g].Faces[i].fv[0].t1 - 1]._TexCoord);
-                    V[i * 3 + 1] = new VertexPositionNormalTexture(Vertices[Meshes[g].Faces[i].fv[1].v1 - 1]._Vertex, Normals[Meshes[g].Faces[i].fv[1].n1 - 1]._Normal, TexCoords[Meshes[g].Faces[i].fv[1].t1 - 1]._TexCoord);
-                    V[i * 3 + 0] = new VertexPositionNormalTexture(Vertices[Meshes[g].Faces[i].fv[2].v1 - 1]._Vertex, Normals[Meshes[g].Faces[i].fv[2].n1 - 1]._Normal, TexCoords[Meshes[g].Faces[i].fv[2].t1 - 1]._TexCoord);
-
-                }
-                for (int i = 0; i < Meshes[g].Faces.Count; i++)
-                {
-                    V[Meshes[g].Faces.Count * 3 + i * 3 + 0] = new VertexPositionNormalTexture(Vertices[Meshes[g].Faces[i].fv[0].v1 - 1]._Vertex, Normals[Meshes[g].Faces[i].fv[0].n1 - 1]._Normal, TexCoords[Meshes[g].Faces[i].fv[0].t1 - 1]._TexCoord);
-                    V[Meshes[g].Faces.Count * 3 + i * 3 + 1] = new VertexPositionNormalTexture(Vertices[Meshes[g].Faces[i].fv[1].v1 - 1]._Vertex, Normals[Meshes[g].Faces[i].fv[1].n1 - 1]._Normal, TexCoords[Meshes[g].Faces[i].fv[1].t1 - 1]._TexCoord);
-                    V[Meshes[g].Faces.Count * 3 + i * 3 + 2] = new VertexPositionNormalTexture(Vertices[Meshes[g].Faces[i].fv[2].v1 - 1]._Vertex, Normals[Meshes[g].Faces[i].fv[2].n1 - 1]._Normal, TexCoords[Meshes[g].Faces[i].fv[2].t1 - 1]._TexCoord);
-
-                }*/
-                if (Meshes[g].Faces.Count != 0)
-                {
-                    if (Meshes[g].mat.Visible)
-                    {
-                        GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, Meshes[g].V, 0, Meshes[g].Faces.Count/* * 2 */);
-                    }
-                }
-
-            }
-        }
-   
-
+            ((Mesh)Root.Children[Root.Children.Count - 1].Children[Root.Children[Root.Children.Count - 1].Children.Count - 1]).Faces.Add(f);
+        }                
     }
-    public class Mesh
+    /// <summary>
+    /// The draw function requires these 6 parameters exist. The first target is the light target. 
+    /// generally speaking draw white to your section if you are doing anything special
+    /// the second is texture. Here draw what you want it to look like. If you are drawing flames, make the flames here. 
+    /// The normal target should not need to be written to if you are using a custom effect.
+    /// e.Parameters["World"].SetValue(AbsoluteWorld);
+    /// e.Parameters["View"].SetValue(Camera.View);
+    /// e.Parameters["Projection"].SetValue(Camera.Projection);
+    /// e.Parameters["BasicTexture"].SetValue(Material.Texture);
+    /// e.Parameters["TextureEnabled"].SetValue(Material._TextureEnabled);
+    /// e.Parameters["DiffuseColor"].SetValue(Material.DiffuseColor);
+    /// </summary>
+    public class Mesh : Transform
     {
-        public string name;
-        public Material mat;
-        public Mesh ParentMesh;
-        public BoundingBox boundingBox = new BoundingBox();
+        //reference to OBJ file object
+        public OBJ_File Obj_File;
 
-        public Vector3 _Position
+        [Editor(typeof(CollectionEditor), typeof(UITypeEditor))]
+        public List<Material> Material_Edit
         {
-            get { return Position; }
+            get
+            {
+                List<Material> T = new List<Material>();
+                T.Add(Material);
+                return T;
+            }
             set
             {
-                Position = value;
-                UpdateMatrix();
+                Material = value[0];
             }
         }
-        public Vector3 Position;
 
-        public Vector3 _Center
+
+        [Editor(typeof(WindowsFormsComponentEditor), typeof(UITypeEditor))]
+        public Material Material
         {
-            get { return Center; }
+            get
+            {
+                return __material__;
+            }
             set
             {
-                Center = value;
-                UpdateMatrix();
+                __material__ = value;
             }
         }
-        public Vector3 Center;
-
-        public Vector3 _YawPitchRoll
-        {
-            get { return YawPitchRoll; }
-            set
-            {
-                YawPitchRoll = value;
-                UpdateMatrix();
-            }
-        }
-        public Vector3 YawPitchRoll;
-        public float _Scale
-        {
-            get { return Scale; }
-            set
-            {
-                Scale = value;
-                UpdateMatrix();
-            }
-        }
-        public float Scale = 1.0f;
-
-        public Matrix MeshWorld;
-
+        Material __material__;
         public List<Face> Faces = new List<Face>();
 
         public VertexPositionNormalTexture[] V;
 
-        public Mesh(string n)
+        public void Load(string n)
         {
-            name = n;
+            Name = n;
         }
-
-        public void UpdateMatrix()
+        public Vector3 WBPosition;
+        /*
+        public void Update_Matrix()
         {
-            MeshWorld = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(-Center) * Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z) * Matrix.CreateTranslation(Center) * Matrix.CreateTranslation(Position);
+           MeshWorld = Matrix.CreateTranslation(-Center) * Matrix.CreateScale(Scale) * Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z) * Matrix.CreateTranslation(Center) * Matrix.CreateTranslation(Position);
         }
-        public void UpdateMesh(List<Vertex> Vertices, List<TexCoord> TexCoords, List<Normal> Normals)
+        */
+        public void UpdateMesh()
         {
             boundingBox = new BoundingBox();
             //boundingSphere = 
@@ -787,123 +859,155 @@ namespace CharcoalEngine.Object
             for (int i = 0; i < Faces.Count; i++)
             {
 
-                Points.Add(Vertices[Faces[i].fv[0].v1 - 1]._Vertex);
-                //Face f = Faces[462];
-                V[i * 3 + 2] = new VertexPositionNormalTexture(Vertices[Faces[i].fv[0].v1 - 1]._Vertex, Normals[Faces[i].fv[0].n1 - 1]._Normal, TexCoords[Faces[i].fv[0].t1 - 1]._TexCoord);
-                V[i * 3 + 1] = new VertexPositionNormalTexture(Vertices[Faces[i].fv[1].v1 - 1]._Vertex, Normals[Faces[i].fv[1].n1 - 1]._Normal, TexCoords[Faces[i].fv[1].t1 - 1]._TexCoord);
-                V[i * 3 + 0] = new VertexPositionNormalTexture(Vertices[Faces[i].fv[2].v1 - 1]._Vertex, Normals[Faces[i].fv[2].n1 - 1]._Normal, TexCoords[Faces[i].fv[2].t1 - 1]._TexCoord);
+                Points.Add(Obj_File.Vertices[((Face)Faces[i]).fv[0].v1 - 1]._Vertex);
+                Points.Add(Obj_File.Vertices[((Face)Faces[i]).fv[1].v1 - 1]._Vertex);
+                Points.Add(Obj_File.Vertices[((Face)Faces[i]).fv[2].v1 - 1]._Vertex);
+            }
+            boundingBox = BoundingBox.CreateFromPoints(Points);
+            __localboundingbox__ = new BoundingBox(boundingBox.Min - (boundingBox.Max + boundingBox.Min) / 2, boundingBox.Max - (boundingBox.Max + boundingBox.Min) / 2);
+            WBPosition = (boundingBox.Max + boundingBox.Min) / 2;
+            //Console.WriteLine(boundingBox);
+            UpdateBoundingBox();
+
+            for (int i = 0; i < Faces.Count; i++)
+            {
+                
+                V[i * 3 + 2] = new VertexPositionNormalTexture(Obj_File.Vertices[Faces[i].fv[0].v1 - 1]._Vertex - (AbsolutePosition+ WBPosition), Obj_File.Normals[Faces[i].fv[0].n1 - 1]._Normal, Obj_File.TexCoords[Faces[i].fv[0].t1 - 1]._TexCoord);
+                V[i * 3 + 1] = new VertexPositionNormalTexture(Obj_File.Vertices[Faces[i].fv[1].v1 - 1]._Vertex - (AbsolutePosition + WBPosition), Obj_File.Normals[Faces[i].fv[1].n1 - 1]._Normal, Obj_File.TexCoords[Faces[i].fv[1].t1 - 1]._TexCoord);
+                V[i * 3 + 0] = new VertexPositionNormalTexture(Obj_File.Vertices[Faces[i].fv[2].v1 - 1]._Vertex - (AbsolutePosition + WBPosition), Obj_File.Normals[Faces[i].fv[2].n1 - 1]._Normal, Obj_File.TexCoords[Faces[i].fv[2].t1 - 1]._TexCoord);
 
             }
+            //Parent.Position = Position;
+            //Position = Vector3.Zero;
+            
 
-            boundingBox = BoundingBox.CreateFromPoints(Points);
-            _Center = (boundingBox.Max + boundingBox.Min) / 2;
         }
+        public override void Draw(Effect e)
+        {
+            if (Faces.Count != 0)
+            {
+                if (Material.Visible)
+                {
+                    //if (Camera.Viewport.frAbsoluteBoundingBox)
+                    //fill basic parameters
+                    if (e != null)
+                    {
+                        if ((string)e.Tag == "NDT" && Material.AlphaEnabled == true)
+                        {
+                            base.Draw(e);
+                            return;
+                        }
 
+                        if ((string)e.Tag == "ALPHANDT" && Material.AlphaEnabled == false)
+                        {
+                            base.Draw(e);
+                            return;
+                        }
+
+                        e.Parameters["World"].SetValue(AbsoluteWorld);
+                        e.Parameters["View"].SetValue(Camera.View);
+                        e.Parameters["Projection"].SetValue(Camera.Projection);
+                        e.Parameters["BasicTexture"].SetValue(Material.Texture);
+                        e.Parameters["TextureEnabled"].SetValue(Material._TextureEnabled);
+                        //e.Parameters["BumpMap"].SetValue(Material.BumpMap);
+                        //e.Parameters["BumpMapEnabled"].SetValue(Material.BumpMapEnabled);
+                        e.Parameters["DiffuseColor"].SetValue(Material.DiffuseColor);
+                        e.Parameters["Alpha"].SetValue(Material.Alpha);
+                        e.Parameters["AlphaEnabled"].SetValue(Material.AlphaEnabled);
+                        //...
+                        e.CurrentTechnique.Passes[0].Apply();
+                        e.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+                        Engine.g.DrawUserPrimitives(PrimitiveType.TriangleList, V, 0, Faces.Count/* * 2 */);
+                    }
+                }
+            }
+            base.Draw(e);
+        }
     }
 
-    public class Vertex
+    public struct Vertex
     {
         public Vector3 _Vertex;
         public int LineNumber;
     }
-    public class Normal
+    public struct Normal
     {
         public Vector3 _Normal;
         public int LineNumber;
     }
-    public class TexCoord
+    public struct TexCoord
     {
         public Vector2 _TexCoord;
         public int LineNumber;
     }
-    public class FaceVertex
+    public struct FaceVertex
     {
         public int v1;
         public int t1;
         public int n1;
     }
 
-    public class Face
+    public struct Face
     {
-        public FaceVertex[] fv = new FaceVertex[3];
+        public FaceVertex[] fv;// = new FaceVertex[3];
     }
     public class MTLFile
     {
         public List<Material> Materials = new List<Material>();
 
-        public MTLFile(string Path, string LocalFolder, GraphicsDevice g)
+        public bool Load(string Path, string LocalFolder, GraphicsDevice g)
         {
-            StreamReader reader = new System.IO.StreamReader(Path);
-
+            StreamReader reader;
+            try
+            {
+                reader = new System.IO.StreamReader(Path);
+            }
+            catch
+            {
+                MessageBox.Show("This model has no MTL File, & is unusable");
+                return false;
+            }
             string line = "";
             while (true)
             {
                 if (reader.EndOfStream == true)
                     break;
                 line = reader.ReadLine();
+                while (true)
+                {
+                    if (line.StartsWith(" "))
+                        line = line.Remove(0);
+                    else
+                        break;
+                }
                 if (line.StartsWith("newmtl "))
                 {
-                    Materials.Add(new Material(line.Remove(0, 7)));
+                    Material newmtl = new Material();
+                    newmtl.Load(line.Remove(0, 7));
+                    Materials.Add(newmtl);
                     Materials[Materials.Count - 1].TextureEnabled = false;
                 }
                 #region load_texture
                 if (line.StartsWith("map_Kd "))
                 {
                     Materials[Materials.Count - 1].TextureEnabled = true;
+
                     string texturename = LocalFolder + line.Remove(0, 7);
-                    try
-                    {
-                        Materials[Materials.Count - 1].Texture = Texture2D.FromStream(g, new System.IO.StreamReader(texturename).BaseStream);
-                    }
-                    catch
-                    {
-                        Image image;
-                        try
-                        {
-                            image = Image.FromFile(texturename);
-
-
-                            for (int i = texturename.Length - 1; i > 0; i--)
-                            {
-                                if (texturename[i] != '.')
-                                    texturename = texturename.Remove(texturename.Length - 1, 1);
-                                else
-                                {
-                                    texturename = texturename.Remove(texturename.Length - 1, 1);
-                                    break;
-                                }
-                            }
-                            try
-                            {
-                                texturename += ".png";
-                                try
-                                {
-                                    image.Save(texturename, System.Drawing.Imaging.ImageFormat.Png);
-                                }
-                                catch
-                                {
-                                    Console.WriteLine("Image save failed, possible file already exists...");
-                                }
-                                Materials[Materials.Count - 1].TextureEnabled = true;
-                                Materials[Materials.Count - 1].Texture = Texture2D.FromStream(g, new System.IO.StreamReader(texturename).BaseStream);
-                                Console.WriteLine("__________________" + texturename);
-                            }
-                            catch
-                            {
-                                Materials[Materials.Count - 1].TextureEnabled = false;
-                                Console.WriteLine("FAIL!!!!! ++++++  " + texturename);
-                            }
-
-
-                            Materials[Materials.Count - 1].TextureFileName = texturename;
-                        }
-                        catch
-                        {
-                            Materials[Materials.Count - 1].TextureEnabled = false;
-                            Console.WriteLine("Fatal Error, specified texture does not exist: " + texturename);
-                        }
-                    }
+                    Materials[Materials.Count - 1].Texture = TextureImporter.LoadTextureFromFile(texturename);
+                    Materials[Materials.Count - 1].TextureFileName = texturename;
+                    if (Materials[Materials.Count - 1].Texture == null)
+                        Materials[Materials.Count - 1].TextureEnabled = false;
                 }
+                /*if (line.StartsWith("map_bump "))
+                {
+                    Materials[Materials.Count - 1].BumpMapEnabled = true;
+
+                    string texturename = LocalFolder + line.Remove(0, 9);
+                    Materials[Materials.Count - 1].BumpMap = TextureImporter.LoadTextureFromFile(texturename);
+                    //Materials[Materials.Count - 1].TextureFileName = texturename;
+                    if (Materials[Materials.Count - 1].BumpMap == null)
+                        Materials[Materials.Count - 1].BumpMapEnabled = false;
+                }*/
                 #endregion
                 if (line.StartsWith("Kd "))//diffuse color
                 {
@@ -917,7 +1021,7 @@ namespace CharcoalEngine.Object
 
                     int c = 0;
 
-                    for (int useless = 0; c < dc.Length; c++)
+                    for (; c < dc.Length; c++)
                     {
                         if (dc[c] != ' ')
                             x += dc[c];
@@ -927,7 +1031,7 @@ namespace CharcoalEngine.Object
                             break;
                         }
                     }
-                    for (int useless = 0; c < dc.Length; c++)
+                    for (; c < dc.Length; c++)
                     {
                         if (dc[c] != ' ')
                             y += dc[c];
@@ -937,7 +1041,7 @@ namespace CharcoalEngine.Object
                             break;
                         }
                     }
-                    for (int useless = 0; c < dc.Length; c++)
+                    for (; c < dc.Length; c++)
                     {
                         if (dc[c] != ' ')
                             z += dc[c];
@@ -948,7 +1052,7 @@ namespace CharcoalEngine.Object
                         }
                     }
 
-                    Console.WriteLine("Diffuse Color: " + x + " " + y + " " + z);
+                    //Console.WriteLine("Diffuse Color: " + x + " " + y + " " + z);
                     Materials[Materials.Count - 1].DiffuseColor = new Vector3(float.Parse(x), float.Parse(y), float.Parse(z));
                 }
                 /*if (line.StartsWith("Ka "))//alpha
@@ -974,14 +1078,30 @@ namespace CharcoalEngine.Object
 
             }
             reader.Close();
+            return true;
         }
     }
+
     public class Material
     {
         public string name;
 
-
         public string TextureFileName;
+
+        [BrowsableAttribute(true)]
+        [EditorAttribute(typeof(System.Windows.Forms.Design.FileNameEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        public string _Texture
+        {
+            get { return TextureFileName; }
+            set {
+                TextureEnabled = true;
+                Texture = TextureImporter.LoadTextureFromFile(value);
+                if (Texture == null)
+                    TextureEnabled = false;
+                TextureFileName = value;
+            }
+        }
+
         public Texture2D Texture;
 
         public bool _TextureEnabled
@@ -998,12 +1118,18 @@ namespace CharcoalEngine.Object
         }
         public bool Visible = true;
 
-        public Vector3 _DiffuseColor
+        public bool AlphaEnabled { get; set; }
+
+        [Editor(typeof(ColorEditor), typeof(UITypeEditor))]
+        public System.Drawing.Color _DiffuseColor
         {
-            get { return DiffuseColor; }
-            set { DiffuseColor = value; }
+            get
+            {
+                return System.Drawing.Color.FromArgb((int)(DiffuseColor.X * 255), (int)(DiffuseColor.Z * 255), (int)(DiffuseColor.Z * 255));
+            }
+            set { DiffuseColor = new Vector3((float)value.R / 255.0f, (float)value.G / 255.0f, (float)value.B / 255.0f); }
         }
-        public Vector3 DiffuseColor;
+        public Vector3 DiffuseColor = Vector3.One;
         public Vector3 Ambient;
 
         public float _Alpha
@@ -1012,20 +1138,25 @@ namespace CharcoalEngine.Object
             set { Alpha = value; }
         }
         public float Alpha = 1;
-        /*Vector3 SpecularColor;
-        Texture2D SpecularMap;
-        bool SpecularMapEnabled;
-        Texture2D BumpMap;
-        bool BumpMapEnabled;*/
 
-        public Material(string n)
+        
+        //public Texture2D SpecularMap;
+        //public bool SpecularMapEnabled = false;
+        //public Texture2D BumpMap { get; set; }
+        //public bool BumpMapEnabled { get; set; } = false;
+
+        public Material()
+        {
+            
+        }
+        public void Load(string n)
         {
             name = n;
         }
         public Material Clone()
         {
-            Material mat = new Material(name);
-
+            Material mat = new Material();
+            mat.Load(name);
             mat.TextureFileName = TextureFileName;
             mat.Texture = Texture;
             mat.TextureEnabled = TextureEnabled;
@@ -1033,6 +1164,8 @@ namespace CharcoalEngine.Object
             mat.DiffuseColor = DiffuseColor;
             mat.Ambient = Ambient;
             mat.Alpha = Alpha;
+            //mat.BumpMap = BumpMap;
+            //mat.BumpMapEnabled = BumpMapEnabled;
 
             return mat;
         }

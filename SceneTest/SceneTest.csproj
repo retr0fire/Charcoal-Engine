@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A916EDF9-E937-4D50-B692-B9A3B5B7271E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SceneTest</RootNamespace>
+    <AssemblyName>SceneTest</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MonoGamePlatform>Windows</MonoGamePlatform>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SceneTest.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Arrow.cs" />
+    <Compile Include="Door.cs" />
+    <Compile Include="Game1.cs" />
+    <Compile Include="Objects\Crate.cs" />
+    <Compile Include="Objects\Cube.cs" />
+    <Compile Include="Objects\CubeSection.cs" />
+    <Compile Include="Objects\GameObject.cs" />
+    <Compile Include="Objects\Item.cs" />
+    <Compile Include="Objects\Landscape.cs" />
+    <Compile Include="Objects\PerlinBox.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sky.cs" />
+    <Compile Include="Torch.cs" />
+    <Compile Include="Weapon.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Jitter">
+      <HintPath>..\..\..\..\XNA\Jitter Physics 0.1.7.0\Jitter.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="arrow.png" />
+    <Content Include="Content\Control Textures\arrow.png" />
+    <Content Include="Content\Effects\NDT_Effect.fx" />
+    <Content Include="Content\Effects\NormalPixelMapEffect.fx" />
+    <Content Include="Content\Effects\PointLightEffect.fx" />
+    <Content Include="Content\Effects\ShadowMapEffect.fx" />
+    <Content Include="Content\Effects\SpotLightEffect.fx" />
+    <Content Include="Content\Effects\TextureEffect.fx" />
+    <Content Include="Content\ModelTextures\smoke.png" />
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="Content\Content.mgcb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MonoGameContentReference>
+    <None Include="app.manifest" />
+    <None Include="Content\Effects\Fonts\Font.spritefont" />
+    <None Include="Content\Models\cylinder10uR.x" />
+    <None Include="Content\Models\particleplane.x" />
+    <None Include="Content\Models\pyramid10uR.x" />
+    <None Include="Content\Models\sphere.x" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CharcoalEngine\CharcoalEngine.csproj">
+      <Project>{7a0854d7-6075-4000-a180-77b5503c14d5}</Project>
+      <Name>CharcoalEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleEditor\SimpleEditor.csproj">
+      <Project>{1821a926-df1c-472e-a869-69d535054c5a}</Project>
+      <Name>SimpleEditor</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Character\Armor\" />
+    <Folder Include="Character\CharacterTypes\" />
+    <Folder Include="Character\Slots\" />
+    <Folder Include="Character\Weapons\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

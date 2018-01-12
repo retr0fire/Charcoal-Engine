@@ -17,17 +17,20 @@ namespace CharcoalEngine.Scene
         public static Matrix Projection;
         public static Viewport Viewport;
 
-        private static KeyboardState last_k;
+        //private static KeyboardState last_k;
         private static MouseState last_m;
-
+        public static float FoV = MathHelper.Pi / 3.2f;
         public static Vector3 look;
-
+        public static Vector3 Up;
         //arc_ball
         public static float start_distance_arc_ball = 10;
         public static float distance_arc_ball=10;
         public static float r_x_arc_ball = 0;
         public static float r_y_arc_ball = 0;
         public static Vector3 dynamictarget = Vector3.Zero;
+
+        public static BoundingFrustum Frustum = new BoundingFrustum(Matrix.Identity);
+
         private Camera()
         { }
 
@@ -35,18 +38,19 @@ namespace CharcoalEngine.Scene
         {
             Position = new Vector3(0, 0, 0);
             Rotation = new Quaternion(0, 0, 0, 1);
+            
         }
 
-        public static void Intitialize_WithDefaults()
+        public static void Initialize_WithDefaults()
         {
             Position = new Vector3(0, 0, 0);
             Rotation = new Quaternion(0, 0, 0, 1);
-            
-            Viewport = GameEngineData.game.GraphicsDevice.Viewport;
-            Viewport.MinDepth = .0001f;
-            Viewport.MaxDepth = 40000;
-            Viewport.Width = 800;
-            Viewport.Height = 600;
+
+            Viewport = Engine.g.Viewport;
+            Viewport.MinDepth = 0.1f;
+            Viewport.MaxDepth = 5000;
+            Viewport.Width = Engine.g.PresentationParameters.BackBufferWidth;
+            Viewport.Height = Engine.g.PresentationParameters.BackBufferHeight;
             Position = new Vector3(0, 2, 6);
             LookAt(Vector3.Zero, 0);
             Update();
@@ -79,13 +83,14 @@ namespace CharcoalEngine.Scene
         {
             look = Vector3.Transform(Vector3.Forward, Matrix.CreateFromQuaternion(Rotation));
             look.Normalize();
+            Up = Vector3.Cross(Vector3.Transform(Vector3.Forward, Matrix.CreateFromQuaternion(Rotation)), Vector3.Transform(Vector3.Left, Matrix.CreateFromQuaternion(Rotation)));
             View = Matrix.CreateLookAt(Position, Position + Vector3.Transform(Vector3.Forward, Matrix.CreateFromQuaternion(Rotation)), Vector3.Cross(Vector3.Transform(Vector3.Forward, Matrix.CreateFromQuaternion(Rotation)), Vector3.Transform(Vector3.Left, Matrix.CreateFromQuaternion(Rotation))));
             //View = Matrix.Invert(Matrix.CreateFromQuaternion(Rotation) *
             //                       Matrix.CreateTranslation(Position));
 
-            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.Pi / 3.2f, (float)GameEngineData.game.Window.ClientBounds.Width / (float)GameEngineData.game.Window.ClientBounds.Height, Viewport.MinDepth, Viewport.MaxDepth);
-            
-            
+            Projection = Matrix.CreatePerspectiveFieldOfView(FoV, (float)Engine.Game.Window.ClientBounds.Width / (float)Engine.Game.Window.ClientBounds.Height, Viewport.MinDepth, Viewport.MaxDepth);
+
+            Frustum = new BoundingFrustum(View * Projection);
         }
         public static void Rotate(Vector3 axis, float angle)
         {
@@ -123,6 +128,11 @@ namespace CharcoalEngine.Scene
             if (k.IsKeyDown(Keys.D))
                 Translate(-Vector3.Right * Translation_Speed);
 
+            if (k.IsKeyDown(Keys.Z))
+                Translate(Vector3.Up * Translation_Speed);
+            if (k.IsKeyDown(Keys.X))
+                Translate(-Vector3.Up * Translation_Speed);
+
             Update();
         }
         public static void Update_Arc_Ball(Vector3 Target)
@@ -132,7 +142,7 @@ namespace CharcoalEngine.Scene
             KeyboardState k = Keyboard.GetState();
             MouseState m = Mouse.GetState();
 
-            distance_arc_ball -= (m.ScrollWheelValue - last_m.ScrollWheelValue)/100;
+            distance_arc_ball -= (m.ScrollWheelValue - last_m.ScrollWheelValue)/10;
             if (m.LeftButton == ButtonState.Pressed)
             {
                 r_x_arc_ball -= ((float)m.X - (float)last_m.X) / 150;
@@ -152,10 +162,12 @@ namespace CharcoalEngine.Scene
             translation = Vector3.Transform(translation, rotation);
             Position = Target + translation;
             // Calculate the up vector from the rotation matrix
-            Vector3 up = Vector3.Transform(Vector3.Up, rotation);
-            View = Matrix.CreateLookAt(Position, Target, up);
-            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.Pi / 3.2f, (float)GameEngineData.game.Window.ClientBounds.Width / (float)GameEngineData.game.Window.ClientBounds.Height, Viewport.MinDepth, Viewport.MaxDepth);
+            Up = Vector3.Transform(Vector3.Up, rotation);
+            View = Matrix.CreateLookAt(Position, Target, Up);
+            Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.Pi / 3.2f, (float)Engine.Game.Window.ClientBounds.Width / (float)Engine.Game.Window.ClientBounds.Height, Viewport.MinDepth, Viewport.MaxDepth);
             Rotation = Quaternion.CreateFromRotationMatrix(rotation);
+            
+            Frustum = new BoundingFrustum(View * Projection);
         }
         public static void Update_Chase_Camera(Vector3 Target, float Distance, float Speed)
         {

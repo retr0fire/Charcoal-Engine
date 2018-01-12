@@ -5,7 +5,6 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -13,570 +12,353 @@ using System.Reflection;
 using System.Diagnostics;
 using System.IO;
 using CharcoalEngine.Object;
-using CharcoalEngine.Object.ParticleGenerator;
+using CharcoalEngine.Editing;
 using Jitter;
 using Jitter.Collision;
 using Jitter.Collision.Shapes;
 using Jitter.DataStructures;
 using Jitter.Dynamics;
 using Jitter.LinearMath;
-using CharcoalEngine.Object;
 
 namespace CharcoalEngine.Scene
 {
     public class Scene
     {
-        public List<DirectionalLight> DirectionalLights = new List<DirectionalLight>();
-        public List<SpotLight> SpotLights = new List<SpotLight>();
-        public List<CharcoalModel> Objects = new List<CharcoalModel>();
-        public List<Particle_Generator> ParticleGenerators = new List<Particle_Generator>();
+        public Transform Root = new Transform();
+        GraphicsDevice g;
+        SpriteBatch spriteBatch;
 
-        public int SelectedModel = -1;
-        public int SelectedMesh = -1;
+        RenderTarget2D NormalTarget;
+        RenderTarget2D DepthTarget;
+        RenderTarget2D TextureTarget;
+        RenderTarget2D GeometryTarget;
+        Effect NDT_Effect;
+        Effect Light;
+        Effect TextureEffect;
+        RenderTarget2D LightTarget;
 
-        CollisionSystem collision;
-        public World world;
+        //test
+        GizmoComponent _gizmo;
 
-        public Color BackgroundColor;
-        Effect AMEffect;
-        Effect DLEffect;
-        Effect SLEffect;
-        Effect SMEffect;
-        Effect FBEffect;
-        Effect BTEffect;
+        public List<PointLight> Lights = new List<PointLight>();//hackish, but works for now
 
-        Texture2D Pixel;
-        Texture2D Pixel2;
-
-        //unused
-        public Vector3 Wind;
-        public DateTime TimeOfDay;
-
-
-        //Post Screen Shaders
-        Effect RadialBlurEffect;
-
-        public bool ShadowMappingEnabled = true;
-        public bool AlphaMappingEnabled = true;
-        public bool RadialBlurEnabled = false;
-        public bool DebugDraw = false;
-        public bool PhysicsEnabled = true;
-
-        public GraphicsDevice g;
-
-        public RenderTarget2D LightTarget;
-        public RenderTarget2D SceneTarget;
-        public RenderTarget2D BlurTarget;
-
-        
         public Scene()
         {
-            if (GameEngineData.game == null)
-                throw new NullReferenceException("You have not started the Game Engine. Call CharcoalEngine.StartGameEngine(Game game) to start the Engine");
-            GameEngineData.game.Window.AllowUserResizing = true;
-            GameEngineData.game.IsMouseVisible = true;
+            //Engine.Game.Window.AllowUserResizing = true;
+            Engine.Game.IsMouseVisible = true;
 
-            collision = new CollisionSystemSAP();
-            world = new World(collision);
+            g = Engine.g;
+            spriteBatch = new SpriteBatch(g);
 
+            Engine.Game.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+
+            //load effects
+            NDT_Effect = Engine.Content.Load<Effect>("Effects/NDT_Effect");
+            NDT_Effect.Tag = (object)"NDT";
+            Light = Engine.Content.Load<Effect>("Effects/PointLightEffect");
+            TextureEffect = Engine.Content.Load<Effect>("Effects/TextureEffect");
+
+            //load rendertargets
+            NormalTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+            DepthTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
+            TextureTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+
+            LightTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+            GeometryTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+
+            //Root.Children.Add(new PointLight());
+
+            /*
+            AnimationRig b = new AnimationRig();
+            b.Children.Add(new PointLight());
+            Root.Children.Add(b);
+
+            AnimationRig c = new AnimationRig();
+            c.Children.Add(new PointLight());
+            Root.Children.Add(c);
+            */
+
+            _gizmo = new GizmoComponent(g, spriteBatch, Engine.Content.Load<SpriteFont>("Fonts/Font"));
+            _gizmo.SetSelectionPool(Root.Children, Root);
+
+            //_gizmo.TranslateEvent += _gizmo_TranslateEvent;
+            _gizmo.RotateEvent += _gizmo_RotateEvent;
+            //_gizmo.ScaleEvent += _gizmo_ScaleEvent;
+            AnimationRig a = new AnimationRig();
+            a.Children.Add(new PointLight());
+            Root.Children.Add(a);
+            Root.Update();
         }
-        public void LoadScene(Color backgroundcolor)
+
+        private void _gizmo_RotateEvent(Transform transformable, TransformationEventArgs e, TransformationEventArgs d)
         {
-            g = GameEngineData.game.GraphicsDevice;
-            AMEffect = Utilities.EngineContent.Content.Load<Effect>("Effects/AlphaMapEffect");
-            DLEffect = Utilities.EngineContent.Content.Load<Effect>("Effects/DirectionalLightEffect");
-            SLEffect = Utilities.EngineContent.Content.Load<Effect>("Effects/SpotLightEffect");
-            SMEffect = Utilities.EngineContent.Content.Load<Effect>("Effects/ShadowMapEffect");
-            FBEffect = Utilities.EngineContent.Content.Load<Effect>("Effects/FinalBlendEffect");
-            BTEffect = Utilities.EngineContent.Content.Load<Effect>("Effects/BasicTextureEffect");
-
-            RadialBlurEffect = Utilities.EngineContent.Content.Load<Effect>("Effects/RadialBlurEffect");
-
-            LightTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, true, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            SceneTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, true, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            BlurTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, true, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            BackgroundColor = backgroundcolor;
-
-            GameEngineData.game.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
-
-            Pixel = new Texture2D(g, 1, 1, false, SurfaceFormat.Color);
-            Color[] pix = new Color[1];
-            pix[0] = new Color((float)1, (float)1, (float)1, (float)1);
-            Pixel.SetData(pix, 0, 1);
-
-            Pixel2 = new Texture2D(g, 1, 1, false, SurfaceFormat.Color);
-            Color[] pix2 = new Color[1];
-            pix2[0] = new Color((float)0, (float)0, (float)0, (float)1);
-            Pixel2.SetData(pix2, 0, 1);
+            _gizmo.RotationHelper(transformable, e, d);
         }
 
+        /// <summary>
+        /// not used yet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Window_ClientSizeChanged(object sender, EventArgs e)
         {
-            LightTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, true, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            SceneTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, true, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            BlurTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, true, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            foreach (DirectionalLight d in DirectionalLights)
-            {
-                d.lighttarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            }
-            foreach (SpotLight s in SpotLights)
-            {
-                s.lighttarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            }
-        }
-        public Object.CharcoalModel AddObject(bool Static, string name, Vector3 pos, Vector3 ypr, float scale)
-        {
-            CharcoalEngine.Object.CharcoalModel o = new CharcoalEngine.Object.CharcoalModel(name, g, pos, ypr, scale, false, true);
-            //o._IsStatic = Static;
-            //o._Position = pos;
-            //o._YawPitchRoll = ypr;
+            //load rendertargets
+            NormalTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+            DepthTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
+            TextureTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
 
-            Objects.Add(o);
-            //world.AddBody(o.body);
-
-            return o;
+            LightTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+            Camera.Viewport.Bounds = g.PresentationParameters.Bounds;
         }
+
+        private KeyboardState _previousKeys;
+        private MouseState _previousMouse;
+        private MouseState _currentMouse;
+        private KeyboardState _currentKeys;
 
         public void Update(GameTime gameTime)
         {
-            foreach (Object.CharcoalModel obj in Objects)
+            _currentMouse = Mouse.GetState();
+            _currentKeys = Keyboard.GetState();
+            // select entities with your cursor (add the desired keys for add-to / remove-from -selection)
+            if (_currentMouse.RightButton == ButtonState.Pressed && _previousMouse.RightButton == ButtonState.Released)
+                _gizmo.SelectEntities(new Vector2(_currentMouse.X, _currentMouse.Y),
+                                      _currentKeys.IsKeyDown(Keys.LeftControl) || _currentKeys.IsKeyDown(Keys.RightControl),
+                                      _currentKeys.IsKeyDown(Keys.LeftAlt) || _currentKeys.IsKeyDown(Keys.RightAlt));
+
+            // set the active mode like translate or rotate
+            if (IsNewButtonPress(Keys.D1))
+                _gizmo.ActiveMode = GizmoMode.Translate;
+            if (IsNewButtonPress(Keys.D2))
+                _gizmo.ActiveMode = GizmoMode.Rotate;
+            if (IsNewButtonPress(Keys.D3))
+                _gizmo.ActiveMode = GizmoMode.NonUniformScale;
+            if (IsNewButtonPress(Keys.D4))
+                _gizmo.ActiveMode = GizmoMode.UniformScale;
+            if (IsNewButtonPress(Keys.D5))
+                _gizmo.ActiveMode = GizmoMode.CenterTranslate;
+
+            if (IsNewButtonPress(Keys.Enter))
+                _gizmo.LevelDown();
+            if (IsNewButtonPress(Keys.Back))
+                _gizmo.LevelUp();
+
+            // toggle precision mode
+            if (_currentKeys.IsKeyDown(Keys.LeftShift) || _currentKeys.IsKeyDown(Keys.RightShift))
+                _gizmo.PrecisionModeEnabled = true;
+            else
+                _gizmo.PrecisionModeEnabled = false;
+            
+            // toggle snapping
+            if (IsNewButtonPress(Keys.I))
+                _gizmo.SnapEnabled = !_gizmo.SnapEnabled;
+            
+
+            // clear selection
+            if (IsNewButtonPress(Keys.Escape))
+                _gizmo.Clear();
+
+            _gizmo.Update(gameTime);
+
+            _previousKeys = _currentKeys;
+            _previousMouse = _currentMouse;
+            foreach (Transform o in Root.Children)
             {
-                obj.Update();
-            }
-            foreach (Particle_Generator p_g in ParticleGenerators)
-            {
-                p_g.Update(gameTime, Camera.Position, Camera.Rotation);
-            }
-            if (PhysicsEnabled)
-            {
-                world.Step(1.0f / 100.0f, true);
+                o.Update();
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        private bool IsNewButtonPress(Keys key)
+        {
+            return _currentKeys.IsKeyDown(key) && _previousKeys.IsKeyUp(key);
+        }
+
+        public void Draw()
         {
             #region setup
-            g.BlendState = BlendState.Opaque;
+            g.BlendState = BlendState.AlphaBlend;
             g.DepthStencilState = DepthStencilState.Default;
             g.SamplerStates[0] = SamplerState.LinearWrap;
+            Engine.graphics.PreferMultiSampling = true;
+            //g.DepthStencilState = DepthStencilState.Default;
+            //RasterizerState r = new RasterizerState();
+            //r.MultiSampleAntiAlias = true;
+            //g.RasterizerState = r;
+
+            #endregion
+
+            //Set the active scene:
+            Engine.ActiveScene = this;
+            
+            g.SetRenderTargets(NormalTarget, DepthTarget, TextureTarget);
+            g.BlendState = BlendState.AlphaBlend;
+            g.Clear(Color.Transparent);
+            NDT_Effect.Parameters["FarPlane"].SetValue(Camera.Viewport.MaxDepth);
+            foreach (Transform o in Root.Children)
+            {
+                if (o.AbsoluteBoundingBox.Intersects(Camera.Frustum))
+                    o.Draw(NDT_Effect);
+            }
+            NDT_Effect.Tag = (object)"ALPHANDT";
+
+            //g.DepthStencilState = DepthStencilState.None;
+
+            Lights.Clear();
+
+            foreach (Transform o in Root.Children)
+            {
+                o.Draw(NDT_Effect);
+            }
+            NDT_Effect.Tag = (object)"NDT";
+            g.SetRenderTargets(null);
+
+            //g.DepthStencilState = DepthStencilState.Default;
+
+            //here we go
+            #region setup
+            //g.BlendState = BlendState.Opaque;
             g.DepthStencilState = DepthStencilState.Default;
+            g.SamplerStates[0] = SamplerState.LinearWrap;
+            //g.DepthStencilState = DepthStencilState.Default;
+            RasterizerState r2 = new RasterizerState();
+            r2 = RasterizerState.CullNone;
+            g.RasterizerState = r2;
             #endregion
-            RenderShadowMaps();
-            RenderAlphaMaps();
-            RenderScene(spriteBatch);
-            RenderPostScreen(spriteBatch);
-        }
-        private void RenderShadowMaps()
-        {
-            #region spot_lights
-            if (ShadowMappingEnabled)
-            {
-
-                for (int i = 0; i < SpotLights.Count; i++)
-                {
-                    g.SetRenderTarget(SpotLights[i].shadowmap);
-                    g.Clear(Color.Black);
-                    foreach (Object.CharcoalModel obj in Objects)
-                    {
-                        foreach (Object.Mesh mesh in obj.Meshes)
-                        {
-                            SMEffect.Parameters["World"].SetValue(mesh.MeshWorld*obj.World);
-                            SMEffect.Parameters["View"].SetValue(SpotLights[i].View());
-                            SMEffect.Parameters["Projection"].SetValue(SpotLights[i].Projection);
-                            SMEffect.Parameters["NearPlane"].SetValue(SpotLights[i].NearPlane);
-                            SMEffect.Parameters["FarPlane"].SetValue(SpotLights[i].FarPlane);
-                            SMEffect.Parameters["TextureEnabled"].SetValue(mesh.mat._TextureEnabled);
-                            SMEffect.Parameters["BasicTexture"].SetValue(mesh.mat.Texture);
-                            SMEffect.Parameters["Alpha"].SetValue(mesh.mat.Alpha);
-
-                            SMEffect.CurrentTechnique.Passes[0].Apply();
-
-                            if (mesh.Faces.Count != 0)
-                            {
-                                if (mesh.mat.Visible)
-                                {
-                                    g.DrawUserPrimitives(PrimitiveType.TriangleList, mesh.V, 0, mesh.Faces.Count/* * 2 */);
-                                }
-                            }
-
-                        }
-                    }
-                    g.BlendState = BlendState.Opaque;
-                    g.DepthStencilState = DepthStencilState.Default;
-                    g.SetRenderTarget(null);
-
-                }
-
-            }
-            #endregion
-        }
-        private void RenderAlphaMaps()
-        {
-            if (AlphaMappingEnabled)
-            {
-                #region spot_lights
-                for (int i = 0; i < SpotLights.Count; i++)
-                {
-                    g.SetRenderTarget(SpotLights[i].alphamap);
-                    g.Clear(Color.Black);
-                    g.BlendState = BlendState.AlphaBlend;
-
-
-                    g.DepthStencilState = DepthStencilState.Default;
-
-                    foreach (Object.CharcoalModel obj in Objects)
-                    {
-                        foreach (Object.Mesh mesh in obj.Meshes)
-                        {
-                            AMEffect.Parameters["World"].SetValue(mesh.MeshWorld*obj.World);
-                            AMEffect.Parameters["View"].SetValue(SpotLights[i].View());
-                            AMEffect.Parameters["Projection"].SetValue(SpotLights[i].Projection);
-                            AMEffect.Parameters["BasicTexture"].SetValue(mesh.mat.Texture);
-                            AMEffect.Parameters["TextureEnabled"].SetValue(mesh.mat._TextureEnabled);
-                            AMEffect.Parameters["Alpha"].SetValue(mesh.mat.Alpha);
-                            AMEffect.CurrentTechnique.Passes[0].Apply();
-
-                            if (mesh.Faces.Count != 0)
-                            {
-                                if (mesh.mat.Visible)
-                                {
-                                    g.DrawUserPrimitives(PrimitiveType.TriangleList, mesh.V, 0, mesh.Faces.Count/* * 2 */);
-                                }
-                            }
-                        }
-                    }
-
-                    g.DepthStencilState = DepthStencilState.DepthRead;
-
-                    for (int j = 0; j < ParticleGenerators.Count; j++)
-                    {
-                        for (int k = 0; k < ParticleGenerators[j].Particles.Count; k++)
-                        {
-                            foreach (ModelMesh mesh in ParticleGenerators[j].Particles[k].particlemodel.Meshes)
-                            {
-                                foreach (ModelMeshPart part in mesh.MeshParts)
-                                {
-                                    part.Effect = AMEffect;
-                                    AMEffect.Parameters["World"].SetValue(ParticleGenerators[j].Particles[k].GetWorld(SpotLights[i].LightPosition, Vector3.Cross(SpotLights[i].LightDirection, Vector3.Left)));
-                                    AMEffect.Parameters["View"].SetValue(SpotLights[i].View());
-                                    AMEffect.Parameters["Projection"].SetValue(SpotLights[i].Projection);
-                                    AMEffect.Parameters["BasicTexture"].SetValue(ParticleGenerators[j].Particles[k].particletex);
-                                    AMEffect.Parameters["TextureEnabled"].SetValue(true);
-                                    AMEffect.Parameters["Alpha"].SetValue(ParticleGenerators[j].Particles[k].alpha);
-                                }
-                                mesh.Draw();
-                            }
-                        }
-                    }
-
-                    g.BlendState = BlendState.Opaque;
-                    g.DepthStencilState = DepthStencilState.Default;
-
-                    g.SetRenderTarget(null);
-                }
-                #endregion
-            }
-        }
-        private void RenderScene(SpriteBatch spriteBatch)
-        {
-            #region directional_lights
-            for (int i = 0; i < DirectionalLights.Count; i++)
-            {
-                g.SetRenderTarget(DirectionalLights[i].lighttarget);
-                g.Clear(Color.Transparent);
-                g.BlendState = BlendState.AlphaBlend;
-                foreach (Object.CharcoalModel obj in Objects)
-                {
-                    foreach (Object.Mesh mesh in obj.Meshes)
-                    {
-
-                        DLEffect.Parameters["World"].SetValue(mesh.MeshWorld * obj.World);
-                        DLEffect.Parameters["View"].SetValue(Camera.View);
-                        DLEffect.Parameters["Projection"].SetValue(Camera.Projection);
-                        DLEffect.Parameters["CameraPosition"].SetValue(Camera.Position);
-
-                        Matrix worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.MeshWorld * obj.World));
-                        DLEffect.Parameters["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix);
-
-                        DLEffect.Parameters["LightPosition"].SetValue(DirectionalLights[i].LightPosition);
-                        DLEffect.Parameters["LightColor"].SetValue(DirectionalLights[i].LightColor);
-                        DLEffect.Parameters["LightAttenuation"].SetValue(DirectionalLights[i].LightAttenuation);
-                        DLEffect.Parameters["LightFalloff"].SetValue(DirectionalLights[i].LightFalloff);
-                        DLEffect.Parameters["AmbientLightColor"].SetValue(DirectionalLights[i].AmbientLightColor);
-                        DLEffect.Parameters["SpecularPower"].SetValue(20);
-                        DLEffect.Parameters["bump_Height"].SetValue(0);
-
-                        DLEffect.Parameters["BasicTexture"].SetValue(mesh.mat.Texture);
-                        DLEffect.Parameters["TextureEnabled"].SetValue(mesh.mat._TextureEnabled);
-
-                        DLEffect.Parameters["NormalMapEnabled"].SetValue(false);
-                        DLEffect.Parameters["dds_Normal"].SetValue(false);
-                        DLEffect.Parameters["NormalMap"].SetValue(false);
-                        DLEffect.Parameters["Alpha"].SetValue(mesh.mat.Alpha);
-
-                        DLEffect.CurrentTechnique.Passes[0].Apply();
-                        Console.WriteLine(DLEffect.CurrentTechnique.Name);
-                        if (mesh.Faces.Count != 0)
-                        {
-                            if (mesh.mat.Visible)
-                            {
-                                g.DrawUserPrimitives(PrimitiveType.TriangleList, mesh.V, 0, mesh.Faces.Count/* * 2 */);
-                            }
-                        }
-                    }
-                }
-                g.SetRenderTarget(null);
-            }
-
-            #endregion
-            #region spot_lights
-            for (int i = 0; i < SpotLights.Count; i++)
-            {
-                g.SetRenderTarget(SpotLights[i].lighttarget);
-                g.Clear(Color.Transparent);
-                g.BlendState = BlendState.AlphaBlend;
-
-                foreach (Object.CharcoalModel obj in Objects)
-                {
-                    foreach (Object.Mesh mesh in obj.Meshes)
-                    {
-
-                        SLEffect.Parameters["World"].SetValue(mesh.MeshWorld * obj.World);
-                        SLEffect.Parameters["View"].SetValue(Camera.View);
-                        SLEffect.Parameters["Projection"].SetValue(Camera.Projection);
-
-                        SLEffect.Parameters["CameraPosition"].SetValue(Camera.Position);
-
-                        Matrix worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.MeshWorld * obj.World));
-                        SLEffect.Parameters["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix);
-                        if (ShadowMappingEnabled == false)
-                            SLEffect.Parameters["ShadowMap"].SetValue(Pixel);
-                        else
-                            SLEffect.Parameters["ShadowMap"].SetValue(SpotLights[i].shadowmap);
-
-                        if (AlphaMappingEnabled == false)
-                            SLEffect.Parameters["AlphaMap"].SetValue(Pixel2);
-                        else
-                            SLEffect.Parameters["AlphaMap"].SetValue(SpotLights[i].alphamap);
-
-                        SLEffect.Parameters["LightViewProjection"].SetValue((mesh.MeshWorld * obj.World) * SpotLights[i].View() * SpotLights[i].Projection);
-                        SLEffect.Parameters["LightPosition"].SetValue(SpotLights[i].LightPosition);
-                        SLEffect.Parameters["LightDirection"].SetValue(SpotLights[i].LightDirection);
-                        SLEffect.Parameters["ConeAngle"].SetValue(SpotLights[i].ConeAngle);
-                        SLEffect.Parameters["LightColor"].SetValue(SpotLights[i].LightColor);
-                        SLEffect.Parameters["LightFalloff"].SetValue(SpotLights[i].LightFalloff);
-                        SLEffect.Parameters["SpecularPower"].SetValue(20);
-                        SLEffect.Parameters["dds_Normal"].SetValue(false);
-                        SLEffect.Parameters["bump_Height"].SetValue(0);
-                        SLEffect.Parameters["NearPlane"].SetValue(SpotLights[i].NearPlane);
-                        SLEffect.Parameters["FarPlane"].SetValue(SpotLights[i].FarPlane);
-                        SLEffect.Parameters["offset"].SetValue(SpotLights[i].shadowoffset);
-                        SLEffect.Parameters["AmbientLightColor"].SetValue(SpotLights[i].AmbientLightColor);
-
-                        SLEffect.Parameters["BasicTexture"].SetValue(mesh.mat.Texture);
-                        SLEffect.Parameters["TextureEnabled"].SetValue(mesh.mat._TextureEnabled);
-
-                        SLEffect.Parameters["NormalMapEnabled"].SetValue(false);
-                        SLEffect.Parameters["NormalMap"].SetValue(Pixel);
-
-                        SLEffect.CurrentTechnique.Passes[0].Apply();
-                        
-                        if (mesh.Faces.Count != 0)
-                        {
-                            if (mesh.mat.Visible)
-                            {
-                                g.DrawUserPrimitives(PrimitiveType.TriangleList, mesh.V, 0, mesh.Faces.Count/* * 2 */);
-                            }
-                        }
-                    }
-                }
-                g.BlendState = BlendState.Opaque;
-
-                g.SetRenderTarget(null);
-            }
-            #endregion
-            #region blend lights together
-
             g.SetRenderTarget(LightTarget);
-            g.Clear(Color.Black);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
-            for (int i = 0; i < DirectionalLights.Count; i++)
+            g.Clear(Color.TransparentBlack);
+            
+            // Calculate the view * projection matrix  
+            Matrix ViewProjection = Camera.View * Camera.Projection;
+
+            Light.Parameters["DepthTexture"].SetValue(DepthTarget);
+            Light.Parameters["NormalTexture"].SetValue(NormalTarget);
+            Light.Parameters["viewportWidth"].SetValue((float)Camera.Viewport.Width);
+            Light.Parameters["viewportHeight"].SetValue((float)Camera.Viewport.Height);
+            // Set render states to additive (lights will add their influences)  
+            g.BlendState = BlendState.Additive;
+            g.DepthStencilState = DepthStencilState.None;
+
+            foreach (PointLight l in Lights)
             {
-                spriteBatch.Draw(DirectionalLights[i].lighttarget, new Rectangle(0, 0, DirectionalLights[i].lighttarget.Bounds.Width, DirectionalLights[i].lighttarget.Bounds.Height), Color.White);
+                //l.Draw(null);
+
+                Matrix World = (Matrix.CreateScale(l.Attenuation) * Matrix.CreateTranslation(Camera.Position));
+                Matrix wvp = World * ViewProjection;
+                Light.Parameters["WorldViewProjection"].SetValue(wvp);
+                Light.Parameters["ViewProjection"].SetValue(ViewProjection);
+                Light.Parameters["inverse_ViewProjection"].SetValue(Matrix.Invert(ViewProjection));
+                Light.Parameters["inverse_view"].SetValue(Matrix.Invert(Camera.View));
+                Light.Parameters["view"].SetValue(Camera.View);
+                Light.Parameters["inverse_world"].SetValue(Matrix.Invert(World));
+                Light.Parameters["world"].SetValue(World);
+                Light.Parameters["inverse_projection"].SetValue(Matrix.Invert(Camera.Projection));
+                Light.Parameters["projection"].SetValue(Camera.Projection);
+                Light.Parameters["cam_pos"].SetValue(Camera.Position);
+                Light.Parameters["LightColor"].SetValue(l.LightColor);
+                Light.Parameters["LightPosition"].SetValue(l.AbsolutePosition);
+                Light.Parameters["LightAttenuation"].SetValue(l.Attenuation);
+                Light.Parameters["FarPlane"].SetValue(Camera.Viewport.MaxDepth);
+                Light.Parameters["TanAspect"].SetValue(new Vector2((float)Math.Tan((double)Camera.FoV / 2) * Camera.Viewport.AspectRatio, -(float)Math.Tan((double)Camera.FoV / 2)));
+
+                spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, Light);
+                Light.CurrentTechnique.Passes[0].Apply();
+                spriteBatch.Draw(DepthTarget, NormalTarget.Bounds, Color.White);
+                spriteBatch.End();
+
+                /*
+                // Calculate the world * view * projection matrix and set it to     
+                // the effect    
+               Light.Parameters["inverse_view"].SetValue(Matrix.Invert(Camera.View));
+                Light.Parameters["view"].SetValue(Camera.View);
+                Light.Parameters["inverse_world"].SetValue(Matrix.Invert(World));
+                Light.Parameters["world"].SetValue(World);
+                Light.Parameters["cam_pos"].SetValue(Camera.Position);
+                Light.Parameters["LightColor"].SetValue(l.LightColor);
+                Light.Parameters["LightPosition"].SetValue(l.Position);
+                Light.Parameters["LightAttenuation"].SetValue(l.Attenuation);
+                Light.Parameters["FarPlane"].SetValue(Camera.Viewport.MaxDepth);
+                Light.Parameters["TanAspect"].SetValue(new Vector2((float)Math.Tan((double)Camera.FoV/2) * Camera.Viewport.AspectRatio, -(float)Math.Tan((double)Camera.FoV/2)));
+
+                g.RasterizerState = RasterizerState.CullNone;
+
+                LightMesh.Meshes[0].MeshParts[0].Effect = Light;
+                LightMesh.Meshes[0].MeshParts[0].Effect.CurrentTechnique.Passes[0].Apply();
+                LightMesh.Meshes[0].Draw();*/
+                // Revert the cull mode   
+                //g.RasterizerState = RasterizerState.CullCounterClockwise;
             }
-
-            for (int i = 0; i < SpotLights.Count; i++)
-            {
-                spriteBatch.Draw(SpotLights[i].lighttarget, new Rectangle(0, 0, SpotLights[i].lighttarget.Bounds.Width, SpotLights[i].lighttarget.Bounds.Height), Color.White);
-            }
-
-            spriteBatch.End();
-
             g.SetRenderTarget(null);
-            #endregion
-            #region setup
-
-            g.DepthStencilState = DepthStencilState.Default;
-            g.SamplerStates[0] = SamplerState.LinearWrap;
-            #endregion
-            #region blend final scene
-            g.SetRenderTarget(SceneTarget);
-            g.Clear(BackgroundColor);
-            g.BlendState = BlendState.AlphaBlend;
-
-            foreach (Object.CharcoalModel obj in Objects)
+            g.SetRenderTarget(GeometryTarget);
+            TextureEffect.Parameters["BasicTexture"].SetValue(TextureTarget);
+            TextureEffect.Parameters["LightTexture"].SetValue(LightTarget);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Opaque, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, TextureEffect);
+            TextureEffect.CurrentTechnique.Passes[0].Apply();
+            //spriteBatch.Begin();
+            spriteBatch.Draw(TextureTarget, TextureTarget.Bounds, Color.White);
+            spriteBatch.End();
+                        
+            foreach (Transform o in Root.Children)
             {
-                foreach (Object.Mesh mesh in obj.Meshes)
-                {
-                    FBEffect.Parameters["World"].SetValue(mesh.MeshWorld * obj.World);
-                    FBEffect.Parameters["View"].SetValue(Camera.View);
-                    FBEffect.Parameters["Projection"].SetValue(Camera.Projection);
-                    FBEffect.Parameters["LightMap"].SetValue(LightTarget);
-                    FBEffect.Parameters["EnableLightMap"].SetValue(true);
-                    FBEffect.Parameters["TintColor"].SetValue(Vector3.One);
-
-                    FBEffect.Parameters["NumberOfLights"].SetValue(DirectionalLights.Count + SpotLights.Count);
-
-                    FBEffect.Parameters["Alpha"].SetValue(mesh.mat.Alpha);
-                    FBEffect.Parameters["TextureEnabled"].SetValue(mesh.mat._TextureEnabled);
-                    FBEffect.Parameters["BasicTexture"].SetValue(mesh.mat.Texture);
-
-                    FBEffect.CurrentTechnique.Passes[0].Apply();
-
-                    if (mesh.Faces.Count != 0)
-                    {
-                        if (mesh.mat.Visible)
-                        {
-                            g.DrawUserPrimitives(PrimitiveType.TriangleList, mesh.V, 0, mesh.Faces.Count/* * 2 */);
-                        }
-                    }
-                }
+                o.Draw(null);
             }
             
-            g.BlendState = BlendState.AlphaBlend;
-            g.DepthStencilState = DepthStencilState.DepthRead;
+            g.SetRenderTarget(null);
 
-            for (int j = 0; j < ParticleGenerators.Count; j++)
-            {
-                for (int k = 0; k < ParticleGenerators[j].Particles.Count; k++)
-                {
-                    foreach (ModelMesh mesh in ParticleGenerators[j].Particles[k].particlemodel.Meshes)
-                    {
-                        foreach (ModelMeshPart part in mesh.MeshParts)
-                        {
-                            part.Effect = FBEffect;
-                            FBEffect.Parameters["World"].SetValue(ParticleGenerators[j].Particles[k].world);
-                            FBEffect.Parameters["View"].SetValue(Camera.View);
-                            FBEffect.Parameters["Projection"].SetValue(Camera.Projection);
-                            FBEffect.Parameters["BasicTexture"].SetValue(ParticleGenerators[j].Particles[k].particletex);
-                            FBEffect.Parameters["TextureEnabled"].SetValue(true);
-                            FBEffect.Parameters["LightMap"].SetValue(LightTarget);
-                            FBEffect.Parameters["Alpha"].SetValue(ParticleGenerators[j].Particles[k].alpha);
-                            FBEffect.Parameters["EnableLightMap"].SetValue(false);
-                            FBEffect.Parameters["TintColor"].SetValue(ParticleGenerators[j].Particles[k].color);
-                            FBEffect.Parameters["NumberOfLights"].SetValue(DirectionalLights.Count + SpotLights.Count);
-                        }
-                        mesh.Draw();
-                    }
-                }
-            }
+            g.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
+            spriteBatch.Draw(GeometryTarget, GeometryTarget.Bounds, Color.White);
+            spriteBatch.End();
+
+            #region setup
             g.BlendState = BlendState.Opaque;
             g.DepthStencilState = DepthStencilState.Default;
-            if (DebugDraw) { RenderDebug(); }
-            RenderEdit();
-            g.SetRenderTarget(null);
+            g.SamplerStates[0] = SamplerState.LinearWrap;
+            //g.DepthStencilState = DepthStencilState.Default;
             #endregion
-        }
-        private void RenderPostScreen(SpriteBatch spriteBatch)
-        {
-            g.Clear(Color.Black);
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-            if (RadialBlurEnabled == true)
-                RadialBlurEffect.CurrentTechnique.Passes[0].Apply();
-            spriteBatch.Draw(SceneTarget, g.PresentationParameters.Bounds, Color.White);
+            _gizmo.Draw();
+           /* #region setup
+            g.BlendState = BlendState.Opaque;
+            g.DepthStencilState = DepthStencilState.Default;
+            g.SamplerStates[0] = SamplerState.LinearWrap;
+            g.DepthStencilState = DepthStencilState.Default;
+            #endregion*/
+
+            spriteBatch.Begin();
+            spriteBatch.Draw(LightTarget, new Rectangle(0, 0, 160, 120), Color.White);
+            spriteBatch.Draw(TextureTarget, new Rectangle(160, 0, 160, 120), Color.White);
+            spriteBatch.Draw(NormalTarget, new Rectangle(320, 0, 160, 120), Color.White);
+            spriteBatch.Draw(DepthTarget, new Rectangle(480, 0, 160, 120), Color.White);
             spriteBatch.End();
-
-
-
         }
-        private void RenderDebug()
+
+
+        List<Transform> AllObjects
         {
-            //fill this with debug drawing...
-            /*foreach (CharcoalEngine.Object.Object obj in Objects)
+            get
             {
-                BoundingBox b = obj.UpdateBoundingBox(obj.model, obj.World);
-
-                Vector3[] c = b.GetCorners();
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[0], c[1]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[1], c[2]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[2], c[3]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[3], c[0]);
-
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[4], c[5]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[5], c[6]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[6], c[7]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[7], c[4]);
-
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[0], c[4]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[1], c[5]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[2], c[6]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[3], c[7]);
-            }*/
+                return GetTransformsOfType(new Transform().GetType());
+            }
         }
-        private void RenderEdit()
+
+        List<Transform> transforms = new List<Transform>();
+        /// <summary>
+        /// Very wasteful, will need to be improved
+        /// </summary>
+        public List<Transform> GetTransformsOfType(Type T)
         {
-            /*const int n = 360/2;
-            float[,] h = new float[n, n];
-            for (int y = 0; y < n; y++)
-            {
-                for (int x = 0; x < n; x++)
-                {
-                    h[x, y] = (float)Math.Sin((double)MathHelper.ToRadians(x*16))*10;
-                }
-            }
-            LineUtility3D.DrawPlane(g, Camera.View, Camera.Projection, n-1, h, 0.1f);
-                */
-            /*if (SelectedModel != -1)
-            {
-
-                BoundingBox b = Objects[SelectedModel].UpdateBoundingBox(Objects[SelectedModel].model, Objects[SelectedModel].World);
-                
-                Vector3[] c = b.GetCorners();
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[0], c[1]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[1], c[2]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[2], c[3]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[3], c[0]);
-
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[4], c[5]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[5], c[6]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[6], c[7]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[7], c[4]);
-
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[0], c[4]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[1], c[5]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[2], c[6]);
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Red, c[3], c[7]);
-                //
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Orange, Vector3.Transform(Vector3.Zero, Objects[SelectedModel].World), Vector3.Transform(Vector3.Up * 4, Objects[SelectedModel].World));
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Orange, Vector3.Transform(Vector3.Zero, Objects[SelectedModel].World), Vector3.Transform(Vector3.Forward * 4, Objects[SelectedModel].World));
-                LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Orange, Vector3.Transform(Vector3.Zero, Objects[SelectedModel].World), Vector3.Transform(Vector3.Right * 4, Objects[SelectedModel].World));
-            
-            }
-            if (SelectedMesh != -1)
-            {
-                BoundingSphere bs = Objects[SelectedModel].model.Meshes[SelectedMesh].BoundingSphere;
-                Vector3 Center = bs.Center;
-                Center = Vector3.Transform(Center, Objects[SelectedModel].model.Meshes[SelectedMesh].ParentBone.Transform * Objects[SelectedModel].World);
-
-                for (int i = 0; i < 360; i++)
-                {
-                    LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Green, Center + new Vector3((float)Math.Cos((double)MathHelper.ToRadians(i)) * bs.Radius, (float)Math.Sin((double)MathHelper.ToRadians(i)) * bs.Radius, 0), Center + new Vector3((float)Math.Cos((double)MathHelper.ToRadians(i)) * bs.Radius, (float)Math.Sin((double)MathHelper.ToRadians(i+1)) * bs.Radius, 0));
-                    LineUtility3D.Draw3DLine(g, Camera.View, Camera.Projection, Color.Green, Center + new Vector3(0, (float)Math.Sin((double)MathHelper.ToRadians(i)) * bs.Radius, (float)Math.Cos((double)MathHelper.ToRadians(i)) * bs.Radius), Center + new Vector3(0, (float)Math.Sin((double)MathHelper.ToRadians(i + 1)) * bs.Radius, (float)Math.Cos((double)MathHelper.ToRadians(i+1)) * bs.Radius));
-                
-                }
-
-            }*/
-
+            transforms.Clear();
+            OfType(Root.Children, T);
+            return transforms;
         }
-    }   
+
+        public void OfType(List<Transform> Children, Type T)
+        {
+            foreach (Transform transform in Children)
+            {
+                if (transform.GetType() == T)
+                    transforms.Add(transform);
+                OfType(transform.Children, T);
+            }
+        }
+    }
 }
