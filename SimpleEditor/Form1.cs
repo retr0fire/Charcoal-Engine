@@ -38,12 +38,14 @@ namespace SimpleEditor
 
         private void Add_Click(object sender, EventArgs e)
         {
+            //this.Activated
             System.Windows.Forms.OpenFileDialog d = new System.Windows.Forms.OpenFileDialog();
             d.ValidateNames = true;
             d.CheckFileExists = true;
             d.Filter = "OBJ files (*.obj)|*.obj|All files (*.*)|*.*";
             if (d.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
                 return;
+            // ObjectSelectedEvent
 
             OBJ_File obj = new OBJ_File();
             Transform T = new Transform();

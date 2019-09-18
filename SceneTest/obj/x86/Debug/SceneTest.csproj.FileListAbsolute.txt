@@ -1,7 +1,6 @@
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SceneTest.exe
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SceneTest.pdb
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\CharcoalEngine.dll
-c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\Jitter.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\MonoGame.Framework.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SimpleEditor.exe
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
@@ -11,11 +10,9 @@ c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\S
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.XInput.dll
-c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\CharcoalEngine.pdb
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SimpleEditor.pdb
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SimpleEditor.exe.config
-c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\Jitter.pdb
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\MonoGame.Framework.xml
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.xml
@@ -24,8 +21,6 @@ c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\S
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.XInput.xml
-c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
-c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\obj\x86\Debug\SceneTest.csprojResolveAssemblyReference.cache
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\obj\x86\Debug\SceneTest.exe
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\obj\x86\Debug\SceneTest.pdb
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\Content\Control Textures\arrow.xnb
@@ -43,3 +38,6 @@ C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\S
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\Content\ModelTextures\smoke.xnb
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\Content\Font.xnb
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\Content\ModelTextures\Pixel.xnb
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\obj\x86\Debug\SceneTest.csprojAssemblyReference.cache
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\obj\x86\Debug\SceneTest.csproj.CoreCompileInputs.cache
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SceneTest\obj\x86\Debug\SceneTest.csproj.CopyComplete

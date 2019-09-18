@@ -8,7 +8,8 @@ float4x4 world;
 float4x4 inverse_projection;
 float4x4 projection;
 
-
+float SpecularPower = 200;
+float SpecularIntensity = 1;
 
 texture2D DepthTexture; 
 texture2D NormalTexture; 
@@ -25,7 +26,6 @@ float3 cam_pos;
 
 float viewportWidth; 
 float viewportHeight;
-
 
 float3 DiffuseColor;
 bool TextureEnabled;
@@ -67,18 +67,33 @@ float4 PixelShaderFunction(float4 Position : SV_POSITION, float4 color : COLOR0,
 	//return float4(pos, 1);
 
 
-	float4 normal = (tex2D(normalSampler, texCoord) - .5) * 2;     
+	float3 normal = (tex2D(normalSampler, texCoord) - .5) * 2;     
+	
+	
 	// Perform the lighting calculations for a point light 
 	float3 lightDirection = normalize(LightPosition - pos);  
-	float lighting = clamp(dot(normal, lightDirection), 0, 1);     
+	float lighting = clamp(dot(normal, lightDirection)*2.0f, 0, 1);     
 	// Attenuate the light to simulate a point light  
 	float d = distance(LightPosition, pos);  
 	float att = 1 - d / LightAttenuation;// , 2);
 	if (att < 0) att = 0;
 	if (lighting < 0) lighting = 0;
+
+	//specular highlights
+	float3 light = -normalize(LightPosition -pos);
+	normal = normalize(normal);
+	float3 r = normalize(2 * dot(light, normal) * normal - light);
+	float3 v = normalize(mul(-normalize(cam_pos-pos), world));
+
+	float dotProduct = abs(dot(r, v));
+	float3 specular = SpecularIntensity * float3(1,1,1) * max(pow(dotProduct, SpecularPower), 0);
+
+	
 	if (depth == FarPlane)
 		return float4(0, 0, 0, 0);
-	return float4(LightColor * lighting * att, 1) + float4(.3, .3, .3, 0);
+
+	//return float4(saturate(LightColor*specular),1);
+	return float4(saturate(LightColor*specular).x, LightColor * lighting * att);
 }
 
 technique Technique1

@@ -54,6 +54,11 @@ namespace CharcoalEngine.Object
         Vector3 __lightcolor__ = Color.White.ToVector3();
         public float Falloff = 1;
 
+
+        public float SpecularPower { get; set; } = 10;
+        public float SpecularIntensity { get; set; } = 1;
+
+
         public PointLight()
         {
             Name = "PointLight";

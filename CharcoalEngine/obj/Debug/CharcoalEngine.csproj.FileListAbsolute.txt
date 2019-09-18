@@ -1,6 +1,5 @@
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\CharcoalEngine.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\CharcoalEngine.pdb
-c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\Jitter.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\MonoGame.Framework.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.MediaFoundation.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.dll
@@ -9,8 +8,6 @@ c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\C
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.Direct3D11.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.Direct2D1.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.XInput.dll
-c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.Direct3D9.dll
-c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\Jitter.pdb
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\MonoGame.Framework.xml
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.MediaFoundation.xml
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.xml
@@ -19,7 +16,8 @@ c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\C
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.Direct3D11.xml
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.Direct2D1.xml
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.XInput.xml
-c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\bin\Debug\SharpDX.Direct3D9.xml
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\obj\Debug\CharcoalEngine.dll
 c:\users\michael\documents\visual studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\obj\Debug\CharcoalEngine.pdb
-C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\obj\Debug\CharcoalEngine.csprojResolveAssemblyReference.cache
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\obj\Debug\CharcoalEngine.csproj.CoreCompileInputs.cache
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\obj\Debug\CharcoalEngine.csproj.CopyComplete
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\CharcoalEngine\obj\Debug\CharcoalEngine.csprojAssemblyReference.cache

@@ -2,7 +2,6 @@ C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\S
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SimpleEditor.exe
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SimpleEditor.pdb
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\CharcoalEngine.dll
-C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\Jitter.dll
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\MonoGame.Framework.dll
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.MediaFoundation.dll
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.dll
@@ -11,7 +10,6 @@ C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\S
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.Direct3D11.dll
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.Direct2D1.dll
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.XInput.dll
-C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.Direct3D9.dll
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\CharcoalEngine.pdb
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\Jitter.pdb
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\MonoGame.Framework.xml
@@ -22,10 +20,11 @@ C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\S
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.Direct3D11.xml
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.Direct2D1.xml
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.XInput.xml
-C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Release\SharpDX.Direct3D9.xml
-C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Release\SimpleEditor.csprojResolveAssemblyReference.cache
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Release\SimpleEditor.Form1.resources
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Release\SimpleEditor.Properties.Resources.resources
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Release\SimpleEditor.csproj.GenerateResource.Cache
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Release\SimpleEditor.exe
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Release\SimpleEditor.pdb
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Release\SimpleEditor.csprojAssemblyReference.cache
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Release\SimpleEditor.csproj.CoreCompileInputs.cache
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Release\SimpleEditor.csproj.CopyComplete

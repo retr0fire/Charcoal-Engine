@@ -219,6 +219,8 @@ namespace CharcoalEngine.Editing
         private KeyboardState _currentKeys;
         private MouseState _lastMouseState, _currentMouseState;
 
+        public event EventHandler ObjectSelectedEvent;
+
         public GizmoComponent(GraphicsDevice graphics, SpriteBatch spriteBatch, SpriteFont font)
             : this(graphics, spriteBatch, font, Matrix.Identity) { }
 
@@ -227,7 +229,7 @@ namespace CharcoalEngine.Editing
             _graphics = graphics;
             _spriteBatch = spriteBatch;
             _font = font;
-            
+
             _selectionBoxEffect = new BasicEffect(graphics) { VertexColorEnabled = true };
             _lineEffect = new BasicEffect(graphics) { VertexColorEnabled = true, AmbientLightColor = Vector3.One, EmissiveColor = Vector3.One };
             _meshEffect = new BasicEffect(graphics);
@@ -350,6 +352,7 @@ namespace CharcoalEngine.Editing
                 _selectionPool = Parent.Parent.Children;
                 Parent = Parent.Parent;
                 Console.WriteLine(Parent.GetType().ToString());
+                //ObjectSelectedEvent(null, null);
             }
             else
             {
@@ -365,7 +368,7 @@ namespace CharcoalEngine.Editing
                     _selectionPool = Selection[0].Children;
                     Parent = Selection[0];
                     Selection.Clear();
-
+                    //ObjectSelectedEvent(null, null);
                 }
             }
 

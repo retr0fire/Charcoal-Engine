@@ -89,20 +89,23 @@ namespace CharcoalEngine.Object
                 List<Transform> js = Joints;
                 if (TargetObject != -1)
                 {
-                    if (js.Count > 1)
+                    if (js != null)
                     {
-                        Target.Position = Vector3.CatmullRom(js[PreviousJoint(Joint, js)].Position, js[Joint].Position, js[NextJoint(Joint, js)].Position, js[NextJoint(NextJoint(Joint, js), js)].Position, amount);
-                        Target.YawPitchRoll = Vector3.CatmullRom(js[PreviousJoint(Joint, js)].YawPitchRoll, js[Joint].YawPitchRoll, js[NextJoint(Joint, js)].YawPitchRoll, js[NextJoint(NextJoint(Joint, js), js)].YawPitchRoll, amount);
-
-                        amount += AnimationSpeed;
-                        if (amount > 1)
+                        if (js.Count > 1)
                         {
-                            amount = 0;
-                            Joint++;
-                            if (Joint > js.Count - 1)
-                                Joint = 0;
-                        }
+                            Target.Position = Vector3.CatmullRom(js[PreviousJoint(Joint, js)].Position, js[Joint].Position, js[NextJoint(Joint, js)].Position, js[NextJoint(NextJoint(Joint, js), js)].Position, amount);
+                            Target.YawPitchRoll = Vector3.CatmullRom(js[PreviousJoint(Joint, js)].YawPitchRoll, js[Joint].YawPitchRoll, js[NextJoint(Joint, js)].YawPitchRoll, js[NextJoint(NextJoint(Joint, js), js)].YawPitchRoll, amount);
 
+                            amount += AnimationSpeed;
+                            if (amount > 1)
+                            {
+                                amount = 0;
+                                Joint++;
+                                if (Joint > js.Count - 1)
+                                    Joint = 0;
+                            }
+
+                        }
                     }
                 }
             }

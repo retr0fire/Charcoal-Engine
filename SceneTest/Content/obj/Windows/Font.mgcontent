@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Font.spritefont</SourceFile>
+  <SourceFile>C:/Users/Michael/documents/visual studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Font.spritefont</SourceFile>
   <SourceTime>2017-05-16T07:03:45.3277664-04:00</SourceTime>
-  <DestFile>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/Font.xnb</DestFile>
-  <DestTime>2018-01-11T11:01:51.1926462-05:00</DestTime>
+  <DestFile>C:/Users/Michael/documents/visual studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/Font.xnb</DestFile>
+  <DestTime>2018-10-03T17:37:52.2153113-04:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2017-03-01T10:05:36-05:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>

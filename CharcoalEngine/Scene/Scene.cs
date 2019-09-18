@@ -37,6 +37,8 @@ namespace CharcoalEngine.Scene
         Effect TextureEffect;
         RenderTarget2D LightTarget;
 
+        public PhysicsManager physics;
+
         //test
         GizmoComponent _gizmo;
 
@@ -51,6 +53,9 @@ namespace CharcoalEngine.Scene
             spriteBatch = new SpriteBatch(g);
 
             Engine.Game.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+
+            //load physics
+            physics = new PhysicsManager();
 
             //load effects
             NDT_Effect = Engine.Content.Load<Effect>("Effects/NDT_Effect");
@@ -108,6 +113,8 @@ namespace CharcoalEngine.Scene
             TextureTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
 
             LightTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+            GeometryTarget = new RenderTarget2D(g, g.PresentationParameters.BackBufferWidth, g.PresentationParameters.BackBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+
             Camera.Viewport.Bounds = g.PresentationParameters.Bounds;
         }
 
@@ -118,6 +125,8 @@ namespace CharcoalEngine.Scene
 
         public void Update(GameTime gameTime)
         {
+            Engine.gameTime = gameTime;
+
             _currentMouse = Mouse.GetState();
             _currentKeys = Keyboard.GetState();
             // select entities with your cursor (add the desired keys for add-to / remove-from -selection)
@@ -125,7 +134,7 @@ namespace CharcoalEngine.Scene
                 _gizmo.SelectEntities(new Vector2(_currentMouse.X, _currentMouse.Y),
                                       _currentKeys.IsKeyDown(Keys.LeftControl) || _currentKeys.IsKeyDown(Keys.RightControl),
                                       _currentKeys.IsKeyDown(Keys.LeftAlt) || _currentKeys.IsKeyDown(Keys.RightAlt));
-
+                
             // set the active mode like translate or rotate
             if (IsNewButtonPress(Keys.D1))
                 _gizmo.ActiveMode = GizmoMode.Translate;
@@ -162,6 +171,9 @@ namespace CharcoalEngine.Scene
 
             _previousKeys = _currentKeys;
             _previousMouse = _currentMouse;
+
+            physics.UpdatePhysics();
+
             foreach (Transform o in Root.Children)
             {
                 o.Update();
@@ -194,10 +206,10 @@ namespace CharcoalEngine.Scene
             g.BlendState = BlendState.AlphaBlend;
             g.Clear(Color.Transparent);
             NDT_Effect.Parameters["FarPlane"].SetValue(Camera.Viewport.MaxDepth);
-            foreach (Transform o in Root.Children)
+            for (int i = 0; i < Root.Children.Count; i++)
             {
-                if (o.AbsoluteBoundingBox.Intersects(Camera.Frustum))
-                    o.Draw(NDT_Effect);
+                if (Root.Children[i].AbsoluteBoundingBox.Intersects(Camera.Frustum))
+                    Root.Children[i].Draw(NDT_Effect);
             }
             NDT_Effect.Tag = (object)"ALPHANDT";
 
@@ -205,9 +217,9 @@ namespace CharcoalEngine.Scene
 
             Lights.Clear();
 
-            foreach (Transform o in Root.Children)
+            for (int i = 0; i < Root.Children.Count; i++)
             {
-                o.Draw(NDT_Effect);
+                Root.Children[i].Draw(NDT_Effect);
             }
             NDT_Effect.Tag = (object)"NDT";
             g.SetRenderTargets(null);
@@ -259,6 +271,8 @@ namespace CharcoalEngine.Scene
                 Light.Parameters["LightAttenuation"].SetValue(l.Attenuation);
                 Light.Parameters["FarPlane"].SetValue(Camera.Viewport.MaxDepth);
                 Light.Parameters["TanAspect"].SetValue(new Vector2((float)Math.Tan((double)Camera.FoV / 2) * Camera.Viewport.AspectRatio, -(float)Math.Tan((double)Camera.FoV / 2)));
+                Light.Parameters["SpecularPower"].SetValue(l.SpecularPower);
+                Light.Parameters["SpecularIntensity"].SetValue(l.SpecularIntensity);
 
                 spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Additive, SamplerState.LinearWrap, DepthStencilState.None, RasterizerState.CullNone, Light);
                 Light.CurrentTechnique.Passes[0].Apply();
@@ -296,10 +310,10 @@ namespace CharcoalEngine.Scene
             //spriteBatch.Begin();
             spriteBatch.Draw(TextureTarget, TextureTarget.Bounds, Color.White);
             spriteBatch.End();
-                        
-            foreach (Transform o in Root.Children)
+
+            for (int i = 0; i < Root.Children.Count; i++)
             {
-                o.Draw(null);
+                Root.Children[i].Draw(null);
             }
             
             g.SetRenderTarget(null);

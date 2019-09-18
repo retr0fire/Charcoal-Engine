@@ -149,7 +149,7 @@ namespace CharcoalEngine.Object
 
             }
         }
-        public BoundingBox __boundingbox__ = new BoundingBox(-Vector3.One/4.0f, Vector3.One/4.0f);
+        public BoundingBox __boundingbox__ = new BoundingBox(-Vector3.One, Vector3.One);
 
         /// <summary>
         /// boundingbox that contains this node's local geometry, untranslated
@@ -166,7 +166,7 @@ namespace CharcoalEngine.Object
                 UpdateBoundingBox();
             }
         }
-        public BoundingBox __localboundingbox__ = new BoundingBox(-Vector3.One/4.0f, Vector3.One/4.0f);
+        public BoundingBox __localboundingbox__ = new BoundingBox(-Vector3.One, Vector3.One);
 
         public BoundingBox AbsoluteBoundingBox
         {
@@ -286,6 +286,11 @@ namespace CharcoalEngine.Object
 
         public float? Select(Ray selectionRay)
         {
+            selectionRay.Position -= AbsolutePosition+Center;
+            selectionRay.Position = Vector3.Transform(selectionRay.Position, Matrix.Transpose(AbsoluteYawPitchRoll));
+            selectionRay.Direction = Vector3.Transform(selectionRay.Direction, Matrix.Transpose(AbsoluteYawPitchRoll));
+            selectionRay.Position += AbsolutePosition+Center;
+
             return selectionRay.Intersects(AbsoluteBoundingBox);
         }
         public virtual void Update()

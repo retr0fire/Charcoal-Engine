@@ -44,9 +44,8 @@
     <StartupObject>SceneTest.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Arrow.cs" />
-    <Compile Include="Door.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Ground.cs" />
     <Compile Include="Objects\Crate.cs" />
     <Compile Include="Objects\Cube.cs" />
     <Compile Include="Objects\CubeSection.cs" />
@@ -57,8 +56,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sky.cs" />
-    <Compile Include="Torch.cs" />
-    <Compile Include="Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Jitter">
@@ -68,6 +65,10 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -104,12 +105,7 @@
       <Name>SimpleEditor</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Character\Armor\" />
-    <Folder Include="Character\CharacterTypes\" />
-    <Folder Include="Character\Slots\" />
-    <Folder Include="Character\Weapons\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

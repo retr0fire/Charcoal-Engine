@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -28,13 +27,14 @@ namespace SceneTest.Objects
     //manages a 50x50x50 chunk of cubes
     public class CubeSection : Transform
     {
-        CubeType[,,] Cubes;// = new CubeType[50, 50, 50];
+        public CubeType[,,] Cubes;// = new CubeType[50, 50, 50];
         int Size;
         VertexPositionNormalTexture[] V;
+        List<VertexPositionNormalTexture> CubeVertices;
 
         Material Material;
 
-        Octree CollisionOctree;
+        public Octree CollisionOctree;
 
         public CubeSection(CubeType[,,] cubes, int size, Vector3 Position)
         {
@@ -43,10 +43,13 @@ namespace SceneTest.Objects
             Size = size;
             LocalBoundingBox = new BoundingBox(Vector3.Zero-Vector3.One/2, Vector3.One * Size + Vector3.One/2);
             UpdateBoundingBox();
+
+            CreateBaseCube();
+
             Update_Cubes();
 
             //set up the collision octree for this section
-            CollisionOctree = new Octree(Vector3.Zero, new BoundingBox(Vector3.Zero, Vector3.One*Size), 2);
+            CollisionOctree = new Octree(Vector3.Zero, new BoundingBox(Vector3.Zero, Vector3.One*Size), 0);
             
             Material = new CharcoalEngine.Object.Material();
             Material.Alpha = 1;
@@ -56,10 +59,61 @@ namespace SceneTest.Objects
             Material.name = "CubeMat";
             Material._Texture = "C:\\Users\\Michael\\Documents\\XNA\\Hunt-Or-Gatherers\\Models\\Objects\\Cube\\Carpet_Plush_Charcoal.jpg";
             Material.Visible = true;
+            
+            VertexPositionNormalTexture[] TestV = AddCube(Vector3.Zero);
+            for (int i = 0; i < 36; i++)
+            {
+                Console.WriteLine(TestV[i]);
+            }
+
         }
         
         List<VertexPositionNormalTexture> VList = new List<VertexPositionNormalTexture>();
             
+        public void CreateBaseCube()
+        {
+            CubeVertices = new List<VertexPositionNormalTexture>();
+
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(0, 0, -1), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, -0.5f, -0.5f), new Vector3(0, 0, -1), new Vector2(1, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, 0.5f, -0.5f), new Vector3(0, 0, -1), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, 0.5f, -0.5f), new Vector3(0, 0, -1), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, 0.5f, -0.5f), new Vector3(0, 0, -1), new Vector2(0, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(0, 0, -1), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, 0.5f), new Vector3(-1.0f, 0, 0), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(-1.0f, 0, 0), new Vector2(1, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, 0.5f, -0.5f), new Vector3(-1.0f, 0, 0), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, 0.5f, -0.5f), new Vector3(-1.0f, 0, 0), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, 0.5f, 0.5f), new Vector3(-1.0f, 0, 0), new Vector2(0, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, 0.5f), new Vector3(-1.0f, 0, 0), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, -0.5f, 0.5f), new Vector3(0, 0, 1), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, 0.5f), new Vector3(0, 0, 1), new Vector2(1, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, 0.5f, 0.5f), new Vector3(0, 0, 1), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, 0.5f, 0.5f), new Vector3(0, 0, 1), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, 0.5f, 0.5f), new Vector3(0, 0, 1), new Vector2(0, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, -0.5f, 0.5f), new Vector3(0, 0, 1), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, -0.5f, -0.5f), new Vector3(1.0f, 0, 0), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, -0.5f, 0.5f), new Vector3(1.0f, 0, 0), new Vector2(1, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, 0.5f, 0.5f), new Vector3(1.0f, 0, 0), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, 0.5f, 0.5f), new Vector3(1.0f, 0, 0), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, 0.5f, -0.5f), new Vector3(1.0f, 0, 0), new Vector2(0, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, -0.5f, -0.5f), new Vector3(1.0f, 0, 0), new Vector2(0, 0)));
+
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, 0.5f, -0.5f), new Vector3(0, 1, 0), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, 0.5f, -0.5f), new Vector3(0, 1, 0), new Vector2(1, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, 0.5f, 0.5f), new Vector3(0, 1, 0), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, 0.5f, 0.5f), new Vector3(0, 1, 0), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, 0.5f, 0.5f), new Vector3(0, 1, 0), new Vector2(0, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, 0.5f, -0.5f), new Vector3(0, 1, 0), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, 0.5f), new Vector3(0, -1, 0), new Vector2(0, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, -0.5f, 0.5f), new Vector3(0, -1, 0), new Vector2(1, 0)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, -0.5f, -0.5f), new Vector3(0, -1, 0), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(0.5f, -0.5f, -0.5f), new Vector3(0, -1, 0), new Vector2(1, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(0, -1, 0), new Vector2(0, 1)));
+            CubeVertices.Add(new VertexPositionNormalTexture(new Vector3(-0.5f, -0.5f, 0.5f), new Vector3(0, -1, 0), new Vector2(0, 0)));
+
+        }
+
         public void Update_Cubes()
         {
             VList.Clear();
@@ -73,7 +127,7 @@ namespace SceneTest.Objects
                         if (Cubes[x,y,z] != CubeType.Nothing)
                         {
                             if (CubeVisible(x, y, z))
-                                VList.AddRange(AddCube(new Vector3(x, y, z)).ToList());
+                                VList.AddRange(AddCube(new Vector3(x, y, z)));
                         }
                     }
                 }
@@ -85,6 +139,10 @@ namespace SceneTest.Objects
 
         public void Remove_Block(int x, int y, int z)
         {
+            if (x < 0 || y < 0 || z < 0)
+                return;
+            if (x > Size - 1 || y > Size - 1 || z > Size - 1)
+                return;
             Cubes[x, y, z] = CubeType.Nothing;
             Update_Cubes();
         }
@@ -109,7 +167,6 @@ namespace SceneTest.Objects
                             {
                                 if (Cubes[x, y, z + 1] != CubeType.Nothing)
                                 {
-                                    //Console.WriteLine("skipped");
                                     return false;
                                 }
                             }
@@ -123,12 +180,20 @@ namespace SceneTest.Objects
         VertexPositionNormalTexture[] AddCube(Vector3 Position)
         {
             VertexPositionNormalTexture[] cube = new VertexPositionNormalTexture[6 * 6];
-            AddFace(Position, Vector3.Zero).CopyTo(cube, 0);
+            /*AddFace(Position, Vector3.Zero).CopyTo(cube, 0);
             AddFace(Position, new Vector3(MathHelper.ToRadians(90), 0, 0)).CopyTo(cube, 6);
             AddFace(Position, new Vector3(MathHelper.ToRadians(180), 0, 0)).CopyTo(cube, 12);
             AddFace(Position, new Vector3(MathHelper.ToRadians(270), 0, 0)).CopyTo(cube, 18);
             AddFace(Position, new Vector3(0, MathHelper.ToRadians(90), 0)).CopyTo(cube, 24);
             AddFace(Position, new Vector3(0, MathHelper.ToRadians(-90), 0)).CopyTo(cube, 30);
+            
+            return cube;*/
+
+            for (int i = 0; i < 36; i++)
+            {
+                cube[i] = CubeVertices[i];
+                cube[i].Position += Position;
+            }
 
             return cube;
         }
@@ -156,6 +221,29 @@ namespace SceneTest.Objects
 
             return Face;
         }
+
+        /*public Vector3 CubeIntersection(Ray ray)
+        {
+            if (ray.Intersects(CollisionOctree.boundingBox) != null)
+            {
+
+            }
+        }*/
+
+        /*Octree latest;
+        /// <summary>
+        /// returns octree
+        /// </summary>
+        /// <param name="octree"></param>
+        /// <returns></returns>
+        Octree TestOctree(Octree octree, Ray ray)
+        {
+            latest = octree;
+            if (octree.boundingBox.Intersects(ray) != null)
+            {
+                TestOctree(octr)
+            }
+        }*/
 
         public override void Draw(Effect e)
         {
@@ -254,6 +342,8 @@ namespace SceneTest.Objects
                 Octrees[i].UpdateOctree();
             }
         }
+
+        
 
         public void Draw(Matrix ParentWorld)
         {

@@ -30,6 +30,14 @@ namespace SceneTest
 {
     class Sky : Transform
     {
+        public Sky()
+        {
+            Children.Add(new Transform());
+            OBJ_File obj = new OBJ_File();
+            Name = "Sky_Geometry";
+            obj.Load(Application.StartupPath + "Sky.obj", Engine.g, new Vector3(0, 0, 0), Vector3.Zero, 1f, false, false, Children[0]);
+        }
+
         public override void Draw(Effect e)
         {
             base.Draw(e);

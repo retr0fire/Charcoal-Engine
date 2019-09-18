@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.IO;
 using CharcoalEngine.Scene;
@@ -821,6 +820,7 @@ namespace CharcoalEngine.Object
 
 
         [Editor(typeof(WindowsFormsComponentEditor), typeof(UITypeEditor))]
+        [Browsable(true)]
         public Material Material
         {
             get
@@ -871,8 +871,8 @@ namespace CharcoalEngine.Object
 
             for (int i = 0; i < Faces.Count; i++)
             {
-                
-                V[i * 3 + 2] = new VertexPositionNormalTexture(Obj_File.Vertices[Faces[i].fv[0].v1 - 1]._Vertex - (AbsolutePosition+ WBPosition), Obj_File.Normals[Faces[i].fv[0].n1 - 1]._Normal, Obj_File.TexCoords[Faces[i].fv[0].t1 - 1]._TexCoord);
+
+                V[i * 3 + 2] = new VertexPositionNormalTexture(Obj_File.Vertices[Faces[i].fv[0].v1 - 1]._Vertex - (AbsolutePosition + WBPosition), Obj_File.Normals[Faces[i].fv[0].n1 - 1]._Normal, Obj_File.TexCoords[Faces[i].fv[0].t1 - 1]._TexCoord);
                 V[i * 3 + 1] = new VertexPositionNormalTexture(Obj_File.Vertices[Faces[i].fv[1].v1 - 1]._Vertex - (AbsolutePosition + WBPosition), Obj_File.Normals[Faces[i].fv[1].n1 - 1]._Normal, Obj_File.TexCoords[Faces[i].fv[1].t1 - 1]._TexCoord);
                 V[i * 3 + 0] = new VertexPositionNormalTexture(Obj_File.Vertices[Faces[i].fv[2].v1 - 1]._Vertex - (AbsolutePosition + WBPosition), Obj_File.Normals[Faces[i].fv[2].n1 - 1]._Normal, Obj_File.TexCoords[Faces[i].fv[2].t1 - 1]._TexCoord);
 
@@ -909,11 +909,12 @@ namespace CharcoalEngine.Object
                         e.Parameters["Projection"].SetValue(Camera.Projection);
                         e.Parameters["BasicTexture"].SetValue(Material.Texture);
                         e.Parameters["TextureEnabled"].SetValue(Material._TextureEnabled);
-                        //e.Parameters["BumpMap"].SetValue(Material.BumpMap);
-                        //e.Parameters["BumpMapEnabled"].SetValue(Material.BumpMapEnabled);
+                        e.Parameters["NormalMap"].SetValue(Material.NormalMap);
+                        e.Parameters["NormalMapEnabled"].SetValue(Material.NormalMapEnabled);
                         e.Parameters["DiffuseColor"].SetValue(Material.DiffuseColor);
                         e.Parameters["Alpha"].SetValue(Material.Alpha);
                         e.Parameters["AlphaEnabled"].SetValue(Material.AlphaEnabled);
+                        
                         //...
                         e.CurrentTechnique.Passes[0].Apply();
                         e.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
@@ -998,16 +999,25 @@ namespace CharcoalEngine.Object
                     if (Materials[Materials.Count - 1].Texture == null)
                         Materials[Materials.Count - 1].TextureEnabled = false;
                 }
-                /*if (line.StartsWith("map_bump "))
+                if (line.StartsWith("map_bump "))
                 {
-                    Materials[Materials.Count - 1].BumpMapEnabled = true;
+                    Materials[Materials.Count - 1].NormalMapEnabled = true;
 
-                    string texturename = LocalFolder + line.Remove(0, 9);
-                    Materials[Materials.Count - 1].BumpMap = TextureImporter.LoadTextureFromFile(texturename);
-                    //Materials[Materials.Count - 1].TextureFileName = texturename;
-                    if (Materials[Materials.Count - 1].BumpMap == null)
-                        Materials[Materials.Count - 1].BumpMapEnabled = false;
-                }*/
+                    line = line.Remove(0, 9);
+
+                    if (line.Length > 0)
+                    {
+                        while (line[0] == ' ')
+                            line = line.Remove(0, 1);
+
+                        string texturename = LocalFolder + line;
+
+                        Materials[Materials.Count - 1].NormalMap = TextureImporter.LoadTextureFromFile(texturename);
+                        //Materials[Materials.Count - 1].TextureFileName = texturename;
+                    }
+                    if (Materials[Materials.Count - 1].NormalMap == null)
+                        Materials[Materials.Count - 1].NormalMapEnabled = false;
+                }
                 #endregion
                 if (line.StartsWith("Kd "))//diffuse color
                 {
@@ -1055,10 +1065,13 @@ namespace CharcoalEngine.Object
                     //Console.WriteLine("Diffuse Color: " + x + " " + y + " " + z);
                     Materials[Materials.Count - 1].DiffuseColor = new Vector3(float.Parse(x), float.Parse(y), float.Parse(z));
                 }
-                /*if (line.StartsWith("Ka "))//alpha
+                if (line.StartsWith("d "))//alpha
                 {
                     // Ka 0.0470588
-                    string a = line.Remove(0, 3);
+                    string a = line.Remove(0, 2);
+
+                    while (a[0] == ' ')
+                        a = a.Remove(0, 1);
 
                     string alpha = "";
 
@@ -1074,7 +1087,8 @@ namespace CharcoalEngine.Object
                     }
                     Console.WriteLine("Alpha: " + alpha);
                     Materials[Materials.Count - 1].Alpha = float.Parse(alpha);
-                }*/
+                    if (Materials[Materials.Count - 1].Alpha < 1.0f) Materials[Materials.Count - 1].AlphaEnabled = true;
+                }
 
             }
             reader.Close();
@@ -1111,6 +1125,33 @@ namespace CharcoalEngine.Object
         }
         public bool TextureEnabled;
 
+
+        public string NormalMapFileName;
+
+        [BrowsableAttribute(true)]
+        [EditorAttribute(typeof(System.Windows.Forms.Design.FileNameEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        public string _NormalMap
+        {
+            get { return NormalMapFileName; }
+            set
+            {
+                NormalMapEnabled = true;
+                NormalMap = TextureImporter.LoadTextureFromFile(value);
+                if (NormalMap == null)
+                    NormalMapEnabled = false;
+                NormalMapFileName = value;
+            }
+        }
+
+        public Texture2D NormalMap;
+
+        public bool _NormalMapEnabled
+        {
+            get { return NormalMapEnabled; }
+            set { NormalMapEnabled = value; }
+        }
+        public bool NormalMapEnabled;
+
         public bool _Visible
         {
             get { return Visible; }
@@ -1138,7 +1179,6 @@ namespace CharcoalEngine.Object
             set { Alpha = value; }
         }
         public float Alpha = 1;
-
         
         //public Texture2D SpecularMap;
         //public bool SpecularMapEnabled = false;
@@ -1164,10 +1204,29 @@ namespace CharcoalEngine.Object
             mat.DiffuseColor = DiffuseColor;
             mat.Ambient = Ambient;
             mat.Alpha = Alpha;
-            //mat.BumpMap = BumpMap;
-            //mat.BumpMapEnabled = BumpMapEnabled;
+            mat.AlphaEnabled = AlphaEnabled;
+            mat.NormalMap = NormalMap;
+            mat.NormalMapEnabled = NormalMapEnabled;
 
             return mat;
         }
     }
+    /*public class VertexPositionNormalTangentTexture : IVertexType
+    {
+        public VertexDeclaration VertexDeclaration { get; }
+        public Vector3 Position;
+        public Vector3 Normal;
+        public Vector2 TextureCoordinate;
+        public Vector3 Tangent;
+
+        public VertexPositionNormalTangentTexture(Vector3 position, Vector3 normal, Vector2 textureCoordinate, Vector3 tangent)
+        {
+            Position = position;
+            Normal = normal;
+            TextureCoordinate = textureCoordinate;
+            Tangent = tangent;
+
+            VertexDeclaration = new VertexDeclaration()
+        }
+    }*/
 }

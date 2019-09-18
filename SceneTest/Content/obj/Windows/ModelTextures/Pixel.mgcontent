@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/ModelTextures/Pixel.png</SourceFile>
+  <SourceFile>C:/Users/Michael/documents/visual studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/ModelTextures/Pixel.png</SourceFile>
   <SourceTime>2017-05-14T13:01:35.5790276-04:00</SourceTime>
-  <DestFile>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/ModelTextures/Pixel.xnb</DestFile>
-  <DestTime>2018-01-11T11:01:51.2707914-05:00</DestTime>
+  <DestFile>C:/Users/Michael/documents/visual studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/ModelTextures/Pixel.xnb</DestFile>
+  <DestTime>2018-10-03T17:37:52.4112101-04:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T10:05:36-05:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -19,7 +19,7 @@ struct VertexShaderInput
 
 float4 PixelShaderFunction(float4 pos : SV_POSITION, float4 color : COLOR0, float2 UV : TEXCOORD0) : COLOR0
 {
-	return tex2D(BasicTextureSampler, UV) * tex2D(LightSampler, UV);
+	return tex2D(BasicTextureSampler, UV) * float4(tex2D(LightSampler, UV).y, tex2D(LightSampler, UV).z, tex2D(LightSampler, UV).a, 1) +float4(tex2D(LightSampler, UV).x, tex2D(LightSampler, UV).x, tex2D(LightSampler, UV).x, 0);
 }
 
 technique Technique1

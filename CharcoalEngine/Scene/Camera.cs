@@ -105,6 +105,11 @@ namespace CharcoalEngine.Scene
             Position += Vector3.Transform(distance, Matrix.CreateFromQuaternion(Rotation));
             Update();
         }
+        public static void Translate_AxisAligned(Vector3 distance)
+        {
+            Position += distance;
+            Update();
+        }
 
         public static void Update_WASD(float Rotation_Speed, float Translation_Speed)
         {
@@ -118,7 +123,7 @@ namespace CharcoalEngine.Scene
                 Rotate(Vector3.Left, -Rotation_Speed);
             if (k.IsKeyDown(Keys.Down))
                 Rotate(Vector3.Left, Rotation_Speed);
-
+            /*
             if (k.IsKeyDown(Keys.W))
                 Translate(Vector3.Forward * Translation_Speed);
             if (k.IsKeyDown(Keys.S))
@@ -126,13 +131,13 @@ namespace CharcoalEngine.Scene
             if (k.IsKeyDown(Keys.A))
                 Translate(Vector3.Right * Translation_Speed);
             if (k.IsKeyDown(Keys.D))
-                Translate(-Vector3.Right * Translation_Speed);
-
+                Translate(-Vector3.Right * Translation_Speed);*/
+            /*
             if (k.IsKeyDown(Keys.Z))
                 Translate(Vector3.Up * Translation_Speed);
             if (k.IsKeyDown(Keys.X))
                 Translate(-Vector3.Up * Translation_Speed);
-
+            */
             Update();
         }
         public static void Update_Arc_Ball(Vector3 Target)

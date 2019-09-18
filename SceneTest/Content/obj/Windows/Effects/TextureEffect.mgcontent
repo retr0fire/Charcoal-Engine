@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/TextureEffect.fx</SourceFile>
-  <SourceTime>2017-05-06T05:27:42.5532854-04:00</SourceTime>
-  <DestFile>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/Effects/TextureEffect.xnb</DestFile>
-  <DestTime>2018-01-11T11:01:47.5672968-05:00</DestTime>
+  <SourceFile>C:/Users/Michael/documents/visual studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/TextureEffect.fx</SourceFile>
+  <SourceTime>2018-05-12T10:57:47.1423535-04:00</SourceTime>
+  <DestFile>C:/Users/Michael/documents/visual studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/Effects/TextureEffect.xnb</DestFile>
+  <DestTime>2018-10-03T17:37:49.1204661-04:00</DestTime>
   <Importer>EffectImporter</Importer>
   <ImporterTime>2017-03-01T10:05:36-05:00</ImporterTime>
   <Processor>EffectProcessor</Processor>

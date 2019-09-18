@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/NDT_Effect.fx</SourceFile>
-  <SourceTime>2018-01-08T18:39:45.5216836-05:00</SourceTime>
-  <DestFile>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/Effects/NDT_Effect.xnb</DestFile>
-  <DestTime>2018-01-11T11:01:46.4579499-05:00</DestTime>
+  <SourceFile>C:/Users/Michael/documents/visual studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/NDT_Effect.fx</SourceFile>
+  <SourceTime>2018-05-31T17:44:19.1549666-04:00</SourceTime>
+  <DestFile>C:/Users/Michael/documents/visual studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/Effects/NDT_Effect.xnb</DestFile>
+  <DestTime>2018-10-03T17:37:47.648662-04:00</DestTime>
   <Importer>EffectImporter</Importer>
   <ImporterTime>2017-03-01T10:05:36-05:00</ImporterTime>
   <Processor>EffectProcessor</Processor>
