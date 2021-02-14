@@ -264,7 +264,7 @@ namespace CharcoalEngine.Object
 
                 for (int sub = 0; sub < Root.Children[group].Children.Count; sub++)
                 {
-                    Root.Children[group].Children[sub].boundingBox = new BoundingBox(Vector3.Zero, Vector3.Zero);
+                    //Root.Children[group].Children[sub].boundingBox = new BoundingBox(Vector3.Zero, Vector3.Zero);
                     b = BoundingBox.CreateMerged(b, Root.GetBBox(Root.Children[group].Children[sub].boundingBox, ((Mesh)(Root.Children[group].Children[sub])).WBPosition));
                     
                 }
@@ -850,7 +850,7 @@ namespace CharcoalEngine.Object
         */
         public void UpdateMesh()
         {
-            boundingBox = new BoundingBox();
+            LocalBoundingBox = new BoundingBox();
             //boundingSphere = 
             V = new VertexPositionNormalTexture[Faces.Count * 3/* * 2 */];
 
@@ -863,7 +863,7 @@ namespace CharcoalEngine.Object
                 Points.Add(Obj_File.Vertices[((Face)Faces[i]).fv[1].v1 - 1]._Vertex);
                 Points.Add(Obj_File.Vertices[((Face)Faces[i]).fv[2].v1 - 1]._Vertex);
             }
-            boundingBox = BoundingBox.CreateFromPoints(Points);
+            LocalBoundingBox = BoundingBox.CreateFromPoints(Points);
             __localboundingbox__ = new BoundingBox(boundingBox.Min - (boundingBox.Max + boundingBox.Min) / 2, boundingBox.Max - (boundingBox.Max + boundingBox.Min) / 2);
             WBPosition = (boundingBox.Max + boundingBox.Min) / 2;
             //Console.WriteLine(boundingBox);

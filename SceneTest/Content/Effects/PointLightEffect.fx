@@ -11,14 +11,12 @@ float4x4 projection;
 float SpecularPower = 200;
 float SpecularIntensity = 1;
 
-texture2D DepthTexture; 
-texture2D NormalTexture; 
+texture2D DepthTexture;  
 
 float3 LightColor; 
 float3 LightPosition; 
 float LightAttenuation;
 
-//=
 float2 TanAspect;
 float FarPlane;
 
@@ -27,12 +25,11 @@ float3 cam_pos;
 float viewportWidth; 
 float viewportHeight;
 
-float3 DiffuseColor;
-bool TextureEnabled;
 texture BasicTexture;
 sampler BasicTextureSampler = sampler_state {
 	texture = <BasicTexture>;
 };
+
 sampler2D depthSampler = sampler_state { 
 	texture = <DepthTexture>;   
 	minfilter = point;  
@@ -68,7 +65,7 @@ float4 PixelShaderFunction(float4 Position : SV_POSITION, float4 color : COLOR0,
 
 
 	float3 normal = (tex2D(normalSampler, texCoord) - .5) * 2;     
-	
+	normal = normalize(normal);
 	
 	// Perform the lighting calculations for a point light 
 	float3 lightDirection = normalize(LightPosition - pos);  
@@ -80,20 +77,32 @@ float4 PixelShaderFunction(float4 Position : SV_POSITION, float4 color : COLOR0,
 	if (lighting < 0) lighting = 0;
 
 	//specular highlights
-	float3 light = -normalize(LightPosition -pos);
+	/*float3 light = -normalize(LightPosition-pos);
 	normal = normalize(normal);
 	float3 r = normalize(2 * dot(light, normal) * normal - light);
 	float3 v = normalize(mul(-normalize(cam_pos-pos), world));
 
 	float dotProduct = abs(dot(r, v));
-	float3 specular = SpecularIntensity * float3(1,1,1) * max(pow(dotProduct, SpecularPower), 0);
+	float specular = SpecularIntensity * max(pow(dotProduct, SpecularPower), 0);
+	*/
 
-	
-	if (depth == FarPlane)
+	float3 light = -normalize(LightPosition - pos);
+	normal = normalize(normal);
+	float3 r = normalize(2 * dot(light, normal) * normal - light);
+	float3 v = normalize(mul(-normalize(cam_pos - pos),	world));
+
+	float dotProduct = dot(r, v);
+	float3 specular = SpecularIntensity * LightColor * max(pow(dotProduct, SpecularPower), 0);
+			
+	if (depth == 0)
 		return float4(0, 0, 0, 0);
 
-	//return float4(saturate(LightColor*specular),1);
-	return float4(saturate(LightColor*specular).x, LightColor * lighting * att);
+	float4 output = float4(LightColor * (lighting * att) + specular, 1.0);
+
+	output = output * tex2D(BasicTextureSampler, UV);
+	
+	return output;
+
 }
 
 technique Technique1

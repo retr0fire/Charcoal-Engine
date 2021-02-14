@@ -46,6 +46,15 @@ namespace CharcoalEngine.Scene
 
         public Scene()
         {
+
+            foreach (Type t in AppDomain.CurrentDomain.GetAssemblies()
+                       .SelectMany(t => t.GetTypes()))
+            {
+                if (t.IsSubclassOf(typeof(Transform)))
+                    Console.WriteLine(t);
+            }
+
+
             //Engine.Game.Window.AllowUserResizing = true;
             Engine.Game.IsMouseVisible = true;
 
@@ -89,9 +98,9 @@ namespace CharcoalEngine.Scene
             //_gizmo.TranslateEvent += _gizmo_TranslateEvent;
             _gizmo.RotateEvent += _gizmo_RotateEvent;
             //_gizmo.ScaleEvent += _gizmo_ScaleEvent;
-            AnimationRig a = new AnimationRig();
+            /*AnimationRig a = new AnimationRig();
             a.Children.Add(new PointLight());
-            Root.Children.Add(a);
+            Root.Children.Add(a);*/
             Root.Update();
         }
 
@@ -237,18 +246,21 @@ namespace CharcoalEngine.Scene
             g.RasterizerState = r2;
             #endregion
             g.SetRenderTarget(LightTarget);
-            g.Clear(Color.TransparentBlack);
+            g.Clear(Color.Black);
             
             // Calculate the view * projection matrix  
             Matrix ViewProjection = Camera.View * Camera.Projection;
 
             Light.Parameters["DepthTexture"].SetValue(DepthTarget);
             Light.Parameters["NormalTexture"].SetValue(NormalTarget);
+            Light.Parameters["BasicTexture"].SetValue(TextureTarget);
             Light.Parameters["viewportWidth"].SetValue((float)Camera.Viewport.Width);
             Light.Parameters["viewportHeight"].SetValue((float)Camera.Viewport.Height);
             // Set render states to additive (lights will add their influences)  
             g.BlendState = BlendState.Additive;
             g.DepthStencilState = DepthStencilState.None;
+            
+            
 
             foreach (PointLight l in Lights)
             {
@@ -303,12 +315,12 @@ namespace CharcoalEngine.Scene
             }
             g.SetRenderTarget(null);
             g.SetRenderTarget(GeometryTarget);
-            TextureEffect.Parameters["BasicTexture"].SetValue(TextureTarget);
+            //TextureEffect.Parameters["BasicTexture"].SetValue(TextureTarget);
             TextureEffect.Parameters["LightTexture"].SetValue(LightTarget);
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Opaque, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, TextureEffect);
             TextureEffect.CurrentTechnique.Passes[0].Apply();
             //spriteBatch.Begin();
-            spriteBatch.Draw(TextureTarget, TextureTarget.Bounds, Color.White);
+            spriteBatch.Draw(LightTarget, LightTarget.Bounds, Color.White);
             spriteBatch.End();
 
             for (int i = 0; i < Root.Children.Count; i++)

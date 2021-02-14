@@ -49,34 +49,36 @@ namespace CharcoalEngine.Object
             }
             set
             {
-                //Console.WriteLine("set" + this.GetType().ToString());
                 __position__ = value;
-                if (Parent != null) Parent.UpdateBoundingBox();
-                UpdateMatrix();
+                Invalidate();
             }
         }
         public Vector3 __position__ = Vector3.Zero;
+
         public Vector3 AbsolutePosition
         {
             get
             {
-                if (Parent != null)
+                if (!AbsolutePositionValid)
                 {
-                    //Console.WriteLine(Parent.AbsolutePosition);
-                    return Vector3.Transform(Position, Parent.AbsoluteWorld);
+                    if (Parent != null)
+                    {
+                        //Console.WriteLine(Parent.AbsolutePosition);
+                        __absoluteposition__ =  Vector3.Transform(Position, Parent.AbsoluteWorld);
+                    }
+                    else
+                    {
+                        //Console.WriteLine("null");
+                        __absoluteposition__ = Position;
+                    }
+                    AbsolutePositionValid = true;
                 }
-                else
-                {
-                    //Console.WriteLine("null");
-                    return Position;
-                }
-            }
-            set
-            {
-
+                return __absoluteposition__;
             }
         }
-        
+        private bool AbsolutePositionValid = false;
+        private Vector3 __absoluteposition__;
+
         /// <summary>
         /// Yaw, Pitch, and Roll for this node
         /// </summary>
@@ -89,10 +91,16 @@ namespace CharcoalEngine.Object
             set
             {
                 __yawpitchroll__ = value;
-                UpdateMatrix();
+                //UpdateMatrix();
                 Up = Vector3.Transform(Vector3.Up, Matrix.CreateFromYawPitchRoll(__yawpitchroll__.X, __yawpitchroll__.Y, __yawpitchroll__.Z));
                 Forward = Vector3.Transform(Vector3.Forward, Matrix.CreateFromYawPitchRoll(__yawpitchroll__.X, __yawpitchroll__.Y, __yawpitchroll__.Z));
                 //Update_AfterRotation();
+
+                Invalidate();
+
+                /*TODO this is I think a hack*/
+                UpValid = true;
+                ForwardValid = true;
             }
         }
         Vector3 __yawpitchroll__;
@@ -101,39 +109,21 @@ namespace CharcoalEngine.Object
         {
             get
             {
-                if (Parent != null)
+                if (!AbsoluteYawPitchRollValid)
                 {
-                    return Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z)*Parent.AbsoluteYawPitchRoll;
+                    if (Parent != null)
+                        __absoluteyawpitchroll__ = Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z) * Parent.AbsoluteYawPitchRoll;
+                    else
+                        __absoluteyawpitchroll__ = Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z);
+                    AbsoluteYawPitchRollValid = true;
                 }
-                return Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z);
+                return __absoluteyawpitchroll__;
             }
         }
+        private bool AbsoluteYawPitchRollValid = false;
+        private Matrix __absoluteyawpitchroll__;
 
-        /*  
-        /// <summary>
-        /// relative scale for this node, and its children
-        /// </summary>
-        public Vector3 Scale
-        {
-            get
-            {
-                return __scale__;
-            }
-            set
-            {
-                __scale__ = value;
-                UpdateBoundingBox();
-            }
-        }
-        Vector3 __scale__;
-        public Vector3 AbsoluteScale
-        {
-            get
-            {
-                return Parent.AbsoluteScale + Scale;
-            }
-        }
-        */
+        
         /// <summary>
         /// boundingBox that contains this node and all of its children, untranslated
         /// </summary>
@@ -141,15 +131,17 @@ namespace CharcoalEngine.Object
         {
             get
             {
+                if (!boundingBoxValid)
+                {
+                    UpdateBoundingBox();
+                    boundingBoxValid = true;
+                }
                 return __boundingbox__;
             }
-            set
-            {
-                __boundingbox__ = value;
-
-            }
+            //this shouldn't be written to as its a generated value
         }
-        public BoundingBox __boundingbox__ = new BoundingBox(-Vector3.One, Vector3.One);
+        private BoundingBox __boundingbox__ = new BoundingBox(-Vector3.One, Vector3.One);
+        private bool boundingBoxValid = false;
 
         /// <summary>
         /// boundingbox that contains this node's local geometry, untranslated
@@ -163,7 +155,7 @@ namespace CharcoalEngine.Object
             set
             {
                 __localboundingbox__ = value;
-                UpdateBoundingBox();
+                InvalidateBBox();
             }
         }
         public BoundingBox __localboundingbox__ = new BoundingBox(-Vector3.One, Vector3.One);
@@ -172,25 +164,55 @@ namespace CharcoalEngine.Object
         {
             get
             {
-                BoundingBox b = boundingBox;
+                if (!AbsoluteBoundingBoxValid)
+                {
+                    BoundingBox b = boundingBox;
 
-                b.Min += AbsolutePosition;
-                b.Max += AbsolutePosition;
-                return b;
-            }
-            set
-            {
-
+                    b.Min += AbsolutePosition;
+                    b.Max += AbsolutePosition;
+                    __absoluteboundingbox__ = b;
+                    AbsoluteBoundingBoxValid = true;
+                }
+                return __absoluteboundingbox__;
             }
         }
-
-
+        private bool AbsoluteBoundingBoxValid = false;
+        private BoundingBox __absoluteboundingbox__;
+        
         private bool JustCreated = true;
+
+        public bool DebugDraw
+        {
+            get;
+            set;
+        }
 
         public Transform()
         {
-            //UpdateBoundingBox();
+            
+        }
 
+        public void Invalidate()
+        {
+            AbsolutePositionValid = false;
+            AbsoluteYawPitchRollValid = false;
+            LocalWorldValid = false;
+            AbsoluteWordValid = false;
+            InvalidateBBox();
+
+            for (int i = 0; i < Children.Count; i++)
+            {
+                Children[i].Invalidate();
+            }
+
+            if (Parent != null) Parent.InvalidateBBox();
+        }
+
+        public void InvalidateBBox()
+        {
+            AbsoluteBoundingBoxValid = false;
+            boundingBoxValid = false;
+            if (Parent != null) Parent.InvalidateBBox();
         }
         
         /// <summary>
@@ -204,19 +226,15 @@ namespace CharcoalEngine.Object
             {
                 b = BoundingBox.CreateMerged(b, GetBBox(Children[i].boundingBox,Children[i].Position));
             }
-                boundingBox = b;
-                
-                if (Parent != null)
-                    Parent.UpdateBoundingBox();
-            
+            __boundingbox__ = b;
         }
+
         public BoundingBox GetBBox(BoundingBox b)
         {
             b.Max += Position;
             b.Min += Position;
             return b;
         }
-
         public BoundingBox GetBBox(BoundingBox b, Vector3 Offset)
         {
             b.Max += Offset;
@@ -224,45 +242,80 @@ namespace CharcoalEngine.Object
             return b;
         }
 
-        public Matrix LocalWorld = Matrix.Identity;
+
+        public Matrix LocalWorld
+        {
+            get
+            {
+                if (!LocalWorldValid)
+                {
+                    UpdateMatrix();
+                    LocalWorldValid = true;
+                }
+                return __localworld__;
+            }
+        }
+        private Matrix __localworld__ = Matrix.Identity;
+        private bool LocalWorldValid = false;
+
         public Matrix AbsoluteWorld
         {
             get
             {
-                if (Parent != null)
-                    return LocalWorld * Parent.AbsoluteWorld;
-                else
-                    return LocalWorld;
+                if (!AbsoluteWordValid)
+                {
+                    if (Parent != null)
+                        __absoluteworld__ = LocalWorld * Parent.AbsoluteWorld;
+                    else
+                        __absoluteworld__ = LocalWorld;
+                    AbsoluteWordValid = true;
+                }
+                return __absoluteworld__;
             }
         }
+        private Matrix __absoluteworld__;
+        private bool AbsoluteWordValid = false;
 
         public Vector3 Forward {
             get
             {
-                if (Parent != null)
-                    return Vector3.Transform(__forward__, Parent.AbsoluteYawPitchRoll);
+                if (!ForwardValid)
+                {
+                    if (Parent != null)
+                        __forward__ = Vector3.Transform(__forward__, Parent.AbsoluteYawPitchRoll);
+                    ForwardValid = true;
+                }
                 return __forward__;
             }
             set
             {
+                ForwardValid = true;
                 __forward__ = value;
             }
         }
-        Vector3 __forward__= Vector3.Forward;
+        private Vector3 __forward__= Vector3.Forward;
+        private bool ForwardValid = false;
+
         public Vector3 Up
         {
             get
             {
-                if (Parent != null)
-                    return Vector3.Transform(__up__, Parent.AbsoluteYawPitchRoll);
+                if (!UpValid)
+                {
+                    if (Parent != null)
+                        __up__ = Vector3.Transform(__up__, Parent.AbsoluteYawPitchRoll);
+                    UpValid = true;
+                }
                 return __up__;
             }
             set
             {
+                ForwardValid = true;
                 __up__ = value;
             }
         }
-        Vector3 __up__ = Vector3.Up;
+        private Vector3 __up__ = Vector3.Up;
+        private bool UpValid = false;
 
         public Vector3 Center
         {
@@ -273,7 +326,8 @@ namespace CharcoalEngine.Object
             set
             {
                 __center__ = value;
-                UpdateMatrix();
+                LocalWorldValid = false;
+                AbsoluteWordValid = false;
             }
         }
         private Vector3 __center__;
@@ -281,7 +335,7 @@ namespace CharcoalEngine.Object
         public virtual void UpdateMatrix()
         {
             //World = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(-Center) * Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z) * Matrix.CreateTranslation(Center) * Matrix.CreateTranslation(Position);
-            LocalWorld = Matrix.CreateTranslation(-Center) * Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z) * Matrix.CreateTranslation(Center) * Matrix.CreateTranslation(Position);
+            __localworld__ = Matrix.CreateTranslation(-Center) * Matrix.CreateFromYawPitchRoll(YawPitchRoll.X, YawPitchRoll.Y, YawPitchRoll.Z) * Matrix.CreateTranslation(Center) * Matrix.CreateTranslation(Position);
         }
 
         public float? Select(Ray selectionRay)
@@ -295,17 +349,6 @@ namespace CharcoalEngine.Object
         }
         public virtual void Update()
         {
-            if (JustCreated)
-            {
-                UpdateBoundingBox();
-                JustCreated = false;
-                for (int i = 0; i < Children.Count; i++)
-                {
-                    if (Children[i].Parent == null)
-                        Children[i].Parent = this;
-                    Children[i].Update();
-                }
-            }
             for (int i = 0; i < Children.Count; i++)
             {
                 if (Children[i].Parent == null)
@@ -320,9 +363,12 @@ namespace CharcoalEngine.Object
         /// </summary>
         public virtual void Draw(Effect e)
         {
-            //LineUtility3D.Draw3DLine(Engine.g, Camera.View, Camera.Projection, Microsoft.Xna.Framework.Color.White, AbsolutePosition, AbsolutePosition + Vector3.Right * 0.5f);
-            //LineUtility3D.Draw3DLine(Engine.g, Camera.View, Camera.Projection, Microsoft.Xna.Framework.Color.White, AbsolutePosition, AbsolutePosition + Vector3.Up * 0.5f);
-            //LineUtility3D.Draw3DLine(Engine.g, Camera.View, Camera.Projection, Microsoft.Xna.Framework.Color.White, AbsolutePosition, AbsolutePosition + Vector3.Forward * 0.5f);
+            if (DebugDraw)
+            {
+                LineUtility3D.Draw3DLine(Engine.g, Camera.View, Camera.Projection, Microsoft.Xna.Framework.Color.White, AbsolutePosition, AbsolutePosition + Vector3.Right * 0.5f);
+                LineUtility3D.Draw3DLine(Engine.g, Camera.View, Camera.Projection, Microsoft.Xna.Framework.Color.White, AbsolutePosition, AbsolutePosition + Vector3.Up * 0.5f);
+                LineUtility3D.Draw3DLine(Engine.g, Camera.View, Camera.Projection, Microsoft.Xna.Framework.Color.White, AbsolutePosition, AbsolutePosition + Vector3.Forward * 0.5f);
+            }
             //if (AbsoluteBoundingBox.Intersects(Camera.Frustum))
             //{
                 for (int i = 0; i < Children.Count; i++)

@@ -88,6 +88,7 @@ PixelShaderOutput PixelShaderFunction(VertexShaderOutput input)
 	output.Normal = float4(normal, 1);
 	
 	output.Depth = float4(input.Depth.y / FarPlane, 1, 1, 1);
+
 	output.Texture = float4(1, 1, 1, Alpha);
 	if (TextureEnabled == true)
 	{
