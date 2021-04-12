@@ -361,7 +361,7 @@ namespace CharcoalEngine.Object
         /// _Not_ to be used for main drawing of 3D entities - should be done by scene manager.
         /// This handles the drawing of any UI graphics
         /// </summary>
-        public virtual void Draw(Effect e)
+        public virtual void Draw()
         {
             if (DebugDraw)
             {
@@ -369,13 +369,10 @@ namespace CharcoalEngine.Object
                 LineUtility3D.Draw3DLine(Engine.g, Camera.View, Camera.Projection, Microsoft.Xna.Framework.Color.White, AbsolutePosition, AbsolutePosition + Vector3.Up * 0.5f);
                 LineUtility3D.Draw3DLine(Engine.g, Camera.View, Camera.Projection, Microsoft.Xna.Framework.Color.White, AbsolutePosition, AbsolutePosition + Vector3.Forward * 0.5f);
             }
-            //if (AbsoluteBoundingBox.Intersects(Camera.Frustum))
-            //{
-                for (int i = 0; i < Children.Count; i++)
-                {
-                    Children[i].Draw(e);
-                }
-            //}
+            for (int i = 0; i < Children.Count; i++)
+            {
+                Children[i].Draw();
+            }
         }
     }
 }

@@ -19,7 +19,6 @@ namespace CharcoalEngine
         public static SpriteBatch spriteBatch;
         public static GameTime gameTime;
         public static Scene.Scene ActiveScene;
-        public static bool PhysicsEnabled;
 
         /// <summary>
         /// Starts the game engine and initiates all classes

@@ -16,7 +16,6 @@ using CharcoalEngine.Scene;
 using CharcoalEngine;
 using CharcoalEngine.Utilities;
 using CharcoalEngine.Object;
-using CharcoalEngine._2D;
 using Jitter;
 using Jitter.Collision;
 using Jitter.Collision.Shapes;

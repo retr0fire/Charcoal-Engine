@@ -121,11 +121,40 @@ C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\S
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.Direct3D11.xml
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.Direct2D1.xml
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.XInput.xml
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csprojAssemblyReference.cache
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.Form1.resources
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.Properties.Resources.resources
-C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csproj.GenerateResource.Cache
-C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.exe
-C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.pdb
-C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csprojAssemblyReference.cache
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csproj.GenerateResource.cache
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csproj.CoreCompileInputs.cache
 C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csproj.CopyComplete
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.exe
+C:\Users\Michael\Documents\Visual Studio 2017\Projects\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.pdb
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SimpleEditor.exe.config
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SimpleEditor.exe
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SimpleEditor.pdb
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\CharcoalEngine.dll
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\MonoGame.Framework.dll
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.dll
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.XAudio2.dll
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.DXGI.dll
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.Direct3D11.dll
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.Direct2D1.dll
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.XInput.dll
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\CharcoalEngine.pdb
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\MonoGame.Framework.xml
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.xml
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.XAudio2.xml
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.DXGI.xml
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.Direct3D11.xml
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.Direct2D1.xml
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\bin\Debug\SharpDX.XInput.xml
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csprojAssemblyReference.cache
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.Form1.resources
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.Properties.Resources.resources
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csproj.GenerateResource.cache
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csproj.CoreCompileInputs.cache
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.csproj.CopyComplete
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.exe
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SimpleEditor\obj\Debug\SimpleEditor.pdb

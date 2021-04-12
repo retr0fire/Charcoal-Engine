@@ -16,7 +16,6 @@ using CharcoalEngine.Scene;
 using CharcoalEngine;
 using CharcoalEngine.Utilities;
 using CharcoalEngine.Object;
-using CharcoalEngine._2D;
 using Jitter;
 using Jitter.Collision;
 using Jitter.Collision.Shapes;
@@ -31,8 +30,6 @@ namespace SceneTest.Objects
 {
     class GameObject : Transform
     {
-        public Element2D Display = new Element2D();
-
         public virtual void Mine()
         {
 

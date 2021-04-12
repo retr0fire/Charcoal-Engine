@@ -29,7 +29,7 @@ using System.Design;
 
 namespace CharcoalEngine.Object
 {
-    public class AnimationRig : UI_Object
+    public class AnimationRig : Transform
     {
         List<Transform> Joints
         {
@@ -156,10 +156,6 @@ namespace CharcoalEngine.Object
             Target.Draw(e);
             base.Draw(e);
         }
-
-    }
-    public class AnimationJoint : UI_Object
-    {
 
     }
 }

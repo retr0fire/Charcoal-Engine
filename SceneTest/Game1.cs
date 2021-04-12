@@ -14,8 +14,6 @@ using Microsoft.Xna.Framework.Media;
 
 using CharcoalEngine;
 using CharcoalEngine.Scene;
-using CharcoalEngine.Object;
-using CharcoalEngine._2D;
 using CharcoalEngine.Utilities;
 
 using Jitter;
@@ -27,7 +25,6 @@ using Jitter.Collision.Shapes;
 using Jitter.LinearMath;
 using System.Diagnostics;
 using Jitter.DataStructures;
-using SceneTest.Objects;
 //using SceneTest.Objects;
 namespace SceneTest
 {
@@ -552,15 +549,6 @@ ParticleGenerator p = new ParticleGenerator();
             float pitch = -(float)Math.Atan2((double)pitchvec.Y / yawlen, (double)pitchvec.Z / yawlen);
             pitch += MathHelper.ToRadians(180);
             return new Vector3(yaw, 0, pitch);
-        }
-        
-        public void AddModel(Vector3 Position, Vector3 YawPitchRoll, Transform AttachmentPoint, string file, string name)
-        {
-            OBJ_File obj = new OBJ_File();
-
-            AttachmentPoint.Children.Add(new Transform());
-            AttachmentPoint.Children[AttachmentPoint.Children.Count - 1].Name = name;
-            obj.Load(file, Engine.g,Position, YawPitchRoll, 1f, false, false, AttachmentPoint.Children[AttachmentPoint.Children.Count-1]);
         }
     }
 }

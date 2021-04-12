@@ -77,7 +77,6 @@ namespace CharcoalEngine.Utilities.MapGeneration
                     {
                         gradients[i, j, k] = new Vector3((float)r.Next(-10000, 10000) / 10000.0f, (float)r.Next(-10000, 10000) / 10000.0f, (float)r.Next(-10000, 10000) / 10000.0f);
                         gradients[i, j, k].Normalize();
-                        //Text.Add(new TextPoint(new Vector2(i, j)*divisor, gradients[i, j].ToString()));
                     }
                 }
             }

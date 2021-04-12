@@ -39,7 +39,7 @@ namespace SimpleEditor
         private void Add_Click(object sender, EventArgs e)
         {
             //this.Activated
-            System.Windows.Forms.OpenFileDialog d = new System.Windows.Forms.OpenFileDialog();
+            /*System.Windows.Forms.OpenFileDialog d = new System.Windows.Forms.OpenFileDialog();
             d.ValidateNames = true;
             d.CheckFileExists = true;
             d.Filter = "OBJ files (*.obj)|*.obj|All files (*.*)|*.*";
@@ -56,7 +56,7 @@ namespace SimpleEditor
             obj.Load(d.FileName, Engine.g, new Vector3(0, 0, 0), Vector3.Zero, 1f, false, false, T);
             scene.Root.Update();
 
-            UpdateNodes();
+            UpdateNodes();*/
         }
 
         private void ObjectsTree_AfterSelect(object sender, TreeViewEventArgs e)
@@ -238,55 +238,9 @@ namespace SimpleEditor
             return filename;
         }
 
-        private void Add_Light_Click(object sender, EventArgs e)
-        {
-            scene.Root.Children.Add(new PointLight());
-            UpdateNodes();
-        }
-
         private void Refresh_Click(object sender, EventArgs e)
         {
             UpdateNodes();
-        }
-
-        private void List_Up_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Transform T = (Transform)ObjectsTree.SelectedNode.Tag;
-                T.Parent.Parent.Children.Add(T);
-                T.Parent.Children.Remove(T);
-                T.Update();
-                T.Parent.Update();
-                try
-                {
-                    T.Parent.Parent.Update();
-                }
-                catch
-                {
-
-                }
-                UpdateNodes();
-            }
-            catch
-            {
-                UpdateNodes();
-            }
-        }
-
-        private void List_Down_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void List_Left_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void List_Right_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void List_Remove_Click(object sender, EventArgs e)

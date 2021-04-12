@@ -4,21 +4,21 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/NDT_Effect.fx</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/NormalPixelMapEffect.fx</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/PointLightEffect.fx</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/ShadowMapEffect.fx</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/SpotLightEffect.fx</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Effects/TextureEffect.fx</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Control Textures/arrow.png</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Models/cylinder10uR.x</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Models/particleplane.x</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Models/pyramid10uR.x</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Models/sphere.x</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/ModelTextures/smoke.png</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Font.spritefont</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/Fonts/Font.spritefont</File>
-    <File>C:/Users/Michael/Documents/Visual Studio 2017/Projects/CharcoalEngine_Monogame/SceneTest/Content/ModelTextures/Pixel.png</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Effects/NDT_Effect.fx</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Effects/NormalPixelMapEffect.fx</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Effects/PointLightEffect.fx</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Effects/ShadowMapEffect.fx</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Effects/SpotLightEffect.fx</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Effects/TextureEffect.fx</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Control Textures/arrow.png</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Models/cylinder10uR.x</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Models/particleplane.x</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Models/pyramid10uR.x</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Models/sphere.x</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/ModelTextures/smoke.png</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Font.spritefont</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Fonts/Font.spritefont</File>
+    <File>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/ModelTextures/Pixel.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
