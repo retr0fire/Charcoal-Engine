@@ -84,3 +84,4 @@ C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\Charco
 C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SceneTest\obj\x86\Debug\SceneTest.csproj.CopyComplete
 C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SceneTest\obj\x86\Debug\SceneTest.exe
 C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SceneTest\obj\x86\Debug\SceneTest.pdb
+C:\Users\Michael\OneDrive - Purdue University Fort Wayne\DontAskQuestions\CharcoalEngine_Monogame\SceneTest\bin\Windows\x86\Debug\Content\Effects\testPlaneEffect.xnb

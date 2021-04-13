@@ -1,31 +1,68 @@
-texture2D BasicTexture;
-texture2D LightTexture;
-sampler2D LightSampler = sampler_state {
-	texture = <LightTexture>;
-	minfilter = point;
-	magfilter = point;
-	mipfilter = point;
-};
-sampler BasicTextureSampler = sampler_state {
-	texture = <BasicTexture>;
-};
+float4x4 World;
+float4x4 View;
+float4x4 Projection;
 
+float4 AmbientColor = float4(1, 1, 1, 1);
+float AmbientIntensity = 0.1;
+
+float4x4 WorldInverseTranspose;
+
+float3 DiffuseLightDirection = float3(1, 0, 0);
+float4 DiffuseColor = float4(1, 1, 1, 1);
+float DiffuseIntensity = 1.0;
+
+float Shininess = 200;
+float4 SpecularColor = float4(1, 1, 1, 1);
+float SpecularIntensity = 1;
+float3 ViewVector = float3(1, 0, 0);
 
 struct VertexShaderInput
 {
 	float4 Position : POSITION0;
-	float2 UV : TEXCOORD0;
 };
 
-float4 PixelShaderFunction(float4 pos : SV_POSITION, float4 color : COLOR0, float2 UV : TEXCOORD0) : COLOR0
+struct VertexShaderOutput
 {
-	return saturate(/*tex2D(BasicTextureSampler, UV) * */tex2D(LightSampler, UV));
+	float4 Position : POSITION0;
+	float4 Color : COLOR0;
+	float3 Normal : TEXCOORD0;
+};
+
+VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
+{
+	VertexShaderOutput output;
+
+	float4 worldPosition = mul(input.Position, World);
+	float4 viewPosition = worldPosition;// mul(worldPosition, View);
+	output.Position = viewPosition;// mul(viewPosition, Projection);
+
+	float4 normal = float4(0, 1, 0, 0);
+	float lightIntensity = dot(normal, DiffuseLightDirection);
+	output.Color = saturate(DiffuseColor * DiffuseIntensity * lightIntensity);
+
+	output.Normal = normal;
+
+	return output;
 }
 
-technique Technique1
+float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-	pass Pass1
+	float3 light = normalize(DiffuseLightDirection);
+	float3 normal = normalize(input.Normal);
+	float3 r = normalize(2 * dot(light, normal) * normal - light);
+	float3 v = normalize(mul(normalize(ViewVector), World));
+
+	float dotProduct = dot(r, v);
+	float4 specular = SpecularIntensity * SpecularColor * max(pow(dotProduct, Shininess), 0) * length(input.Color);
+
+	return input.Position / 100;// float4(1, 1, 1, 1);// saturate(input.Color + AmbientColor * AmbientIntensity + specular);
+}
+
+technique Specular
+{
+	pass Pass0
 	{
-		PixelShader = compile ps_4_0_level_9_3 PixelShaderFunction();
+		VertexShader = compile vs_4_0 VertexShaderFunction();
+		PixelShader = compile ps_4_0 PixelShaderFunction();
 	}
 }
