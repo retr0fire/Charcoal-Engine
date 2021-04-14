@@ -28,6 +28,8 @@ namespace CharcoalEngine.Scene
 
         public List<DrawingSystem> DrawingSystems = new List<DrawingSystem>();
 
+
+
         GraphicsDevice g;
         SpriteBatch spriteBatch;
 

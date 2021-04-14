@@ -1,20 +1,9 @@
 float4x4 World;
 float4x4 View;
 float4x4 Projection;
-
-float4 AmbientColor = float4(1, 1, 1, 1);
-float AmbientIntensity = 0.1;
-
-float4x4 WorldInverseTranspose;
-
-float3 DiffuseLightDirection = float3(1, 0, 0);
-float4 DiffuseColor = float4(1, 1, 1, 1);
-float DiffuseIntensity = 1.0;
-
-float Shininess = 200;
-float4 SpecularColor = float4(1, 1, 1, 1);
-float SpecularIntensity = 1;
-float3 ViewVector = float3(1, 0, 0);
+float3 position;
+float w;
+float h;
 
 struct VertexShaderInput
 {
@@ -24,38 +13,38 @@ struct VertexShaderInput
 struct VertexShaderOutput
 {
 	float4 Position : POSITION0;
-	float4 Color : COLOR0;
-	float3 Normal : TEXCOORD0;
+	float4 Point : POSITION1;
 };
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
 	VertexShaderOutput output;
 
-	float4 worldPosition = mul(input.Position, World);
-	float4 viewPosition = worldPosition;// mul(worldPosition, View);
-	output.Position = viewPosition;// mul(viewPosition, Projection);
 
-	float4 normal = float4(0, 1, 0, 0);
-	float lightIntensity = dot(normal, DiffuseLightDirection);
-	output.Color = saturate(DiffuseColor * DiffuseIntensity * lightIntensity);
+	output.Position = input.Position;
 
-	output.Normal = normal;
+	output.Position.z = 1.0;
 
+	float4 worldPosition = mul(float4(position, 1.0), World);
+	float4 viewPosition = mul(worldPosition, View);
+	output.Point = mul(viewPosition, Projection);
+	
 	return output;
 }
 
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-	float3 light = normalize(DiffuseLightDirection);
-	float3 normal = normalize(input.Normal);
-	float3 r = normalize(2 * dot(light, normal) * normal - light);
-	float3 v = normalize(mul(normalize(ViewVector), World));
+	input.Point = input.Point / input.Point.w;
 
-	float dotProduct = dot(r, v);
-	float4 specular = SpecularIntensity * SpecularColor * max(pow(dotProduct, Shininess), 0) * length(input.Color);
+	float posx = (2 * input.Position.x / w - 1);
+	float posy = -(2 * input.Position.y / h - 1);
 
-	return input.Position / 100;// float4(1, 1, 1, 1);// saturate(input.Color + AmbientColor * AmbientIntensity + specular);
+	float px = input.Point.x;// / (w / 1000);
+	float py = input.Point.y;// / (h / 1000);
+
+	float3 dist = float3(px - posx, py - posy, 0);
+
+	return float4(length(dist), 0, 0, 1);
 }
 
 technique Specular
