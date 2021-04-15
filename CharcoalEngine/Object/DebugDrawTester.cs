@@ -51,9 +51,7 @@ namespace CharcoalEngine.Object
             effect.Parameters["w"].SetValue((float)Camera.Viewport.Width);
             effect.Parameters["h"].SetValue((float)Camera.Viewport.Height);
             effect.Parameters["position"].SetValue(Vector3.Zero);
-            effect.Parameters["World"].SetValue(LocalWorld);
-            effect.Parameters["View"].SetValue(Camera.View);
-            effect.Parameters["Projection"].SetValue(Camera.Projection);
+            effect.Parameters["WorldViewProjection"].SetValue(AbsoluteWorld * Camera.View * Camera.Projection);
             //effect.Parameters["WVPInverse"].SetValue(Matrix.Invert(AbsoluteWorld * Camera.View * Camera.Projection));
             effect.CurrentTechnique.Passes[0].Apply();
 
