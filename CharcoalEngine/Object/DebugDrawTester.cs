@@ -33,7 +33,7 @@ namespace CharcoalEngine.Object
         Effect effect;
         VertexPositionColor[] V;
 
-        Vector2[] Gradients = new Vector2[2*2];
+        //Vector3[] Gradients = new Vector3[2*2];
 
         public DebugDrawTester()
         {
@@ -49,32 +49,38 @@ namespace CharcoalEngine.Object
             V[4] = new VertexPositionColor(new Vector3(1, 1, 0.0f), new Color(1.0f, 1.0f, 1.0f, 0));
             V[5] = new VertexPositionColor(new Vector3(1, -1, 0.0f), new Color(1.0f, 1.0f, 1.0f, 0));
 
-            for (int i = 0; i < 2; i++)
+            /*for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    Gradients[i + j*2] = new Vector2((float)r.NextDouble() * 2 - 1.0f, (float)r.NextDouble() * 2 - 1.0f);
+                    Gradients[i + j*2] = new Vector3((float)r.NextDouble() * 2 - 1.0f, (float)r.NextDouble() * 2 - 1.0f, 0.0f);
                     Gradients[i + j*2].Normalize();
                 }
-            }
+            }*/
 
         }
 
         public override void Draw()
         {
-            for (int i = 0; i < 2; i++)
+            /*for (int i = 0; i < 2; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    Gradients[i + j * 2] = Vector2.Transform(Gradients[i + j * 2], Matrix.CreateRotationZ(0.01f));
+                    Gradients[i + j * 2] = Vector3.Transform(Gradients[i + j * 2], Matrix.CreateRotationZ(0.01f));
                 }
-            }
+            }*/
 
             effect.Parameters["w"].SetValue((float)Camera.Viewport.Width);
             effect.Parameters["h"].SetValue((float)Camera.Viewport.Height);
-            effect.Parameters["position"].SetValue(Vector3.Zero);
-            effect.Parameters["WorldViewProjection"].SetValue(AbsoluteWorld * Camera.View * Camera.Projection);
-            effect.Parameters["gradients"].SetValue(Gradients);
+            effect.Parameters["Position"].SetValue(Vector3.Zero);
+            effect.Parameters["World"].SetValue(AbsoluteWorld);
+            effect.Parameters["ViewProjection"].SetValue(Camera.View * Camera.Projection);
+            effect.Parameters["InverseViewProjection"].SetValue(Matrix.Invert(Camera.View * Camera.Projection));
+            effect.Parameters["NearClip"].SetValue(Camera.Viewport.MinDepth);
+            effect.Parameters["FarClip"].SetValue(Camera.Viewport.MaxDepth);
+            effect.Parameters["CameraPosition"].SetValue(Camera.Position);
+            effect.Parameters["Radius"].SetValue(1.0f);
+            //effect.Parameters["gradients"].SetValue(Gradients);
             //effect.Parameters["WVPInverse"].SetValue(Matrix.Invert(AbsoluteWorld * Camera.View * Camera.Projection));
             effect.CurrentTechnique.Passes[0].Apply();
 

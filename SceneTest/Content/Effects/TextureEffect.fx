@@ -1,9 +1,14 @@
-float4x4 WorldViewProjection;
-float3 position;
+float4x4 ViewProjection;
+float4x4 InverseViewProjection;
+float4x4 World;
+float3 Position;
 float w;
 float h;
-
-float2 gradients[2*2];
+float3 CameraPosition;
+float3 gradients[2*2];
+float NearClip;
+float FarClip;
+float Radius;
 
 struct VertexShaderInput
 {
@@ -27,7 +32,6 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
 	VertexShaderOutput output;
 
-
 	output.Position = input.Position;
 
 	output.Position.z = 1.0;
@@ -39,26 +43,52 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	float posx = (2 * input.Position.x / w - 1);
 	float posy = -(2 * input.Position.y / h - 1);
-	float2 Position = float2(posx, posy);
+	float2 ScreenPosition = float2(posx, posy);
 
+	float4 PreUnProject = float4(ScreenPosition.x, ScreenPosition.y, 0.0, 1);
+	float4 WorldPosition = mul(PreUnProject, InverseViewProjection);
+
+	float4 PreUnProjectCenter = float4(0, 0, 0.0, 1);
+	float4 WorldPositionCenter = mul(PreUnProjectCenter, InverseViewProjection);
+
+	float4 SpherePosition = mul(float4(Position, 1), World);
+	SpherePosition = SpherePosition / SpherePosition.w;
+
+	WorldPosition = WorldPosition / WorldPosition.w;
+	WorldPositionCenter = WorldPositionCenter / WorldPositionCenter.w;
+
+	float3 Ray = normalize(WorldPosition.xyz - CameraPosition);
+	float3 RayCenter = normalize(WorldPositionCenter.xyz - CameraPosition);
+	
+	float3 Dir = normalize(SpherePosition.xyz - CameraPosition);
+	
+	float Env = normalize(float2(length(SpherePosition.xyz - CameraPosition), Radius)).x;
+	
+	if (dot(Ray, Dir) > Env)
+		return float4(0, 0, 0, 1);
+	return float4(dot(Ray, Dir), 0, 0, 1);
+
+
+	//ray * dir must be less than env * dir
+	
 	/*float2 gradients[2][2];
 	gradients[0][0] = normalize(float2(1, 0.3));
 	gradients[1][0] = normalize(float2(1, -1));
 	gradients[1][1] = normalize(float2(-0.1, 1));
 	gradients[0][1] = normalize(float2(-0.2, -1));*/
 
-	float2 corner_spacing = float2(2.0, 2.0);
-	float2 corners[2][2];
-	corners[0][0] = float2(-1.0, -1.0);
-	corners[1][0] = float2(1.0, -1.0);
-	corners[1][1] = float2(1.0, 1.0);
-	corners[0][1] = float2(-1.0, 1.0);
+	/*float2 corner_spacing = float2(2.0, 2.0);
+	float3 corners[2][2];
+	corners[0][0] = float3(-1.0, -1.0, 0.0);
+	corners[1][0] = float3(1.0, -1.0, 0.0);
+	corners[1][1] = float3(1.0, 1.0, 0.0);
+	corners[0][1] = float3(-1.0, 1.0, 0.0);
 
 	float2 distance[2][2];
 	distance[0][0] = (Position - corners[0][0]) / corner_spacing;
 	distance[1][0] = (Position - corners[1][0]) / corner_spacing;
 	distance[1][1] = (Position - corners[1][1]) / corner_spacing;
-	distance[0][1] = (Position - corners[0][1]) / corner_spacing;
+	distance[0][1] = (Position - corners[0][1]) / corner_spacing;*/
 
 	//float result = lerp(
 	//	lerp(dot(distance[0][0], gradients[0][0]), dot(distance[1][0], gradients[1][0]), Fade((Position.x - corners[0][0].x) / corner_spacing)),
@@ -66,20 +96,19 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	//	Fade((Position.y - corners[0][0].y) / corner_spacing)
 	//);
 
-	float x1 = lerp(dot(distance[0][0], gradients[0 * 2 + 0]), dot(distance[1][0], gradients[1 * 2 + 0]), Fade((Position.x - corners[0][0].x) / corner_spacing));
+	/*float x1 = lerp(dot(distance[0][0], gradients[0 * 2 + 0]), dot(distance[1][0], gradients[1 * 2 + 0]), Fade((Position.x - corners[0][0].x) / corner_spacing));
 	float x2 = lerp(dot(distance[0][1], gradients[0 * 2 + 1]), dot(distance[1][1], gradients[1 * 2 + 1]), Fade((Position.x - corners[0][0].x) / corner_spacing));
 
 	float result = lerp(x1, x2, Fade((Position.y - corners[0][0].y) / corner_spacing));
 
 	result = result * 2;
-	//result = result + 1;
-
+	
 	float k = 0.0;
 	if (abs(result) > 0.8)
 		k = 1;
 
 	return saturate(float4(0.8, 0.4, 1, 1)*result) + saturate(float4(0.3, 0.3, 1, 1)*(-result));
-
+	*/
 
 	/*float4 ProjPosition = mul(float4(position, 1.0), WorldViewProjection);
 
