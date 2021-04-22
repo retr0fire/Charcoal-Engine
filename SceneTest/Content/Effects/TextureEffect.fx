@@ -53,7 +53,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 	float4 SpherePosition = mul(float4(Position, 1), World);
 	SpherePosition = SpherePosition / SpherePosition.w;
-
+	
 	WorldPosition = WorldPosition / WorldPosition.w;
 	WorldPositionCenter = WorldPositionCenter / WorldPositionCenter.w;
 
@@ -65,9 +65,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float Env = normalize(float2(length(SpherePosition.xyz - CameraPosition), Radius)).x;
 	
 	if (dot(Ray, Dir) > Env)
-		return float4(0, 0, 0, 1);
-	return float4(dot(Ray, Dir), 0, 0, 1);
-
+		return float4(dot(Ray, Dir), 0, 0, 1);
+	return float4(0, 0, 0, 1);
 
 	//ray * dir must be less than env * dir
 	
