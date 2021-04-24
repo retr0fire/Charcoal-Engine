@@ -30,6 +30,11 @@ namespace CharcoalEngine.Object
 {
     class DebugDrawTester : Transform
     {
+        public float Radius
+        {
+            get; set;
+        } = 1.0f;
+
         Effect effect;
         VertexPositionColor[] V;
 
@@ -48,15 +53,6 @@ namespace CharcoalEngine.Object
             V[3] = new VertexPositionColor(new Vector3(-1, -1, 0.0f), new Color(1.0f, 1.0f, 1.0f, 0));
             V[4] = new VertexPositionColor(new Vector3(1, 1, 0.0f), new Color(1.0f, 1.0f, 1.0f, 0));
             V[5] = new VertexPositionColor(new Vector3(1, -1, 0.0f), new Color(1.0f, 1.0f, 1.0f, 0));
-
-            /*for (int i = 0; i < 2; i++)
-            {
-                for (int j = 0; j < 2; j++)
-                {
-                    Gradients[i + j*2] = new Vector3((float)r.NextDouble() * 2 - 1.0f, (float)r.NextDouble() * 2 - 1.0f, 0.0f);
-                    Gradients[i + j*2].Normalize();
-                }
-            }*/
 
         }
 
@@ -79,7 +75,7 @@ namespace CharcoalEngine.Object
             effect.Parameters["NearClip"].SetValue(Camera.Viewport.MinDepth);
             effect.Parameters["FarClip"].SetValue(Camera.Viewport.MaxDepth);
             effect.Parameters["CameraPosition"].SetValue(Camera.Position);
-            effect.Parameters["Radius"].SetValue(1.0f);
+            effect.Parameters["Radius"].SetValue(Radius);
             //effect.Parameters["gradients"].SetValue(Gradients);
             //effect.Parameters["WVPInverse"].SetValue(Matrix.Invert(AbsoluteWorld * Camera.View * Camera.Projection));
             effect.CurrentTechnique.Passes[0].Apply();

@@ -20,6 +20,11 @@ struct VertexShaderOutput
 	float4 Position : POSITION0;
 };
 
+float SphereSDF(float3 SpherePosition, float3 TestPosition, float Radius)
+{
+	return distance(SpherePosition, TestPosition) - Radius;
+
+}
 float Fade(float t)
 {
 	// Fade function as defined by Ken Perlin.  This eases coordinate values
@@ -60,14 +65,39 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 Ray = normalize(WorldPosition.xyz - CameraPosition);
 	float3 RayCenter = normalize(WorldPositionCenter.xyz - CameraPosition);
 	
-	float3 Dir = normalize(SpherePosition.xyz - CameraPosition);
+	//float3 Dir = normalize(SpherePosition.xyz - CameraPosition);
 	
-	float Env = normalize(float2(length(SpherePosition.xyz - CameraPosition), Radius)).x;
+	//float Env = normalize(float2(length(SpherePosition.xyz - CameraPosition), Radius)).x;
 	
-	if (dot(Ray, Dir) > Env)
-		return float4(dot(Ray, Dir), 0, 0, 1);
-	return float4(0, 0, 0, 1);
+	//if (dot(Ray, Dir) > Env)
+	//	return float4(dot(Ray, Dir), 0, 0, 1);
+	//return float4(0, 0, 0, 1);
+	
+	float3 MarchPos = CameraPosition;
+	
+	for (int i = 0; i < 10; i++)
+	{
+		float march_dist = SphereSDF(SpherePosition.xyz, MarchPos, Radius);
+		if (march_dist < 0.01f)
+		{
+			//float4(1, 0, 0, 1);//
+			//return float4(distance(MarchPos, CameraPosition), 0, 0, 1);
+            //bad lighting:
+            float3 light_dir = float3(1, -1, 0);
+            
+            float3 normal = normalize(MarchPos - SpherePosition.xyz);
+            
+            float light = clamp(dot(-light_dir, normal), 0.0f, 2.0f)/2;
+            float3 lcolor = float3(1, 1, 1);
+            float3 scolor = float3(0.6, 0.6, 0.6);
+            return float4(scolor * light * lcolor, 1);
 
+        }
+		MarchPos += Ray * march_dist;
+	}
+
+	return float4(0, 0, 0, 1);
+	
 	//ray * dir must be less than env * dir
 	
 	/*float2 gradients[2][2];
@@ -128,7 +158,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 
 
-}
+	}
 
 technique Specular
 {
