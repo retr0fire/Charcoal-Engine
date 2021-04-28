@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Effects/TextureEffect.fx</SourceFile>
-  <SourceTime>2021-04-14T22:31:29.6844114-04:00</SourceTime>
+  <SourceTime>2021-04-24T14:25:42.9709369-04:00</SourceTime>
   <DestFile>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/Effects/TextureEffect.xnb</DestFile>
-  <DestTime>2021-04-14T22:32:02.2373696-04:00</DestTime>
+  <DestTime>2021-04-24T18:49:57.0807015-04:00</DestTime>
   <Importer>EffectImporter</Importer>
   <ImporterTime>2018-09-23T17:55:52-04:00</ImporterTime>
   <Processor>EffectProcessor</Processor>

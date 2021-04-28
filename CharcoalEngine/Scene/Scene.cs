@@ -52,10 +52,15 @@ namespace CharcoalEngine.Scene
             _gizmo.RotateEvent += _gizmo_RotateEvent;
             //_gizmo.ScaleEvent += _gizmo_ScaleEvent;
 
-            Root.Update();
 
-            Root.Children.Add(new DebugDrawTester());
-            
+            Root.Update();       
+            DrawingSystems.Add(new RayMarching());
+
+
+            Root.Children.Add(new Sphere());     
+            ((RayMarching)DrawingSystems[0]).RegisterItem(Root.Children[0]);
+            Root.Children.Add(new Sphere());
+            ((RayMarching)DrawingSystems[0]).RegisterItem(Root.Children[1]);
         }
 
         private void _gizmo_RotateEvent(Transform transformable, TransformationEventArgs e, TransformationEventArgs d)
@@ -156,10 +161,15 @@ namespace CharcoalEngine.Scene
             Engine.ActiveScene = this;
 
             g.Clear(Color.Black);
-            
-            for (int i = 0; i < Root.Children.Count; i++)
+
+            /*for (int i = 0; i < Root.Children.Count; i++)
             {
                 Root.Children[i].Draw();
+            }*/
+
+            for (int i = 0; i < DrawingSystems.Count; i++)
+            {
+                DrawingSystems[i].Draw();
             }
 
             #region setup

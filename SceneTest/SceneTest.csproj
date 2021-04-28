@@ -70,8 +70,11 @@
     <Content Include="Content\Effects\NDT_Effect.fx" />
     <Content Include="Content\Effects\NormalPixelMapEffect.fx" />
     <Content Include="Content\Effects\PointLightEffect.fx" />
+    <Content Include="Content\Effects\VaporTracing.fx" />
     <Content Include="Content\Effects\ShadowMapEffect.fx" />
     <Content Include="Content\Effects\SpotLightEffect.fx" />
+    <Content Include="Content\Effects\RayTracing.fx" />
+    <Content Include="Content\Effects\RayMarching.fx" />
     <Content Include="Content\Effects\TextureEffect.fx" />
     <Content Include="Content\ModelTextures\smoke.png" />
     <Content Include="Icon.ico" />
