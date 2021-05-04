@@ -30,17 +30,12 @@ namespace CharcoalEngine.Object
 {
     class VaporTracing : Transform
     {
-        public float Radius
-        {
-            get; set;
-        } = 1.0f;
-
         Effect effect;
         VertexPositionColor[] V;
         
         public VaporTracing()
         {
-            effect = Engine.Content.Load<Effect>("Effects/RayTracing");
+            effect = Engine.Content.Load<Effect>("Effects/VaporTracing");
             V = new VertexPositionColor[6];
 
             Random r = new Random();
@@ -52,18 +47,25 @@ namespace CharcoalEngine.Object
             V[4] = new VertexPositionColor(new Vector3(1, 1, 0.0f), new Color(1.0f, 1.0f, 1.0f, 0));
             V[5] = new VertexPositionColor(new Vector3(1, -1, 0.0f), new Color(1.0f, 1.0f, 1.0f, 0));
 
+            LocalBoundingBox = new BoundingBox(-Vector3.One, Vector3.One);
         }
 
         public override void Draw()
         {
-            effect.Parameters["w"].SetValue((float)Camera.Viewport.Width);
-            effect.Parameters["h"].SetValue((float)Camera.Viewport.Height);
-            effect.Parameters["Position"].SetValue(Vector3.Zero);
             effect.Parameters["World"].SetValue(AbsoluteWorld);
+            effect.Parameters["InverseWorld"].SetValue(Matrix.Invert(AbsoluteWorld));
+
+            effect.Parameters["CornerMin"].SetValue(boundingBox.Min);
+            effect.Parameters["CornerMax"].SetValue(boundingBox.Max);
+
             effect.Parameters["ViewProjection"].SetValue(Camera.View * Camera.Projection);
             effect.Parameters["InverseViewProjection"].SetValue(Matrix.Invert(Camera.View * Camera.Projection));
+
+            effect.Parameters["w"].SetValue((float)Camera.Viewport.Width);
+            effect.Parameters["h"].SetValue((float)Camera.Viewport.Height);
             effect.Parameters["NearClip"].SetValue(Camera.Viewport.MinDepth);
             effect.Parameters["FarClip"].SetValue(Camera.Viewport.MaxDepth);
+
             effect.Parameters["CameraPosition"].SetValue(Camera.Position);
             effect.CurrentTechnique.Passes[0].Apply();
 

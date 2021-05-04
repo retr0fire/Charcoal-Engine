@@ -71,7 +71,7 @@ float3 GetNormal(float3 pos)
 float MarchToSurface(float3 MarchPos, float3 Ray)
 {
     float3 StartPos = MarchPos;
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 30; i++)
     {
         float march_dist = Map(MarchPos);
             

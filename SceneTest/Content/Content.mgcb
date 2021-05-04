@@ -73,6 +73,12 @@
 /processorParam:DebugMode=Debug
 /build:Effects/TextureEffect.fx
 
+#begin Effects/VaporTracing.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/VaporTracing.fx
+
 #begin Font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

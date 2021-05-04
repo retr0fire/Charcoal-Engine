@@ -1,19 +1,81 @@
 float4x4 ViewProjection;
 float4x4 InverseViewProjection;
 float4x4 World;
-float3 Position;
-float w;
-float h;
+float4x4 InverseWorld;
 float3 CameraPosition;
-float3 gradients[2*2];
+float3 CornerMin;
+float3 CornerMax;
 float NearClip;
 float FarClip;
+float w;
+float h;
 
-#define MAX_ENTITIES  15
 
-float RadiusArray[MAX_ENTITIES];
-float4x4 WorldArray[MAX_ENTITIES];
-int ActiveEntities;
+float DistanceToPlane(float3 P, float K, float3 Ray, float3 Origin)
+{
+    return (K - dot(Origin, P)) / (dot(Ray, P));
+}
+
+float DistanceToBox(float3 Min, float3 Max, float3 Position, float3 Ray)
+{
+    float XPlaneMin = DistanceToPlane(float3(1, 0, 0), Min.x, Ray, Position);
+    float XPlaneMax = DistanceToPlane(float3(1, 0, 0), Max.x, Ray, Position);
+    float YPlaneMin = DistanceToPlane(float3(0, 1, 0), Min.y, Ray, Position);
+    float YPlaneMax = DistanceToPlane(float3(0, 1, 0), Max.y, Ray, Position);
+    float ZPlaneMin = DistanceToPlane(float3(0, 0, 1), Min.z, Ray, Position);
+    float ZPlaneMax = DistanceToPlane(float3(0, 0, 1), Max.z, Ray, Position);
+    
+    if (XPlaneMin < 0.01)
+        XPlaneMin = FarClip;
+    if (XPlaneMax < 0.01)
+        XPlaneMax = FarClip;
+    
+    if (YPlaneMin < 0.01)
+        YPlaneMin = FarClip;
+    if (YPlaneMax < 0.01)
+        YPlaneMax = FarClip;
+    
+    if (ZPlaneMin < 0.01)
+        ZPlaneMin = FarClip;
+    if (ZPlaneMax < 0.01)
+        ZPlaneMax = FarClip;
+    
+    float3 XPlaneMinPoint = Position + Ray * XPlaneMin;
+    float3 XPlaneMaxPoint = Position + Ray * XPlaneMax;
+    float3 YPlaneMinPoint = Position + Ray * YPlaneMin;
+    float3 YPlaneMaxPoint = Position + Ray * YPlaneMax;
+    float3 ZPlaneMinPoint = Position + Ray * ZPlaneMin;
+    float3 ZPlaneMaxPoint = Position + Ray * ZPlaneMax;
+    
+    if (XPlaneMinPoint.y > CornerMax.y || XPlaneMinPoint.y < CornerMin.y || XPlaneMinPoint.z > CornerMax.z || XPlaneMinPoint.z < CornerMin.z)
+    {
+        XPlaneMin = FarClip;
+    }
+    if (XPlaneMaxPoint.y > CornerMax.y || XPlaneMaxPoint.y < CornerMin.y || XPlaneMaxPoint.z > CornerMax.z || XPlaneMaxPoint.z < CornerMin.z)
+    {
+        XPlaneMax = FarClip;
+    }
+    
+    if (YPlaneMinPoint.x > CornerMax.x || YPlaneMinPoint.x < CornerMin.x || YPlaneMinPoint.z > CornerMax.z || YPlaneMinPoint.z < CornerMin.z)
+    {
+        YPlaneMin = FarClip;
+    }
+    if (YPlaneMaxPoint.x > CornerMax.x || YPlaneMaxPoint.x < CornerMin.x || YPlaneMaxPoint.z > CornerMax.z || YPlaneMaxPoint.z < CornerMin.z)
+    {
+        YPlaneMax = FarClip;
+    }
+    
+    if (ZPlaneMinPoint.x > CornerMax.x || ZPlaneMinPoint.x < CornerMin.x || ZPlaneMinPoint.y > CornerMax.y || ZPlaneMinPoint.y < CornerMin.y)
+    {
+        ZPlaneMin = FarClip;
+    }
+    if (ZPlaneMaxPoint.x > CornerMax.x || ZPlaneMaxPoint.x < CornerMin.x || ZPlaneMaxPoint.y > CornerMax.y || ZPlaneMaxPoint.y < CornerMin.y)
+    {
+        ZPlaneMax = FarClip;
+    }
+    
+    return min(min(ZPlaneMin, ZPlaneMax), min(min(XPlaneMin, XPlaneMax), min(YPlaneMin, YPlaneMax)));
+}
 
 struct VertexShaderInput
 {
@@ -24,57 +86,6 @@ struct VertexShaderOutput
 {
 	float4 Position : POSITION0;
 };
-
-float SphereSDF(float3 SpherePosition, float3 TestPosition, float Radius)
-{
-	return distance(SpherePosition, TestPosition) - Radius;
-
-}
-
-float UnionSDF(float a, float b)
-{
-    return min(a, b);
-}
-
-float Map(float3 Position)
-{
-    float march_dist = 100000;
-    for (int s = 0; s < ActiveEntities; s++)
-    {
-        float4 SpherePosition = mul(float4(float3(0, 0, 0), 1), WorldArray[s]);
-        SpherePosition = SpherePosition / SpherePosition.w;
-        
-        float test_dist = SphereSDF(SpherePosition.xyz, Position, RadiusArray[s]);
-        
-        march_dist = UnionSDF(test_dist, march_dist);
-    }
-    
-    return march_dist;
-}
-
-float3 GetNormal(float3 pos)
-{
-    // epsilon - used to approximate dx when taking the derivative
-    const float2 eps = float2(0.01, 0.0);
-
-    // The idea here is to find the "gradient" of the distance field at pos
-    // Remember, the distance field is not boolean - even if you are inside an object
-    // the number is negative, so this calculation still works.
-    // Essentially you are approximating the derivative of the distance field at this point.
-    float3 nor = float3(
-        Map(pos + eps.xyy).x - Map(pos - eps.xyy).x,
-        Map(pos + eps.yxy).x - Map(pos - eps.yxy).x,
-        Map(pos + eps.yyx).x - Map(pos - eps.yyx).x);
-    return normalize(nor);
-}
-
-float Fade(float t)
-{
-	// Fade function as defined by Ken Perlin.  This eases coordinate values
-	// so that they will ease towards integral values.  This ends up smoothing
-	// the final output.
-	return t * t * t * (t * (t * 6 - 15) + 10);         // 6t^5 - 15t^4 + 10t^3
-}
 
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
@@ -96,7 +107,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float4 PreUnProject = float4(ScreenPosition.x, ScreenPosition.y, 0.0, 1);
 	float4 WorldPosition = mul(PreUnProject, InverseViewProjection);
 
-	float4 PreUnProjectCenter = float4(0, 0, 0.0, 1);
+	float4 PreUnProjectCenter = float4(0, 0, 0, 1);
 	float4 WorldPositionCenter = mul(PreUnProjectCenter, InverseViewProjection);
 
     WorldPosition = WorldPosition / WorldPosition.w;
@@ -105,97 +116,17 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 Ray = normalize(WorldPosition.xyz - CameraPosition);
 	float3 RayCenter = normalize(WorldPositionCenter.xyz - CameraPosition);
 	
-	//float3 Dir = normalize(SpherePosition.xyz - CameraPosition);
-	
-	//float Env = normalize(float2(length(SpherePosition.xyz - CameraPosition), Radius)).x;
-	
-	//if (dot(Ray, Dir) > Env)
-	//	return float4(dot(Ray, Dir), 0, 0, 1);
-	//return float4(0, 0, 0, 1);
-	
 	float3 MarchPos = CameraPosition;
-	
     
-    for (int i = 0; i < 50; i++)
+    float dist = DistanceToBox(CornerMin, CornerMax, CameraPosition, Ray);
+    
+    if (dist == FarClip)
     {
-        float march_dist = Map(MarchPos);
-            
-        if (march_dist < 0.1f)
-        {
-			float3 light_dir = normalize(float3(1, -1, 0));
-            
-            float3 normal = GetNormal(MarchPos);
-            
-            float light = clamp(dot(-light_dir, normal), 0.0f, 1.0f);
-            float3 lcolor = float3(1, 1, 1);
-            float3 scolor = float3(0.6, 0.6, 0.6);
-            return float4(scolor * light * lcolor, 1);
-        }
-        MarchPos += Ray * march_dist;
+        return float4(0, 0, 0, 1);
     }
-	return float4(0, 0, 0, 1);
-	
-	//ray * dir must be less than env * dir
-	
-	/*float2 gradients[2][2];
-	gradients[0][0] = normalize(float2(1, 0.3));
-	gradients[1][0] = normalize(float2(1, -1));
-	gradients[1][1] = normalize(float2(-0.1, 1));
-	gradients[0][1] = normalize(float2(-0.2, -1));*/
-
-	/*float2 corner_spacing = float2(2.0, 2.0);
-	float3 corners[2][2];
-	corners[0][0] = float3(-1.0, -1.0, 0.0);
-	corners[1][0] = float3(1.0, -1.0, 0.0);
-	corners[1][1] = float3(1.0, 1.0, 0.0);
-	corners[0][1] = float3(-1.0, 1.0, 0.0);
-
-	float2 distance[2][2];
-	distance[0][0] = (Position - corners[0][0]) / corner_spacing;
-	distance[1][0] = (Position - corners[1][0]) / corner_spacing;
-	distance[1][1] = (Position - corners[1][1]) / corner_spacing;
-	distance[0][1] = (Position - corners[0][1]) / corner_spacing;*/
-
-	//float result = lerp(
-	//	lerp(dot(distance[0][0], gradients[0][0]), dot(distance[1][0], gradients[1][0]), Fade((Position.x - corners[0][0].x) / corner_spacing)),
-	//	lerp(dot(distance[0][1], gradients[0][1]), dot(distance[1][1], gradients[1][1]), Fade((Position.x - corners[0][0].x) / corner_spacing)),
-	//	Fade((Position.y - corners[0][0].y) / corner_spacing)
-	//);
-
-	/*float x1 = lerp(dot(distance[0][0], gradients[0 * 2 + 0]), dot(distance[1][0], gradients[1 * 2 + 0]), Fade((Position.x - corners[0][0].x) / corner_spacing));
-	float x2 = lerp(dot(distance[0][1], gradients[0 * 2 + 1]), dot(distance[1][1], gradients[1 * 2 + 1]), Fade((Position.x - corners[0][0].x) / corner_spacing));
-
-	float result = lerp(x1, x2, Fade((Position.y - corners[0][0].y) / corner_spacing));
-
-	result = result * 2;
-	
-	float k = 0.0;
-	if (abs(result) > 0.8)
-		k = 1;
-
-	return saturate(float4(0.8, 0.4, 1, 1)*result) + saturate(float4(0.3, 0.3, 1, 1)*(-result));
-	*/
-
-	/*float4 ProjPosition = mul(float4(position, 1.0), WorldViewProjection);
-
-	ProjPosition = ProjPosition / ProjPosition.w;
-
-	float posx = (2 * input.Position.x / w - 1);
-	float posy = -(2 * input.Position.y / h - 1);
-
-	float px = ProjPosition.x;
-	float py = ProjPosition.y;
-
-	float3 dist = float3(px - posx, py - posy, 0);
-
-	if (length(dist) < 0.1f)
-		return float4(0, 1, 1, 1);
-
-	return float4(length(dist), 0, 0, 1);*/
-
-
-
-	}
+    
+    return float4(dist/10, 0, 0, 1);
+}
 
 technique Specular
 {

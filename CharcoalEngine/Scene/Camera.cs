@@ -147,7 +147,7 @@ namespace CharcoalEngine.Scene
             KeyboardState k = Keyboard.GetState();
             MouseState m = Mouse.GetState();
 
-            distance_arc_ball -= (m.ScrollWheelValue - last_m.ScrollWheelValue)/10;
+            distance_arc_ball -= (m.ScrollWheelValue - last_m.ScrollWheelValue)/100;
             if (m.LeftButton == ButtonState.Pressed)
             {
                 r_x_arc_ball -= ((float)m.X - (float)last_m.X) / 150;

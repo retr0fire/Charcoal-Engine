@@ -53,14 +53,18 @@ namespace CharcoalEngine.Scene
             //_gizmo.ScaleEvent += _gizmo_ScaleEvent;
 
 
-            Root.Update();       
-            DrawingSystems.Add(new RayMarching());
+            Root.Update();
+            /*DrawingSystems.Add(new RayMarching());
 
 
             Root.Children.Add(new Sphere());     
             ((RayMarching)DrawingSystems[0]).RegisterItem(Root.Children[0]);
             Root.Children.Add(new Sphere());
-            ((RayMarching)DrawingSystems[0]).RegisterItem(Root.Children[1]);
+            ((RayMarching)DrawingSystems[0]).RegisterItem(Root.Children[1]);*/
+
+            DrawingSystems.Add(new CustomFXVertexDrawingSystem());
+            Root.Children.Add(new VaporTracing());
+            DrawingSystems[0].RegisterItem(Root.Children[0]);
         }
 
         private void _gizmo_RotateEvent(Transform transformable, TransformationEventArgs e, TransformationEventArgs d)

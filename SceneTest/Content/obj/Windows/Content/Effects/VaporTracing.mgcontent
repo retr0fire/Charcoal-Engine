@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Effects/RayMarching.fx</SourceFile>
-  <SourceTime>2021-04-28T15:49:19.3517205-04:00</SourceTime>
-  <DestFile>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/Content/Effects/RayMarching.xnb</DestFile>
-  <DestTime>2021-04-28T17:58:05.3391464-04:00</DestTime>
+  <SourceFile>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/Effects/VaporTracing.fx</SourceFile>
+  <SourceTime>2021-05-04T11:17:05.1129747-04:00</SourceTime>
+  <DestFile>C:/Users/Michael/OneDrive - Purdue University Fort Wayne/DontAskQuestions/CharcoalEngine_Monogame/SceneTest/Content/bin/Windows/Content/Effects/VaporTracing.xnb</DestFile>
+  <DestTime>2021-05-04T11:17:11.6347097-04:00</DestTime>
   <Importer>EffectImporter</Importer>
   <ImporterTime>2018-09-23T17:55:52-04:00</ImporterTime>
   <Processor>EffectProcessor</Processor>
