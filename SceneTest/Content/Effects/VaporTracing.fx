@@ -10,6 +10,24 @@ float FarClip;
 float w;
 float h;
 
+/*
+
+texture DensityMap;
+sampler DensityMapSampler = sampler_state {
+texture = <DensityMap>;
+ AddressU = clamp;
+ AddressV = clamp;
+ magfilter = POINT; 
+ minfilter = POINT; 
+ mipfilter=POINT; 
+};
+
+*/
+
+float3 BackgroundColor;
+
+float t;
+
 
 float DistanceToPlane(float3 P, float K, float3 Ray, float3 Origin)
 {
@@ -18,6 +36,12 @@ float DistanceToPlane(float3 P, float K, float3 Ray, float3 Origin)
 
 float DistanceToBox(float3 Min, float3 Max, float3 Position, float3 Ray)
 {
+    //if position is already in the box, return 0
+    if (Position.x < CornerMax.x && Position.x > CornerMin.x && Position.y < CornerMax.y && Position.y > CornerMin.y && Position.z < CornerMax.z && Position.z > CornerMin.z)
+    {
+        return 0;
+    }
+    
     float XPlaneMin = DistanceToPlane(float3(1, 0, 0), Min.x, Ray, Position);
     float XPlaneMax = DistanceToPlane(float3(1, 0, 0), Max.x, Ray, Position);
     float YPlaneMin = DistanceToPlane(float3(0, 1, 0), Min.y, Ray, Position);
@@ -76,6 +100,39 @@ float DistanceToBox(float3 Min, float3 Max, float3 Position, float3 Ray)
     
     return min(min(ZPlaneMin, ZPlaneMax), min(min(XPlaneMin, XPlaneMax), min(YPlaneMin, YPlaneMax)));
 }
+/*
+
+int3 GetVoxelIndices(float3 CMin, float3 CMax, float3 Position, float VoxelsPerUnit)
+{
+    return int3(round((Position - CMin) / (CMax - CMin)));
+}
+
+float3 GetDensityAtVoxel(int3 Voxel, int Granularity)
+{
+    return tex2D(DensityMapSampler, Voxel.xy / (float) Granularity);
+}*/
+
+
+int3 GetVoxelIndices(float3 CMin, float3 Position, float VoxelsPerUnit)
+{
+    float3 Pos = Position - CMin;
+    
+    Pos *= VoxelsPerUnit;
+    
+    return int3(round(Pos));
+}
+
+float GetDensityAtVoxel(int3 Voxel, int Granularity)
+{
+    float3 VoxelCenter = float3(1, 1, 1) * Granularity;
+    
+    float3 FVoxel = float3(sin(t), sin(t), sin(t)) * (Voxel - VoxelCenter) + VoxelCenter;
+    
+    float radius = length(FVoxel - VoxelCenter);
+    
+    return min(0.1 / radius, 0.003);
+
+}
 
 struct VertexShaderInput
 {
@@ -118,14 +175,50 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	
 	float3 MarchPos = CameraPosition;
     
+    float4 CMin = mul(float4(CornerMin, 1), World);
+    CornerMin = (CMin / CMin.w).xyz;
+    float4 CMax = mul(float4(CornerMax, 1), World);
+    CornerMax = (CMax / CMax.w).xyz;
+    
     float dist = DistanceToBox(CornerMin, CornerMax, CameraPosition, Ray);
     
     if (dist == FarClip)
     {
-        return float4(0, 0, 0, 1);
+        return float4(BackgroundColor, 1);
     }
     
-    return float4(dist/10, 0, 0, 1);
+    float3 InterSectionPoint = CameraPosition + Ray * dist;
+    
+    float3 AlterStartPoint = CameraPosition + Ray * dist + Ray * distance(CornerMax, CornerMin);
+    float alter_dist = DistanceToBox(CornerMin, CornerMax, AlterStartPoint, -Ray);
+    float3 AlterInterSectionPoint = AlterStartPoint + (-Ray) * alter_dist;
+    
+    //accessing the texture
+    //float3 internalposition = InterSectionPoint - CornerMin;
+    
+    float granularity = 100;
+    
+    float intensity = 0.0f;// = distance(AlterInterSectionPoint, InterSectionPoint) / 5;
+    int steps = trunc(distance(InterSectionPoint, AlterInterSectionPoint) * granularity);
+    float partial_step = distance(InterSectionPoint, AlterInterSectionPoint) * granularity - steps;
+    float distance_through_box = distance(InterSectionPoint, AlterInterSectionPoint);
+    float step_length = distance_through_box / (float) steps;
+    float3 position_in_box = InterSectionPoint;
+    for (int i = 0; i < steps; i++)
+    {
+        position_in_box += Ray * step_length;
+        int3 voxel = GetVoxelIndices(CornerMin, position_in_box, granularity);
+        intensity += GetDensityAtVoxel(voxel, granularity);
+        
+        if (i == steps - 1)
+        {
+            //last step
+            intensity += GetDensityAtVoxel(voxel, granularity) * partial_step;
+        }
+
+    }
+    
+    return float4(BackgroundColor + float3(1, 0.5, 1) * intensity, 1);
 }
 
 technique Specular

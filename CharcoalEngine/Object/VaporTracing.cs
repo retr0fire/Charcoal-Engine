@@ -32,6 +32,9 @@ namespace CharcoalEngine.Object
     {
         Effect effect;
         VertexPositionColor[] V;
+        //density voxels per unit
+        int Granularity = 100;
+        Texture2D DensityMap;
         
         public VaporTracing()
         {
@@ -48,15 +51,31 @@ namespace CharcoalEngine.Object
             V[5] = new VertexPositionColor(new Vector3(1, -1, 0.0f), new Color(1.0f, 1.0f, 1.0f, 0));
 
             LocalBoundingBox = new BoundingBox(-Vector3.One, Vector3.One);
+
+            DensityMap = new Texture2D(Engine.g, Granularity, Granularity, false, SurfaceFormat.Vector4);
+
+            Vector4[] pixels = new Vector4[Granularity * Granularity];
+
+            for (int i = 0; i < Granularity; i++)
+            {
+                for (int j = 0; j < Granularity; j++)
+                {
+                    pixels[i + j * Granularity] = new Vector4((i / Granularity), (j / Granularity), 0, 1);
+                }
+            }
+
+            DensityMap.SetData(pixels, 0, Granularity*Granularity);
         }
 
+        public float t = 0.0f;
         public override void Draw()
         {
+            t += 0.01f;
             effect.Parameters["World"].SetValue(AbsoluteWorld);
             effect.Parameters["InverseWorld"].SetValue(Matrix.Invert(AbsoluteWorld));
 
-            effect.Parameters["CornerMin"].SetValue(boundingBox.Min);
-            effect.Parameters["CornerMax"].SetValue(boundingBox.Max);
+            effect.Parameters["CornerMin"].SetValue(-Vector3.One);
+            effect.Parameters["CornerMax"].SetValue(Vector3.One);
 
             effect.Parameters["ViewProjection"].SetValue(Camera.View * Camera.Projection);
             effect.Parameters["InverseViewProjection"].SetValue(Matrix.Invert(Camera.View * Camera.Projection));
@@ -67,6 +86,11 @@ namespace CharcoalEngine.Object
             effect.Parameters["FarClip"].SetValue(Camera.Viewport.MaxDepth);
 
             effect.Parameters["CameraPosition"].SetValue(Camera.Position);
+            effect.Parameters["BackgroundColor"].SetValue(Color.Black.ToVector3());
+            //effect.Parameters["DensityMap"].SetValue(DensityMap);
+            //effect.Parameters["Granularity"].SetValue(Granularity);
+            effect.Parameters["t"].SetValue(t);
+
             effect.CurrentTechnique.Passes[0].Apply();
 
             Engine.g.DrawUserPrimitives(PrimitiveType.TriangleList, V, 0, 2);
