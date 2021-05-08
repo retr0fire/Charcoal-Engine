@@ -36,7 +36,7 @@ namespace CharcoalEngine.Object
         int Granularity = 100;
         Texture2D DensityMap;
 
-        public float Brightness { get; set; } = 0.01f;
+        public float Brightness { get; set; } = 0.02f;
         public float Power { get; set; } = 4;
         
         public VaporTracing()
