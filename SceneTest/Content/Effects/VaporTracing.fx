@@ -7,10 +7,13 @@ float3 CornerMin;
 float3 CornerMax;
 float NearClip;
 float FarClip;
+float Brightness;
 float w;
 float h;
 
-/*
+
+
+int Granularity;
 
 texture DensityMap;
 sampler DensityMapSampler = sampler_state {
@@ -21,8 +24,6 @@ texture = <DensityMap>;
  minfilter = POINT; 
  mipfilter=POINT; 
 };
-
-*/
 
 float3 BackgroundColor;
 
@@ -100,19 +101,18 @@ float DistanceToBox(float3 Min, float3 Max, float3 Position, float3 Ray)
     
     return min(min(ZPlaneMin, ZPlaneMax), min(min(XPlaneMin, XPlaneMax), min(YPlaneMin, YPlaneMax)));
 }
-/*
 
 int3 GetVoxelIndices(float3 CMin, float3 CMax, float3 Position, float VoxelsPerUnit)
 {
-    return int3(round((Position - CMin) / (CMax - CMin)));
+    return int3(round(VoxelsPerUnit * (Position - CMin) / (CMax - CMin)));
 }
 
-float3 GetDensityAtVoxel(int3 Voxel, int Granularity)
+/*float3 GetDensityAtVoxel(int3 Voxel, int Granularity)
 {
     return tex2D(DensityMapSampler, Voxel.xy / (float) Granularity);
-}*/
+}
 
-
+/*
 int3 GetVoxelIndices(float3 CMin, float3 Position, float VoxelsPerUnit)
 {
     float3 Pos = Position - CMin;
@@ -120,18 +120,13 @@ int3 GetVoxelIndices(float3 CMin, float3 Position, float VoxelsPerUnit)
     Pos *= VoxelsPerUnit;
     
     return int3(round(Pos));
-}
+}*/
 
-float GetDensityAtVoxel(int3 Voxel, int Granularity)
+float GetDensityAtVoxel(int3 Voxel, float Granularity)
 {
-    float3 VoxelCenter = float3(1, 1, 1) * Granularity;
+    float2 UV = float2(Voxel.x / Granularity, Voxel.y / (Granularity * Granularity) + Voxel.z / Granularity);
     
-    float3 FVoxel = float3(sin(t), sin(t), sin(t)) * (Voxel - VoxelCenter) + VoxelCenter;
-    
-    float radius = length(FVoxel - VoxelCenter);
-    
-    return min(0.1 / radius, 0.003);
-
+    return tex2Dlod(DensityMapSampler, float4(UV, 0.0f, 0.0f)).x * Brightness;
 }
 
 struct VertexShaderInput
@@ -196,29 +191,29 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     //accessing the texture
     //float3 internalposition = InterSectionPoint - CornerMin;
     
-    float granularity = 100;
+    //float granularity = (float) Granularity;
     
     float intensity = 0.0f;// = distance(AlterInterSectionPoint, InterSectionPoint) / 5;
-    int steps = trunc(distance(InterSectionPoint, AlterInterSectionPoint) * granularity);
-    float partial_step = distance(InterSectionPoint, AlterInterSectionPoint) * granularity - steps;
+    int steps = trunc(distance(InterSectionPoint, AlterInterSectionPoint) * (float) Granularity);
+    float partial_step = distance(InterSectionPoint, AlterInterSectionPoint) * (float) Granularity - steps;
     float distance_through_box = distance(InterSectionPoint, AlterInterSectionPoint);
     float step_length = distance_through_box / (float) steps;
     float3 position_in_box = InterSectionPoint;
     for (int i = 0; i < steps; i++)
     {
         position_in_box += Ray * step_length;
-        int3 voxel = GetVoxelIndices(CornerMin, position_in_box, granularity);
-        intensity += GetDensityAtVoxel(voxel, granularity);
+        int3 voxel = GetVoxelIndices(CornerMin, CornerMax, position_in_box, Granularity);
+        intensity += GetDensityAtVoxel(voxel, Granularity);
         
         if (i == steps - 1)
         {
             //last step
-            intensity += GetDensityAtVoxel(voxel, granularity) * partial_step;
+            intensity += GetDensityAtVoxel(voxel, Granularity) * partial_step;
         }
 
     }
     
-    return float4(BackgroundColor + float3(1, 0.5, 1) * intensity, 1);
+    return float4(BackgroundColor + float3(0.70 + 0.3 * sin(t-3.14/4), 0.3 + 0.3 * sin(t), 1) * intensity, 1);
 }
 
 technique Specular

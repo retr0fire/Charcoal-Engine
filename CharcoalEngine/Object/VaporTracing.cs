@@ -35,6 +35,9 @@ namespace CharcoalEngine.Object
         //density voxels per unit
         int Granularity = 100;
         Texture2D DensityMap;
+
+        public float Brightness { get; set; } = 0.01f;
+        public float Power { get; set; } = 4;
         
         public VaporTracing()
         {
@@ -52,19 +55,25 @@ namespace CharcoalEngine.Object
 
             LocalBoundingBox = new BoundingBox(-Vector3.One, Vector3.One);
 
-            DensityMap = new Texture2D(Engine.g, Granularity, Granularity, false, SurfaceFormat.Vector4);
+            DensityMap = new Texture2D(Engine.g, Granularity, Granularity * Granularity, false, SurfaceFormat.Vector4);
 
-            Vector4[] pixels = new Vector4[Granularity * Granularity];
+            Vector4[] pixels = new Vector4[Granularity * Granularity * Granularity];
+
+            //float[,] height = _2DPerlinMap.Create_2D_Perlin_Map_W_Octaves(Granularity, new Random(), 2);
+            float[,,] height = _3DPerlinMap.Create_3D_Perlin_Map_W_Octaves(Granularity, new Random(), 2);
 
             for (int i = 0; i < Granularity; i++)
             {
                 for (int j = 0; j < Granularity; j++)
                 {
-                    pixels[i + j * Granularity] = new Vector4((i / Granularity), (j / Granularity), 0, 1);
+                    for (int k = 0; k < Granularity; k++)
+                    {
+                        pixels[i + j * Granularity + k * Granularity * Granularity] = new Vector4((float)Math.Pow((double)((height[i, j, k] + 1.0f) / (double)2.0), (double)Power), 0, 0, 1);//new Vector4(((float)i / (float)Granularity), ((float)j / Granularity), 0, 1);
+                    }
                 }
             }
 
-            DensityMap.SetData(pixels, 0, Granularity*Granularity);
+            DensityMap.SetData(pixels, 0, Granularity*Granularity* Granularity);
         }
 
         public float t = 0.0f;
@@ -87,8 +96,9 @@ namespace CharcoalEngine.Object
 
             effect.Parameters["CameraPosition"].SetValue(Camera.Position);
             effect.Parameters["BackgroundColor"].SetValue(Color.Black.ToVector3());
-            //effect.Parameters["DensityMap"].SetValue(DensityMap);
-            //effect.Parameters["Granularity"].SetValue(Granularity);
+            effect.Parameters["DensityMap"].SetValue(DensityMap);
+            effect.Parameters["Granularity"].SetValue(Granularity);
+            effect.Parameters["Brightness"].SetValue(Brightness);
             effect.Parameters["t"].SetValue(t);
 
             effect.CurrentTechnique.Passes[0].Apply();
