@@ -11,8 +11,6 @@ float Brightness;
 float w;
 float h;
 
-
-
 int Granularity;
 
 texture DensityMap;
@@ -121,12 +119,28 @@ int3 GetVoxelIndices(float3 CMin, float3 Position, float VoxelsPerUnit)
     
     return int3(round(Pos));
 }*/
+float3 GetColor()
+{
+    float x_mul = (1 + sin(t + (0 * 3.14) / 3));
+    float y_mul = (1 + sin(t + (2 * 3.14) / 3));
+    float z_mul = (1 + sin(t + (4 * 3.14) / 3));
+    
+    float3 multiplier = float3(x_mul, y_mul, z_mul) / 3;
+    return float3(1, 1, 1);
+    //return float3(0.70 + 0.3 * sin(t), 0.3 + 0.7 * sin(t), 1);
+}
 
 float GetDensityAtVoxel(int3 Voxel, float Granularity)
 {
     float2 UV = float2(Voxel.x / Granularity, Voxel.y / (Granularity * Granularity) + Voxel.z / Granularity);
     
-    return tex2Dlod(DensityMapSampler, float4(UV, 0.0f, 0.0f)).x * Brightness;
+    float x_mul = (1 + sin(t + (0 * 3.14) / 3));
+    float y_mul = (1 + sin(t + (2 * 3.14) / 3));
+    float z_mul = (1 + sin(t + (4 * 3.14) / 3));
+    
+    float3 multiplier = float3(x_mul, y_mul, z_mul) / 3;
+    
+    return dot(tex2Dlod(DensityMapSampler, float4(UV, 0.0f, 0.0f)).xyz, multiplier) * Brightness;
 }
 
 struct VertexShaderInput
@@ -213,7 +227,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
     }
     
-    return float4(BackgroundColor + float3(0.70 + 0.3 * sin(t-3.14/4), 0.3 + 0.3 * sin(t), 1) * intensity, 1);
+    return float4(lerp(BackgroundColor, GetColor(), intensity), 1);
+
 }
 
 technique Specular
